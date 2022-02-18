@@ -10,6 +10,10 @@ from matplotlib.pyplot import figure
 
 z = lambda x1,x2 : 2*x1 + 5*x2
 
+c = np.array([2,5])
+c = c/np.sqrt(np.sum(c**2))
+print(c)
+
 x1 = np.linspace(-5,10,2000)
 x2 = np.linspace(-5,10,2000)
 
@@ -38,6 +42,16 @@ plt.fill_between(x1,
                  alpha=0.25,
                  label = "Feasible region")
 
+# Plot -c
+o = np.array([0,0])
+plt.quiver(*o, -c[0], -c[1], units = 'xy', scale = 1 ,color = "burlywood", label = "$-c$")
+
+# Plot points
+
+xs = [2,4]
+ys = [2,0]
+
+plt.scatter(xs,ys,color = "black")
 
 
 # Plot settings
@@ -46,6 +60,8 @@ plt.ylabel("$x_2$")
 plt.legend()
 plt.axis("on")
 
-plt.xlim(1.5,5)
-plt.ylim(0,5)
+plt.xlim(-1.5,7)
+plt.ylim(-1.5,7)
+
+plt.savefig("Ej3c.pdf")
 plt.show()
