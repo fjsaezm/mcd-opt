@@ -407,8 +407,6 @@
 \footnotesize
 Francisco Javier Sáez Maldonado \hfill\\
 José Antonio Álvarez Ocete \hfill\\
-franciscojavier.saez@estudiante.uam.es\\
-joseantonio.alvarezo@estudiante.uam.es
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \centering
@@ -433,28 +431,40 @@ Optimización\\
 Resolver geométricamente el siguiente problema de programación lineal:
 \begin{align*}
 \min \quad z  = 2x_1 + 5x_2\\
-\textbf{subject to} \\
+\text{subject to} \\
 x_1 + x_2 & \geq 4 \\
 x_1 & \geq 2\\
 x_1,x_2 & \geq 0
 \end{align*}
     \end{problem}
+
+Dibujamos la solución en la Figura \ref{fig:ej3c}.
+
+\begin{figure}
+    \centering  
+    \includegraphics[scale=0.8]{Ej3c}
+    \caption{Región factible y puntos solución del problema 3.c)}
+    \label{fig:ej3c}
+\end{figure}
+
+Tenemos una región factible no acotada, pero tenemos una solución óptima y única, pues si tomamos la dirección que nos da $-c$, llegamos al punto $(4,0)$, descartando el otro punto extremo $(2,2)$ ya que según la dirección de $-c$, la función objetivo decrece más hacia abajo que hacia la izquierda. Por tanto, podemos decir que el mínimo es $f(4,0) = 8$.\\
+
     
     \begin{problem}{9.c}
 
-      Resolver el siguiente problema de programación lineal mediante el algoritmo simplex y el mismo algoritmo en formato de tabla. En el último de ellos, realizar solo una iteración en la versión algeraica y la Fase 1, en el método de dos fases.
+    Resolver el siguiente problema de P.L. mediante el algoritmo simplex y el mismo algoritmo en formato de tabla.
 
       \begin{align*}
-        \max z = 2x_{1} - x_{2} + x_{3}\\
+        \max z = 2x_{1} + 5x_{2} \\
         \text{subject to} \\
-        x_{1} + x_{2} - 2x_{3} & \leq 8\\
-        4x_{1} - x_{2} + x_{3} \geq 2\\
-        2x_{1} + 3x_{2} - x_{3} \geq 4\\
-        x_{1},x_{2},x_{3} \geq 0
+        x_{1} + x_{2} & \leq 4\\
+        x_{1} \geq 2\\
+        x_{1},x_{2} \geq 0
     \end{align*}
 
 
         \end{problem}
+        
     
         \begin{problem}{10}
           Dado el siguiente PPL:
@@ -467,10 +477,42 @@ x_1,x_2 & \geq 0
           \end{align*}
           \begin{enumerate}
             \item Plantear el PPL en forma estándar
-            \item Resolver geométricamente. Expresar: (a) la región factible, (b) el vector de costes, (c) la función objetivo, (d)  los puntos extremos y sus coordenadas, (e) el punto o puntos solucinó y el valor objetivo óptimo en el/los mismo/s.
+            \item Resolver geométricamente. Expresar: (a) la región factible, (b) el vector de costes, (c) la función objetivo, (d)  los puntos extremos y sus coordenadas, (e) el punto o puntos solución y el valor objetivo óptimo en el/los mismo/s.
                   \item Resuélvelo aplicando el algoritmo simples algebraico a la SBF dada por la submatriz básica \(B=(a_{2} \ a_{3}\). Debes indicar la solución y el valor objetivo óptimo, justificando por qué lo son.
                   \end{enumerate}
             \end{problem}
+
+            \begin{enumerate}
+                \item Para que este problema esté en forma estándar, todas las restricciones del problema deben ser de igualdad. Es por ello que debemos eliminar la restricción de desigualdad de este caso añadiendo una variable de holgura. El problema quedaría del siguiente modo:
+
+                \begin{align*}
+                    P: \ \min \ x_{1} - 2x_{2}\\
+                    \text{subject to} \\
+                    3x_{1} + 4x_{2} = 12 \\
+                    2x_{1} - x_{2} + x_{3} = 12\\
+                    x_{1},x_{2},x_{3} \geq 0
+                  \end{align*}
+
+                  \item Vamos ahora a resolverlo geométricamente. Primero, identificamos los elementos:
+                  \begin{enumerate}
+                    \item Dibujamos la región factible (que en este caso está sobre la recta definida por una de las restricciones) en la Figura \ref{fig:ej10}.
+                    \begin{figure}
+                        
+                        \centering  
+                        \includegraphics[scale=0.8]{Ej10}
+                        \caption{Región factible y puntos solución del problema.}
+                        \label{fig:ej10}
+                    \end{figure}
+                  \item El vector de costes es el vector $c$ tal que la función a minimizar es $c^T x$, por lo que en este caso $c = (1,-2)$.
+                  \item La función objetivo es esta función a minimizar, en este caso
+                  \[
+                  f(x_1,x_2) = c^T(x_1,x_2) = x_1 - 2 x_2.  
+                  \]
+                  \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el $(0,3)$ y el $(4,0)$
+                  \item Si utilizamos la dirección del vector $-c$, dibujada también en la figura,  vemos que la solución óptima se da en el punto $(0,3)$ y tiene valor $f(0,3) = -6$.
+                  
+                \end{enumerate}
+            \end{enumerate}
 
             \begin{problem}{11}
 
