@@ -503,15 +503,42 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
                         \caption{Región factible y puntos solución del problema.}
                         \label{fig:ej10}
                     \end{figure}
-                  \item El vector de costes es el vector $c$ tal que la función a minimizar es $c^T x$, por lo que en este caso $c = (1,-2)$.
+                  \item El vector de costes es el vector \(c\) tal que la función a minimizar es \(c^T x\), por lo que en este caso \(c = (1,-2)\).
                   \item La función objetivo es esta función a minimizar, en este caso
                   \[
                   f(x_1,x_2) = c^T(x_1,x_2) = x_1 - 2 x_2.  
                   \]
-                  \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el $(0,3)$ y el $(4,0)$
-                  \item Si utilizamos la dirección del vector $-c$, dibujada también en la figura,  vemos que la solución óptima se da en el punto $(0,3)$ y tiene valor $f(0,3) = -6$.
+                  \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el \((0,3)\) y el \(4,0)\)
+                  \item Si utilizamos la dirección del vector \(-c\), dibujada también en la figura,  vemos que la solución óptima se da en el punto \((0,3)\) y tiene valor \(f(0,3) = -6\).
                   
                 \end{enumerate}
+
+                \item Vamos ahora a resolverlo aplicando el algoritmo simplex algebraico. Consideramos la SBF inicial dada por la submatriz básica \(B = (a_2 \ \ a_3)\) (queda así hecho el \textbf{Paso 1}).\\ 
+                
+                \textbf{Paso 2.}\\
+                Primero, vemos que nuestra matriz \(A\) es :
+                \[
+                A = \begin{pmatrix} 3 & 4 & 0 \\  2 & -1 & 1 \end{pmatrix}        
+                \]
+                Por lo que, en este caso, 
+                \[
+                B = \begin{pmatrix} 4 & 0 \\ -1 & 1\end{pmatrix}, \implies B^{-1} = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}.
+                \]
+                Y tenemos también que \(c_B = (-2,0)\). Conociendo el vector \(b = (12 \ 12)^T\), podemos calcular el valor de las variables básicas:
+                \[
+                x_B = B^{-1} b = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12 \end{pmatrix}  = \begin{pmatrix} 3 & 15\end{pmatrix}
+                \]
+                Calculamos entonces el valor de la función objetivo:
+                \[
+                z = c_B B^{-1} b = (-2,0)  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12\end{pmatrix} = -6
+                \]
+                \textbf{Paso 3.}\\
+                A continuación, solo tenemos una variable no básica \(a_1\), debemos calcular \(z_j - c_j\) para esta variable no básica. Tenemos que:
+                \[
+                z_j - c_j = c_b B^{-1}a_j - c_j =  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}\begin{pmatrix} 3 \\ 2 \end{pmatrix} - 2 = -\frac{3}{2} - 1 = -\frac{5}{2} < 0
+                \]
+                Ahora, como \(z_1 - c_1 \leq 0\), se verifica el \textbf{criterio de optimalidad simplex} (que es que todas las variables no básicas verifiquen esta desigualdad) y por tanto hemos terminado el algoritmo, por lo que nuestra \textbf{SBF actual es óptima}. \\
+                Para finalizar, sabemos que como \(x_1\) finalizó como variable no básica, su valor es \(0\), y el valor de \(x_2\) lo encontramos previamente cuando calculamos \(x_B = B^-1 b\), y vimos que era \(x_2 = 3\). Es por ello que nuestra solución óptima de este problema está en el punto \((x_1,x_2) = (0,3)\) y tiene el valor calculado previamente \(z = c_B B^{-1} b = -6 \).\\
             \end{enumerate}
 
             \begin{problem}{11}

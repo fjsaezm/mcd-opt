@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+import tikzplotlib
 
 # min z = x1 - 2x2
 # 3x1 + 4x2 = 12
@@ -80,5 +81,8 @@ plt.axis("on")
 plt.xlim(-1,7)
 plt.ylim(-2,7)
 
-plt.savefig("Ej10.pdf")
-plt.show()
+#plt.savefig("Ej10.pdf")
+#plt.show()
+tikzplotlib.clean_figure()
+tikzplotlib.save("Ej10.tex")
+

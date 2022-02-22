@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+import tikzplotlib
 
 # z = 2x1 + 5x2
 # x1 + x2 >= 4
@@ -35,7 +36,7 @@ plt.axvline(2.0, color = "teal",label = "$x_1 \geq 2$")
 
 # Feasible region
 plt.fill_between(x1,
-                np.minimum(4-x1,2*np.ones(len(x1))),
+                np.maximum(4-x1,np.zeros(len(x1))),
                 10,
                 where=x1 >= 2,
                 color='cornflowerblue',
@@ -63,5 +64,6 @@ plt.axis("on")
 plt.xlim(-1.5,7)
 plt.ylim(-1.5,7)
 
-plt.savefig("Ej3c.pdf")
-plt.show()
+#plt.savefig("Ej3c.pdf")
+tikzplotlib.save("Ej3c.tex")
+#plt.show()
