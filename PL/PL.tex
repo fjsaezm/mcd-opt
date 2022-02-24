@@ -586,11 +586,92 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
                 Para finalizar, sabemos que como \(x_1\) finalizó como variable no básica, su valor es \(0\), y el valor de \(x_2\) lo encontramos previamente cuando calculamos \(x_B = B^-1 b\), y vimos que era \(x_2 = 3\). Es por ello que nuestra solución óptima de este problema está en el punto \((x_1,x_2) = (0,3)\) y tiene el valor calculado previamente \(z = c_B B^{-1} b = -6 \).\\
             \end{enumerate}
 
-            \begin{problem}{11}
+\begin{problem}{11}
+	Resolver por el método de las dos fases el PPL del ejercicio anterior.
+\end{problem}
 
-                Resolver por el método de las dos fases el PPL del ejercicio anterior.
-                \end{problem}
+\emph{Ejercicio realizado por:} José Antonio Álvarez Ocete
 
-            
+El objetivo de la primera fase será obtener una SBF inicial. Para ello buscamos que aparezca en la parte superior de la tabla una matriz identidad. La variable de holgura \(x_3\) nos proporciona la segunda columna de dicha matriz. Para obtener la primera añadimos una variable artificial adicional, \(x_4\). Obtenemos el siguiente problema de minimización:
+
+\[
+\begin{align*}
+	P: \ \min \ z = x_4\\
+	\text{subject to} \\
+	3x_{1} + 4x_{2} & = 12 \\
+	2x_{1} - x_{2} + x_3 & = 12\\
+	x_{1}, x_{2}, x_3, x_4 & \geq 0
+\end{align*}
+\]
+
+La matriz $A$ tendrá la siguiente expresión:
+
+\[
+A = (a_1 \ a_2 \ a_3 \ a_4) =
+\begin{pmatrix}
+	3 & 4 & 0 & 1\\
+	2 & -1 & 1 & 0
+\end{pmatrix}.
+\]
+
+A continuación mostramos la tabla correspondiente a este problema, partiendo de la SBF inicial dada por $B=(a_4 \ a_3)$, con $B^{-1}=I$. Además de la fila inicial con los valores de la fase I, añadimos una fila con los valores de la fase II para ir computándolos directamente. Así cuando cambiémos de fase bastará con eliminar la fila correspondiente a la fase I y las columnas correspondientes a las variables artificiales (únciamente \(x_4\) en nuestro caso):
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|c|cccc|c}
+		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
+		\hline
+		I & 1 & 0 & 0 & 0 & -1 & 0\\
+		II & 1 & -1 & 2 & 0 & 0 & 0\\
+		\hline
+		$x_4$ & 0 & 3 & 4 & 0 & 1 & 12\\
+		$x_3$ & 0 & 2 & -1 & 1 & 0 & 12
+	\end{tabular}
+\end{table}
+
+En primer lgiar, hacemos ceros en las variables básicas de la primera fila. Para ello, sumamos la fila correspondiente a $x_4$ la priemra fila:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|c|cccc|c}
+		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
+		\hline
+		I & 1 & 3 & 4 & 0 & 0 & 12 \\
+		II & 1 & -1 & 2 & 0 & 0 & 0 \\
+		\hline
+		$x_4$ & 0 & 3 & 4 & 0 & 1 & 12\\
+		$x_3$ & 0 & 2 & -1 & 1 & 0 & 12
+	\end{tabular}
+\end{table}
+
+Puesto que el elemento \(4\) es máximo en la primera fila, la variable \(x_2\) entrará en la base. Para decidir qué variable sale de la base tomaríamos el mínimo entre los cocientes de la columna LD y la correspondiente a la variable que entra en la base, \(x_2\), sin incluir los valores no positivos. Por lo tanto, la variable que sale en la base es \(x_4\). Obtenemos:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|c|cccc|c}
+		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
+		\hline
+		I & 1 & 0 & 0 & 0 & -1 & 0\\
+		II & 1 & -5/2 & 0 & 0 & -1/2 & -6\\
+		\hline
+		$x_2$ & 0 & 3/4 & 1 & 0 & 1/4 & 3\\
+		$x_3$ & 0 & 11/4 & 0 & 1 & 1/4 & 15
+	\end{tabular}
+\end{table}
+
+Como no quedan elementos positivos en la primera fila, hemos concluido la fase I. A continuación revisamos si las variables artificales valen \(0\). Como la variable \(x_4\) no está en la base, toma valor nulo y podemos eliminarla de la tabla para proseguir con la fase II con la SBF inicial encontrada $(x_1, x_2)=(0, 3)$, asociada a la matriz básica $B=(a_2 \ a_3)$:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|c|ccc|c}
+		& z & $x_1$ & $x_2$ & $x_3$ & $z$\\
+		II & 1 & -5/2 & 0 & 0 & -6\\
+		\hline
+		$x_2$ & 0 & 3/4 & 1 & 0 & 3\\
+		$x_3$ & 0 & 11/4 & 0 & 1 & 15
+	\end{tabular}
+\end{table}
+
+De nuevo, hemos de hacer operaciones para que queden valores positivos en la primera fila. Sin embargo, ya que no quedan valores positivos en dicha fila podemos concluir que hemos terminado de ejecutar el algorimto. La solución óptima será $(x_1, x_2)=(0, 3)$ ya que al no ser \(x_1\) una variable básica toma valor nulo. Dicha solución tiene valor óptimo de la función de coste $z=-6$. Esto coincide con la solución obtenida por el método algebraico utilizado en el problema anterior, como cabría esperar.
     
 \end{document}
