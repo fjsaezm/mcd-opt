@@ -448,7 +448,7 @@ Dibujamos la solución en la Figura \ref{fig:ej3c}.
 
 \begin{figure}
     \centering  
-    \includegraphics[scale=0.8]{Ej3c}
+    \includegraphics[scale=0.8]{figures/Ej3c}
     \caption{Región factible y puntos solución del problema 3.c)}
     \label{fig:ej3c}
 \end{figure}
@@ -640,7 +640,7 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
             \begin{figure}
                 
                 \centering  
-                \includegraphics[scale=0.8]{Ej10}
+                \includegraphics[scale=0.8]{figures/Ej10}
                 \caption{Región factible y puntos solución del problema.}
                 \label{fig:ej10}
             \end{figure}
@@ -696,9 +696,9 @@ El objetivo de la primera fase será obtener una SBF inicial. Para ello buscamos
 \begin{align*}
 	P: \ \min \ z = x_4\\
 	\text{subject to} \\
-	3x_{1} + 4x_{2} & = 12 \\
-	2x_{1} - x_{2} + x_3 & = 12\\
-	x_{1}, x_{2}, x_3, x_4 & \geq 0
+	3x_{1} + 4x_{2} = 12 \\
+	2x_{1} - x_{2} + x_3 = 12\\
+	x_{1}, x_{2}, x_3, x_4 \geq 0
 \end{align*}
 
 
@@ -716,7 +716,7 @@ A continuación mostramos la tabla correspondiente a este problema, partiendo de
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c|cccc|c}
+	\begin{tabular}{c|ccccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
 		\hline
 		I & 1 & 0 & 0 & 0 & -1 & 0\\
@@ -746,7 +746,7 @@ Puesto que el elemento \(4\) es máximo en la primera fila, la variable \(x_2\) 
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c|cccc|c}
+	\begin{tabular}{c|ccccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
 		\hline
 		I & 1 & 0 & 0 & 0 & -1 & 0\\
@@ -761,7 +761,7 @@ Como no quedan elementos positivos en la primera fila, hemos concluido la fase I
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c|ccc|c}
+	\begin{tabular}{c|cccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $z$\\
         \hline
 		II & 1 & -5/2 & 0 & 0 & -6\\
