@@ -1,4 +1,6 @@
-\documentclass[11pt]{article}
+\documentclass[11pt,table]{article}
+
+    \usepackage[table]{xcolor}
 
     \usepackage[breakable]{tcolorbox}
     \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
@@ -25,7 +27,9 @@
 
     \usepackage{float}
     \floatplacement{figure}{H} % forces figures to be placed at the correct location
-    \usepackage{xcolor} % Allow colors to be defined
+    
+
+    %\usepackage{xcolor} % Allow colors to be defined
     \usepackage{enumerate} % Needed for markdown enumerations to work
     \usepackage{geometry} % Used to adjust the document margins
     \usepackage{amsmath} % Equations
@@ -178,7 +182,6 @@
     \fancyfoot[C]{} % Custom footer text
     \fancyfoot[R]{\thepage} % Custom footer text
     \newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
-    
     
     
     
@@ -438,6 +441,9 @@ x_1,x_2 & \geq 0
 \end{align*}
     \end{problem}
 
+\emph{Ejercicio realizado por:} José Antonio Álvarez Ocete
+
+
 Dibujamos la solución en la Figura \ref{fig:ej3c}.
 
 \begin{figure}
@@ -464,17 +470,23 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
 
     
 \end{problem}
+
+\emph{Ejercicio realizado por:} Francisco Javier Sáez Maldonado.
+
         
     Primero, expresamos el problema añadiendo variables de holgura:
     \begin{align*}
         \max z = 2x_{1} + 5x_{2} \\
         \text{subject to} \\
         x_{1} + x_{2} - x_{3} & = 4\\
-        x_{1} - x_{4} =  2\\
-        x_{1},x_{2},x_{3},x_{4} \geq 0
+        x_{1} - x_{4} & =  2\\
+        x_{1},x_{2},x_{3},x_{4} & \geq 0
     \end{align*}
 
-    Además, vamos a resolver el problema de minimización, que tiene el signo opuesto
+    Además, vamos a resolver el problema de minimización, que tiene el signo opuesto. Es decir, encontraremos
+    \[
+    \min z = -2x_1 - 5x_2,
+    \]
 
     Vamos a resolverlo ahora por los dos métodos mencionados.\\
 
@@ -513,28 +525,85 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
     \[
     x_3 = B^{-1}b - B^{-1}a_3 x_3 = \begin{pmatrix} 2 \\ 5 \end{pmatrix} - \begin{pmatrix} 0 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} -1 \\ 0 \end{pmatrix} = \begin{pmatrix} 2 \\ 5 \end{pmatrix} - \begin{pmatrix} 0 \\ -1 \end{pmatrix}x_3.
     \]
-    Ahora, tenemos que \textbf{usar el criterio de la razón mínima} para elegir un \(\frac{\bar b_r}{y_{rk}}\) que sea el mínimo de todos los cocientes, pero ese \textbf{no existe} pues estamos dividiendo tanto por \(0\) como por \(-1\), así que podemos decir que el problema \textbf{tiene solución NO ACOTADA}.\\
+    Ahora, tenemos que \textbf{usar el criterio de la razón mínima} para elegir un \(\frac{\bar b_r}{y_{rk}}\) que sea el mínimo de todos los cocientes, pero ese \textbf{no existe} pues estamos dividiendo tanto por \(0\) como por \(-1\), así que podemos decir que el problema \textbf{tiene solución no acotada}.\\
 
     \textbf{Método usando TABLAS.}\\
 
-    Podemos ver primero que nuestra matriz \(A\) escrita anteriormente \textbf{no tiene} una submatriz identidad, por lo que añadimos \textbf{variables artificiales} para generarla, y utilizaremos por tanto el \textbf{método de las dos fases}. El problema queda entonces definido del siguiente modo:
-
-
-    Primero, definimos la tabla inicial usando las variables artificiales.
+    Podemos ver primero que nuestra matriz \(A\) escrita anteriormente \textbf{no tiene} una submatriz identidad, por lo que añadimos \textbf{variables artificiales} para generarla, y utilizaremos por tanto el \textbf{método de las dos fases}. Entonces, la tabla inicial usando estas variables artificiales es la siguiente:
 
     \begin{table}[H]
+        \centering
         \begin{tabular}{c|cccccc|c}
               & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $LD$ \\ \hline
         $z$   & 0     & 0     & 0     & 0     & -1    & -1    & 0    \\
-        $x_5$ & 1     & 1     & 1     & 0     & 1     & 0     & 4    \\
-        $x_6$ & 1     & 0     & 0     & 1     & 0     & 1     & 2   
+        $x_5$ & 1     & 1     & -1     & 0     & 1     & 0     & 4    \\
+        $x_6$ & 1     & 0     & 0     & -1     & 0     & 1     & 2   
     \end{tabular}
     \end{table}
 
+    Tenemos que eliminar primero estas variables artificiales. Sumamos Para ello las filas \(x_5,x_6\) a la fila \(z\) para hacer ceros sobre esta fila en estas variables. El resultado es el siguiente:
 
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|cccccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $LD$ \\ \hline
+        $z$   &\cellcolor[HTML]{AED6F1} 2     & 1     & -1     & -1     & 0    & 0    & 6    \\
+        $x_5$ & 1     & 1     & -1     & 0     & 1     & 0     & 4    \\
+        $x_6$ & 1     & 0     & 0     & -1     & 0     & 1     & 2   
+    \end{tabular}
+    \end{table}
+
+    Ahora, como estamos buscando un mínimo, usamos que el mayor valor está en la columna de \(x_1\). Procedemos a pivotar sobre el valor que está coloreado, obteniendo la siguiente tabla:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|cccccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $LD$ \\ \hline
+        $z$   & 0     & 1     & -1     & 1     & 0    & -2    & 2    \\
+        $x_5$ & 0     & \cellcolor[HTML]{AED6F1}1     & -2     & 1     & 1     & -1     & 2    \\
+        $x_6$ & 1     & 0     & 0     & -1     & 0     & 1     & 2   
+    \end{tabular}
+    \end{table}
+
+    En este caso, teníamos dos columnas que podíamos elegir como mayor valor, pero hemos escogido la columna de \(x_2\) pues es la que más rápido nos hace terminar el problema. Pivotamos ahora sobre la celda coloreada, y el resultado es el siguiente:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|cccccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $LD$ \\ \hline
+        $z$   & 0     & 0     & 0     & 0     & -1    & -1    & 0    \\
+        $x_5$ & 0     & 1     & -1     & 1     & 1     & -1     & 2    \\
+        $x_6$ & 1     & 0     & 0     & -1     & 0     & 1     & 2   
+    \end{tabular}
+    \end{table}
     
+    Hemos llegado al punto en el que no tenemos más elementos positivos en la fila de \(z\), por lo que hemos terminado esta fase del algoritmo, pasamos a la segunda fase.
 
+    En esta, eliminamos las variables artificiales e incluimos la función objetivo inicial. La tabla resultante es la siguiente:
 
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|cccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $LD$ \\ \hline
+        $z$   & 2     & 5     & 0     & 0     & 0    \\
+        $x_2$ & 0     & 1     & -1    & 1     & 2    \\
+        $x_1$ & 1     & 0     & 0     & -1    & 2   
+        \end{tabular}
+    \end{table}
+
+    Teniendo esta tabla, tenemos que hacer que \(z_j - c_j\) sea cero. Al transformar la tabla obtenemos el siguiente resultado:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|cccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $LD$ \\ \hline
+        $z$   & 0     & 0     & 5     & -3     & -14    \\
+        $x_2$ & 0     & 1     & -1    & 1     & 2    \\
+        $x_1$ & 1     & 0     & 0     & -1    & 2   
+        \end{tabular}
+    \end{table}
+
+    Llegados a este punto, no tenemos elementos positivos en la base en la fila \(z\), por lo que el algoritmo ha terminado. Además, tenemos que en este caso tenemos una \textbf{no tiene una solución acotada}.\\
     
 \begin{problem}{10}
     Dado el siguiente PPL:
@@ -551,6 +620,8 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
             \item Resuélvelo aplicando el algoritmo simples algebraico a la SBF dada por la submatriz básica \(B=(a_{2} \ a_{3}\). Debes indicar la solución y el valor objetivo óptimo, justificando por qué lo son.
             \end{enumerate}
     \end{problem}
+    \emph{Ejercicio realizado por:} Francisco Javier Sáez Maldonado. 
+
 
     \begin{enumerate}
         \item Para que este problema esté en forma estándar, todas las restricciones del problema deben ser de igualdad. Es por ello que debemos eliminar la restricción de desigualdad de este caso añadiendo una variable de holgura. El problema quedaría del siguiente modo:
@@ -578,7 +649,7 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
             \[
             f(x_1,x_2) = c^T(x_1,x_2) = x_1 - 2 x_2.  
             \]
-            \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el \((0,3)\) y el \(4,0)\)
+            \item Los puntos extremos son los que hemos dibujado en la Figura \ref{fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el \((0,3)\) y el \(4,0)\)
             \item Si utilizamos la dirección del vector \(-c\), dibujada también en la figura,  vemos que la solución óptima se da en el punto \((0,3)\) y tiene valor \(f(0,3) = -6\).
             
         \end{enumerate}
@@ -608,6 +679,7 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
         z_j - c_j = c_b B^{-1}a_j - c_j =  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}\begin{pmatrix} 3 \\ 2 \end{pmatrix} - 2 = -\frac{3}{2} - 1 = -\frac{5}{2} < 0
         \]
         Ahora, como \(z_1 - c_1 \leq 0\), se verifica el \textbf{criterio de optimalidad simplex} (que es que todas las variables no básicas verifiquen esta desigualdad) y por tanto hemos terminado el algoritmo, por lo que nuestra \textbf{SBF actual es óptima}. \\
+
         Para finalizar, sabemos que como \(x_1\) finalizó como variable no básica, su valor es \(0\), y el valor de \(x_2\) lo encontramos previamente cuando calculamos \(x_B = B^-1 b\), y vimos que era \(x_2 = 3\). Es por ello que nuestra solución óptima de este problema está en el punto \((x_1,x_2) = (0,3)\) y tiene el valor calculado previamente \(z = c_B B^{-1} b = -6 \).\\
     \end{enumerate}
 
@@ -642,7 +714,7 @@ A = (a_1 \ a_2 \ a_3 \ a_4) =
 
 A continuación mostramos la tabla correspondiente a este problema, partiendo de la SBF inicial dada por $B=(a_4 \ a_3)$, con $B^{-1}=I$. Además de la fila inicial con los valores de la fase I, añadimos una fila con los valores de la fase II para ir computándolos directamente. Así cuando cambiémos de fase bastará con eliminar la fila correspondiente a la fase I y las columnas correspondientes a las variables artificiales (únciamente \(x_4\) en nuestro caso):
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{c|c|cccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
@@ -655,9 +727,9 @@ A continuación mostramos la tabla correspondiente a este problema, partiendo de
 	\end{tabular}
 \end{table}
 
-En primer lugar, hacemos ceros en las variables básicas de la primera fila. Para ello, sumamos la fila correspondiente a $x_4$ la priemra fila:
+En primer lugar, hacemos ceros en las variables básicas de la primera fila. Para ello, sumamos la fila correspondiente a $x_4$ la primera fila:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{c|c|cccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
@@ -672,7 +744,7 @@ En primer lugar, hacemos ceros en las variables básicas de la primera fila. Par
 
 Puesto que el elemento \(4\) es máximo en la primera fila, la variable \(x_2\) entrará en la base. Para decidir qué variable sale de la base tomaríamos el mínimo entre los cocientes de la columna LD y la correspondiente a la variable que entra en la base, \(x_2\), sin incluir los valores no positivos. Por lo tanto, la variable que sale en la base es \(x_4\). Obtenemos:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{c|c|cccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $x_4$ & LD \\
@@ -687,10 +759,11 @@ Puesto que el elemento \(4\) es máximo en la primera fila, la variable \(x_2\) 
 
 Como no quedan elementos positivos en la primera fila, hemos concluido la fase I. A continuación revisamos si las variables artificales valen \(0\). Como la variable \(x_4\) no está en la base, toma valor nulo y podemos eliminarla de la tabla para proseguir con la fase II con la SBF inicial encontrada $(x_1, x_2)=(0, 3)$, asociada a la matriz básica $B=(a_2 \ a_3)$:
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{c|c|ccc|c}
 		& z & $x_1$ & $x_2$ & $x_3$ & $z$\\
+        \hline
 		II & 1 & -5/2 & 0 & 0 & -6\\
 		\hline
 		$x_2$ & 0 & 3/4 & 1 & 0 & 3\\
