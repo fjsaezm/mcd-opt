@@ -455,15 +455,17 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
     Resolver el siguiente problema de P.L. mediante el algoritmo simplex y el mismo algoritmo en formato de tabla.
 
       \begin{align*}
-        \max z = 2x_{1} + 5x_{2} \\
+        \max z & = 2x_{1} + 5x_{2} \\
         \text{subject to} \\
         x_{1} + x_{2} & \leq 4\\
-        x_{1} \geq 2\\
-        x_{1},x_{2} \geq 0
+        x_{1} & \geq 2\\
+        x_{1},x_{2} & \geq 0
     \end{align*}
 
+    
+\end{problem}
+        
     Primero, expresamos el problema añadiendo variables de holgura:
-
     \begin{align*}
         \max z = 2x_{1} + 5x_{2} \\
         \text{subject to} \\
@@ -471,6 +473,8 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
         x_{1} - x_{4} =  2\\
         x_{1},x_{2},x_{3},x_{4} \geq 0
     \end{align*}
+
+    Además, vamos a resolver el problema de minimización, que tiene el signo opuesto
 
     Vamos a resolverlo ahora por los dos métodos mencionados.\\
 
@@ -505,91 +509,112 @@ Tenemos una región factible no acotada, pero tenemos una solución óptima y ú
     z_4 - c_4 =     \begin{pmatrix} 2 & 5\end{pmatrix} \begin{pmatrix}    0 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 0 \\ -1 \end{pmatrix} - 0 = 3
     \]
 
-    Ahora, tomamos el máximo de estos, que es \(z_4 - c_4 = 3\). Como no se cumple que sea menor que \(0\), la variable \(x_4\) entra en la base.
+    Ahora, tomamos el mínimo de estos, pues estamos en un problema de \textbf{maximización}, que es \(z_3 - c_3 = -5\). Como no se cumple que sea mayor que \(0\), la variable \(x_3\) entra en la base. Escribimos entonces \(x_B = \bar b - \bar y x_k\), con \(\bar b = B^{-1}b\) y \(\bar y = B^{-1}a_k\). En este caso:
+    \[
+    x_3 = B^{-1}b - B^{-1}a_3 x_3 = \begin{pmatrix} 2 \\ 5 \end{pmatrix} - \begin{pmatrix} 0 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} -1 \\ 0 \end{pmatrix} = \begin{pmatrix} 2 \\ 5 \end{pmatrix} - \begin{pmatrix} 0 \\ -1 \end{pmatrix}x_3.
+    \]
+    Ahora, tenemos que \textbf{usar el criterio de la razón mínima} para elegir un \(\frac{\bar b_r}{y_{rk}}\) que sea el mínimo de todos los cocientes, pero ese \textbf{no existe} pues estamos dividiendo tanto por \(0\) como por \(-1\), así que podemos decir que el problema \textbf{tiene solución NO ACOTADA}.\\
+
+    \textbf{Método usando TABLAS.}\\
+
+    Podemos ver primero que nuestra matriz \(A\) escrita anteriormente \textbf{no tiene} una submatriz identidad, por lo que añadimos \textbf{variables artificiales} para generarla, y utilizaremos por tanto el \textbf{método de las dos fases}. El problema queda entonces definido del siguiente modo:
 
 
-    \end{problem}
-        
+    Primero, definimos la tabla inicial usando las variables artificiales.
+
+    \begin{table}[H]
+        \begin{tabular}{c|cccccc|c}
+              & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $LD$ \\ \hline
+        $z$   & 0     & 0     & 0     & 0     & -1    & -1    & 0    \\
+        $x_5$ & 1     & 1     & 1     & 0     & 1     & 0     & 4    \\
+        $x_6$ & 1     & 0     & 0     & 1     & 0     & 1     & 2   
+    \end{tabular}
+    \end{table}
+
+
     
-        \begin{problem}{10}
-          Dado el siguiente PPL:
-          \begin{align*}
+
+
+    
+\begin{problem}{10}
+    Dado el siguiente PPL:
+    \begin{align*}
+    P: \ \min \ x_{1} - 2x_{2}\\
+    \text{subject to} \\
+    3x_{1} + 4x_{2} = 12 \\
+    2x_{1} - x_{2} \leq 12\\
+    x_{1},x_{2} \geq 0
+    \end{align*}
+    \begin{enumerate}
+    \item Plantear el PPL en forma estándar
+    \item Resolver geométricamente. Expresar: (a) la región factible, (b) el vector de costes, (c) la función objetivo, (d)  los puntos extremos y sus coordenadas, (e) el punto o puntos solución y el valor objetivo óptimo en el/los mismo/s.
+            \item Resuélvelo aplicando el algoritmo simples algebraico a la SBF dada por la submatriz básica \(B=(a_{2} \ a_{3}\). Debes indicar la solución y el valor objetivo óptimo, justificando por qué lo son.
+            \end{enumerate}
+    \end{problem}
+
+    \begin{enumerate}
+        \item Para que este problema esté en forma estándar, todas las restricciones del problema deben ser de igualdad. Es por ello que debemos eliminar la restricción de desigualdad de este caso añadiendo una variable de holgura. El problema quedaría del siguiente modo:
+
+        \begin{align*}
             P: \ \min \ x_{1} - 2x_{2}\\
             \text{subject to} \\
             3x_{1} + 4x_{2} = 12 \\
-            2x_{1} - x_{2} \leq 12\\
-            x_{1},x_{2} \geq 0
-          \end{align*}
-          \begin{enumerate}
-            \item Plantear el PPL en forma estándar
-            \item Resolver geométricamente. Expresar: (a) la región factible, (b) el vector de costes, (c) la función objetivo, (d)  los puntos extremos y sus coordenadas, (e) el punto o puntos solución y el valor objetivo óptimo en el/los mismo/s.
-                  \item Resuélvelo aplicando el algoritmo simples algebraico a la SBF dada por la submatriz básica \(B=(a_{2} \ a_{3}\). Debes indicar la solución y el valor objetivo óptimo, justificando por qué lo son.
-                  \end{enumerate}
-            \end{problem}
+            2x_{1} - x_{2} + x_{3} = 12\\
+            x_{1},x_{2},x_{3} \geq 0
+            \end{align*}
 
+            \item Vamos ahora a resolverlo geométricamente. Primero, identificamos los elementos:
             \begin{enumerate}
-                \item Para que este problema esté en forma estándar, todas las restricciones del problema deben ser de igualdad. Es por ello que debemos eliminar la restricción de desigualdad de este caso añadiendo una variable de holgura. El problema quedaría del siguiente modo:
-
-                \begin{align*}
-                    P: \ \min \ x_{1} - 2x_{2}\\
-                    \text{subject to} \\
-                    3x_{1} + 4x_{2} = 12 \\
-                    2x_{1} - x_{2} + x_{3} = 12\\
-                    x_{1},x_{2},x_{3} \geq 0
-                  \end{align*}
-
-                  \item Vamos ahora a resolverlo geométricamente. Primero, identificamos los elementos:
-                  \begin{enumerate}
-                    \item Dibujamos la región factible (que en este caso está sobre la recta definida por una de las restricciones) en la Figura \ref{fig:ej10}.
-                    \begin{figure}
-                        
-                        \centering  
-                        \includegraphics[scale=0.8]{Ej10}
-                        \caption{Región factible y puntos solución del problema.}
-                        \label{fig:ej10}
-                    \end{figure}
-                  \item El vector de costes es el vector \(c\) tal que la función a minimizar es \(c^T x\), por lo que en este caso \(c = (1,-2)\).
-                  \item La función objetivo es esta función a minimizar, en este caso
-                  \[
-                  f(x_1,x_2) = c^T(x_1,x_2) = x_1 - 2 x_2.  
-                  \]
-                  \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el \((0,3)\) y el \(4,0)\)
-                  \item Si utilizamos la dirección del vector \(-c\), dibujada también en la figura,  vemos que la solución óptima se da en el punto \((0,3)\) y tiene valor \(f(0,3) = -6\).
-                  
-                \end{enumerate}
-
-                \item Vamos ahora a resolverlo aplicando el algoritmo simplex algebraico. Consideramos la SBF inicial dada por la submatriz básica \(B = (a_2 \ \ a_3)\) (queda así hecho el \textbf{Paso 1}).\\ 
+            \item Dibujamos la región factible (que en este caso está sobre la recta definida por una de las restricciones) en la Figura \ref{fig:ej10}.
+            \begin{figure}
                 
-                \textbf{Paso 2.}\\
-                Primero, vemos que nuestra matriz \(A\) es :
-                \[
-                A = \begin{pmatrix} 3 & 4 & 0 \\  2 & -1 & 1 \end{pmatrix}        
-                \]
-                Por lo que, en este caso, 
-                \[
-                B = \begin{pmatrix} 4 & 0 \\ -1 & 1\end{pmatrix}, \implies B^{-1} = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}.
-                \]
-                Y tenemos también que \(c_B = (-2,0)\). Conociendo el vector \(b = (12 \ 12)^T\), podemos calcular el valor de las variables básicas:
-                \[
-                x_B = B^{-1} b = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12 \end{pmatrix}  = \begin{pmatrix} 3 & 15\end{pmatrix}
-                \]
-                Calculamos entonces el valor de la función objetivo:
-                \[
-                z = c_B B^{-1} b = (-2,0)  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12\end{pmatrix} = -6
-                \]
-                \textbf{Paso 3.}\\
-                A continuación, solo tenemos una variable no básica \(a_1\), debemos calcular \(z_j - c_j\) para esta variable no básica. Tenemos que:
-                \[
-                z_j - c_j = c_b B^{-1}a_j - c_j =  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}\begin{pmatrix} 3 \\ 2 \end{pmatrix} - 2 = -\frac{3}{2} - 1 = -\frac{5}{2} < 0
-                \]
-                Ahora, como \(z_1 - c_1 \leq 0\), se verifica el \textbf{criterio de optimalidad simplex} (que es que todas las variables no básicas verifiquen esta desigualdad) y por tanto hemos terminado el algoritmo, por lo que nuestra \textbf{SBF actual es óptima}. \\
-                Para finalizar, sabemos que como \(x_1\) finalizó como variable no básica, su valor es \(0\), y el valor de \(x_2\) lo encontramos previamente cuando calculamos \(x_B = B^-1 b\), y vimos que era \(x_2 = 3\). Es por ello que nuestra solución óptima de este problema está en el punto \((x_1,x_2) = (0,3)\) y tiene el valor calculado previamente \(z = c_B B^{-1} b = -6 \).\\
-            \end{enumerate}
+                \centering  
+                \includegraphics[scale=0.8]{Ej10}
+                \caption{Región factible y puntos solución del problema.}
+                \label{fig:ej10}
+            \end{figure}
+            \item El vector de costes es el vector \(c\) tal que la función a minimizar es \(c^T x\), por lo que en este caso \(c = (1,-2)\).
+            \item La función objetivo es esta función a minimizar, en este caso
+            \[
+            f(x_1,x_2) = c^T(x_1,x_2) = x_1 - 2 x_2.  
+            \]
+            \item Los puntos extremos son los que hemos dibujado en la Figura \ref{Fig:ej10}, que son los puntos donde se cortan las restricciones. En este caso, son el \((0,3)\) y el \(4,0)\)
+            \item Si utilizamos la dirección del vector \(-c\), dibujada también en la figura,  vemos que la solución óptima se da en el punto \((0,3)\) y tiene valor \(f(0,3) = -6\).
+            
+        \end{enumerate}
 
-            \begin{problem}{11}
+        \item Vamos ahora a resolverlo aplicando el algoritmo simplex algebraico. Consideramos la SBF inicial dada por la submatriz básica \(B = (a_2 \ \ a_3)\) (queda así hecho el \textbf{Paso 1}).\\ 
+        
+        \textbf{Paso 2.}\\
+        Primero, vemos que nuestra matriz \(A\) es :
+        \[
+        A = \begin{pmatrix} 3 & 4 & 0 \\  2 & -1 & 1 \end{pmatrix}        
+        \]
+        Por lo que, en este caso, 
+        \[
+        B = \begin{pmatrix} 4 & 0 \\ -1 & 1\end{pmatrix}, \implies B^{-1} = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}.
+        \]
+        Y tenemos también que \(c_B = (-2,0)\). Conociendo el vector \(b = (12 \ 12)^T\), podemos calcular el valor de las variables básicas:
+        \[
+        x_B = B^{-1} b = \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12 \end{pmatrix}  = \begin{pmatrix} 3 & 15\end{pmatrix}
+        \]
+        Calculamos entonces el valor de la función objetivo:
+        \[
+        z = c_B B^{-1} b = (-2,0)  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix} \begin{pmatrix} 12 \\ 12\end{pmatrix} = -6
+        \]
+        \textbf{Paso 3.}\\
+        A continuación, solo tenemos una variable no básica \(a_1\), debemos calcular \(z_j - c_j\) para esta variable no básica. Tenemos que:
+        \[
+        z_j - c_j = c_b B^{-1}a_j - c_j =  \begin{pmatrix} \frac{1}{4} & 0 \\ \frac{1}{4} & 1\end{pmatrix}\begin{pmatrix} 3 \\ 2 \end{pmatrix} - 2 = -\frac{3}{2} - 1 = -\frac{5}{2} < 0
+        \]
+        Ahora, como \(z_1 - c_1 \leq 0\), se verifica el \textbf{criterio de optimalidad simplex} (que es que todas las variables no básicas verifiquen esta desigualdad) y por tanto hemos terminado el algoritmo, por lo que nuestra \textbf{SBF actual es óptima}. \\
+        Para finalizar, sabemos que como \(x_1\) finalizó como variable no básica, su valor es \(0\), y el valor de \(x_2\) lo encontramos previamente cuando calculamos \(x_B = B^-1 b\), y vimos que era \(x_2 = 3\). Es por ello que nuestra solución óptima de este problema está en el punto \((x_1,x_2) = (0,3)\) y tiene el valor calculado previamente \(z = c_B B^{-1} b = -6 \).\\
+    \end{enumerate}
 
-                Resolver por el método de las dos fases el PPL del ejercicio anterior.
-                \end{problem}
+    \begin{problem}{11}
+
+        Resolver por el método de las dos fases el PPL del ejercicio anterior.
+        \end{problem}
 
             
     
