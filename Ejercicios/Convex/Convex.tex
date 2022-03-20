@@ -178,33 +178,32 @@ Optimización\\
   Show that if \( S \) is an open set, its complement \( S^c \) is closed, and viceversa.
 \end{problem}
 
-TO BE COMPLETED \\
-
 \(\boxed{\Rightarrow}\)\\
 
-Let $S$ be an open set. Clearly, \(cl(S^c) \subset S^c\).
+Let \(S\) be an open set. We know that \(S^c\) is a closed set if and only if for any sequence of elements \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\), then \(x \in S^c\). \\
 
-Now, let \(x\) be an element of \(S^c\). Then,
-\[
-\forall \delta > 0, \quad B(x,\delta) \cap S^c \neq \emptyset
-\]
+Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\). Suppose that \(x\) is not in \(S^c\). Then \(x\) must be in its complementary, \(S\). Since \(S\) is an open set we know that \(\exists \epsilon > 0\) such that \( B(x, \epsilon) \subset S\). \\
+
+Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the succesion \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradictions implies that \(x\) is, in fact, in \(S^c\).
 
 \(\boxed{\Leftarrow}\)\\
 
-Let us see that \(S^c = cl(S^c)\) since, if this happens, \(S\) is open.\\
+Let \(S\) be a set such that its complement $S^c$ is closed (that is, \(S^c = cl(S^c)\)). Let us show that \(S\) is open. \\
 
-Let \(x\in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). This implies that
+Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). This implies that
+
 \[
-\exists \lambda > 0 \text{ such that } B(x,\lambda) \cap S^c = \emptyset \implies B(x,\delta) \subset S \implies S \text{ is open}.  
+\exists \epsilon > 0 \text{ such that } B(x,\epsilon) \cap S^c = \emptyset \implies B(x,\epsilon) \subset S 
 \]
 
+Thus, showing that $S$ is open. \\
 
 \begin{problem}{2}
   If \( S_1, S_2 \) are convex subsets, prove that the following are also convex sets:
   \begin{align*}
-    S_{1} \cap S_{2} & = & \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\\
-    S_{1} + S_{2} & = & \{x + x' \ : \ x \in S_{1}, x' \in S_{2}\}\\
-    S_{1} - S_{2} & = & \{x - x' \ : \ x \in S_{1}, x0 \in S_{2}\}
+    S_{1} \cap S_{2} & = \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\\
+    S_{1} + S_{2} & = \{x + x' \ : \ x \in S_{1}, x' \in S_{2}\}\\
+    S_{1} - S_{2} & = \{x - x' \ : \ x \in S_{1}, x0 \in S_{2}\}
     \end{align*}
 
 \end{problem}
@@ -231,11 +230,11 @@ so the segment is in the difference set, so the set \(S_1 - S_2\) is convex.
 \begin{problem}{4}
   Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian
   \[
-\nabla q(w) = Qw + b, \quad Hq(w) = Q
+	\nabla q(w) = Qw + b, \quad Hq(w) = Q
   \]
 
   \emph{Hint: expand} \(q(w) = \sum_{i=1}^{d} \sum_{j=1}^{d} Q_{ij} w_{i}w_{j} + \sum_{1}^{d}b_{i}w_{i} + c\) \emph{and take the partials} \(\frac{\partial q}{\partial w_{i}}\) \emph{and} \(\frac{\partial^{2}q}{\partial w_{i}\partial w_{j}}\).
-  \end{problem}
+ \end{problem}
 
 
 
@@ -257,17 +256,17 @@ so the segment is in the difference set, so the set \(S_1 - S_2\) is convex.
 \end{enumerate}
 \end{problem}
 
-\begin{problem}{8}
-We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
-\[
-\min_{w,b} \frac{1}{2} \norm{w}^2  
-\]
-subject to \(y^p\left(w \cdot x^p + b\right) \geq 1\). What are here the KKT conditions?
+\begin{problem}{7}
+	We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
+	\[
+	\min_{w,b} \frac{1}{2} \norm{w}^2  
+	\]
+	subject to \(y^p\left(w \cdot x^p + b\right) \geq 1\). What are here the KKT conditions?
 \end{problem}
 
 Firstly, consider the Lagrangian for this problem
 \begin{align*}
-L(w,b,\lambda)& = \frac{1}{2} \norm{w}^2 - \sum \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]\\
+L(w,b,\lambda) & = \frac{1}{2} \norm{w}^2 - \sum \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]\\
 & = \frac{1}{2} w \cdot w - w \sum \lambda_p y^p  x^p - b \sum \lambda_p y_p + \sum \lambda_p \\
 & = w \left(\frac{1}{2}w -\sum \lambda_p y^p  x^p \right) b \sum \lambda_p y_p + \sum \lambda_p
 \end{align*}
@@ -275,17 +274,17 @@ L(w,b,\lambda)& = \frac{1}{2} \norm{w}^2 - \sum \alpha_p \left[ y^p \left(w \cdo
 Then, we have to compute the gradient of the Lagrangian
 
 \[
-\nabla_w L(w,b,\lambda) = w - \sum \lambda_p y^p x^p = 0 \implies w = \sum \lambda_p y^p x^p
+	\nabla_w L(w,b,\lambda) = w - \sum \lambda_p y^p x^p = 0 \implies w = \sum \lambda_p y^p x^p
 \]
 \[
-\frac{\partial L}{\partial b} = - \sum \lambda_p y^p = 0  
+	\frac{\partial L}{\partial b} = - \sum \lambda_p y^p = 0  
 \]
 
 Lastly, we have to use the optimalas that we have found in the expression of the Lagrangian:
 
 \begin{align*}
-L(w,b,\alpha) &= \sum \alpha_p  - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
-& = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p y^p \alpha_q y^q x^p x^q = - \alpha
+	L(w,b,\alpha) &= \sum \alpha_p  - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
+	& = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p y^p \alpha_q y^q x^p x^q = - \alpha
 \end{align*}
 
 Our optimization problem has turned today
