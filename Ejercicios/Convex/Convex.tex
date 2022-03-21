@@ -209,23 +209,57 @@ Thus, showing that $S$ is open. \\
 \end{problem}
 
 \begin{itemize}
-\item Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
-\begin{align*}
-\lambda(x-z) + (1-\lambda)(x'-z') & = \lambda x - \lambda z + (1-\lambda)x' - (1-\lambda z')\\
-& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} - \underbrace{\left( \lambda z + (1-\lambda)z'\right)}_{z'' \in S_2}  
-\end{align*}
-Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
-\[
-x'' - z'' \in S_1 - S_2   
-\]
-so the segment is in the difference set, so the set \(S_1 - S_2\) is convex.
+	\item Consider \(S_{1} \cap S_{2}  =  \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\). Let \(x,x' \in S_1 \cap S_2\) and consider the segment
+	\[
+		z \equiv \lambda x + (1-\lambda)x', lambda \in [0,1]
+	\]
+	
+	Since \(x\) is in in \(S_1\), which is a convex set, \(z\) will also be in \(S_1\). Likewise, \(z\) will be in \(S_2\), and thus in the intersection \(S_{1} \cap S_{2}\). Since the segment is contained in the intersection, \(S_{1} \cap S_{2}\) is a convex subset.
+	
+	\item Consider \(S_{1} + S_{2}  =  \{x + z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x+z \in S_1 + S_2\) and \(x'+z' \in S_1+S_2\). Also, consider the segment
+	\begin{align*}
+		\lambda(x+z) + (1-\lambda)(x'+z') & = \lambda x + \lambda z + (1-\lambda)x' + (1-\lambda z')\\
+		& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} + \underbrace{\lambda z + (1-\lambda)z'}_{z'' \in S_2}  
+	\end{align*}
+	Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
+	\[
+	x'' + z'' \in S_1 + S_2   
+	\]
+	so the segment is in the sum set, and thus, the set \(S_1 + S_2\) is convex.
+	
+	\item Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
+	\begin{align*}
+	\lambda(x-z) + (1-\lambda)(x'-z') & = \lambda x - \lambda z + (1-\lambda)x' - (1-\lambda z')\\
+	& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} - \underbrace{\left( \lambda z + (1-\lambda)z'\right)}_{z'' \in S_2}  
+	\end{align*}
+	Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
+	\[
+	x'' - z'' \in S_1 - S_2   
+	\]
+	so the segment is in the difference set, and thus, the set \(S_1 - S_2\) is convex.
 \end{itemize}
 
 
 \begin{problem}{3}
-  If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
+  If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( S_{min} = \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
 \end{problem}
 
+Let \(y\) be the minimum of \(f(x)\): \(y = \min_x f(x)\). Then \( S_{min} = \{x \in S : \ f(x) = y \} \). We need need to show that for all \(x, x' \in S_{min}\) and for all \(\lambda \in [0,1]\):
+
+\[
+	z \equiv \lambda x + (1-\lambda) x' \in S_{min} \leftrightarrow f(z) = y
+\]
+
+Since \(S\) is convex, \(z\) is in \(S\), and since \(f\) is also convex:
+
+\begin{align*}
+	f(z) & = f\left(\lambda x + (1-\lambda) x'\right) \\
+	& \leq \lambda f(x) + (1-\lambda) f(x') \\
+	& = \lambda y + (1-\lambda) y \\
+	& = y \\
+\end{align*}
+
+where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\), the equality holds \(f(z) = y\). This means that \(z\) is in \(S_{min}\), therefore \(S_{min}\) is a convex set.
 
 \begin{problem}{4}
   Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian
