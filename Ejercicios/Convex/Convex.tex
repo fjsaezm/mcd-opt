@@ -262,18 +262,69 @@ Since \(S\) is convex, \(z\) is in \(S\), and since \(f\) is also convex:
 where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\), the equality holds \(f(z) = y\). This means that \(z\) is in \(S_{min}\), therefore \(S_{min}\) is a convex set.
 
 \begin{problem}{4}
-  Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian
-  \[
-	\nabla q(w) = Qw + b, \quad Hq(w) = Q
-  \]
+  Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian.
+\end{problem}
 
-  \emph{Hint: expand} \(q(w) = \sum_{i=1}^{d} \sum_{j=1}^{d} Q_{ij} w_{i}w_{j} + \sum_{1}^{d}b_{i}w_{i} + c\) \emph{and take the partials} \(\frac{\partial q}{\partial w_{i}}\) \emph{and} \(\frac{\partial^{2}q}{\partial w_{i}\partial w_{j}}\).
- \end{problem}
+Let us start by unrolling the quadratic form expression:
 
+\[
+	q(w) = \sum_{i,j=1}^{d} Q_{ij} w_{i}w_{j} + \sum_{i=1}^{d}b_{i}w_{i} + c,
+\]
 
+and compute the partial derivative over the \(k-th\) component:
 
+\[
+	\frac{\partial q}{\partial w_k} (w) = \sum_{i=1}^{d} Q_{ik} w_{i} + \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k}
+\]
 
-\begin{problem}{5}If \( (p_1,\dots,p_n) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_n) = - \sum_{i=1}^n p_i \log p_i\) is a concave function. Show also that its maximum is \( \log n \), attained when \( p_i = \frac{1}{n}\) for all $i$.
+where \(k \in \{1, \ldots, d\}\). By using that \(Q\) is symmetric we obtain:
+
+\begin{equation}
+	\label{eq-4}
+	\frac{\partial q}{\partial w_k} (w) = 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k}.
+\end{equation}
+
+That is, we are multiplying the \(k-th\) row of the \(Q\) matrix and multiplying it by \(w\). We can obtain gradient as a product of matrices using the previous expression:
+
+\[
+	\nabla q(w) = \begin{pmatrix}
+		\frac{\partial q}{\partial w_1} (w) \\
+		\vdots \\
+		\frac{\partial q}{\partial w_d} (w)
+	\end{pmatrix}
+	= \begin{pmatrix}
+		2 \; \sum_{j=1}^{d} Q_{1j} w_{j} + b_{1} \\
+		\vdots \\
+		2 \; \sum_{j=1}^{d} Q_{dj} w_{j} + b_{d}
+	\end{pmatrix}
+	= 2 \; \begin{pmatrix}
+		\sum_{j=1}^{d} Q_{1j} w_{j} \\
+		\vdots \\
+		\sum_{j=1}^{d} Q_{dj} w_{j}
+	\end{pmatrix} + \begin{pmatrix}
+		b_{1} \\
+		\vdots \\
+		b_{d}
+	\end{pmatrix}
+	= 2 \ Qw + b
+\]
+
+In order to obtain the gradient take partial derivative over the \(l-th\) component in \ref{eq-4}:
+ 
+\begin{align*}
+	\frac{\partial^2 q}{\partial w_k \partial w_l} (w) & = \frac{\partial q}{\partial w_l} \left( \frac{\partial q}{\partial w_k} \right) (w) \\
+	& = \frac{\partial q}{\partial w_l} \left( 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k} \right) (w) \\
+	& = 2 \; Q_{kl}
+\end{align*}
+
+Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\). That is:
+
+\[
+	\text{Hess} \ q(w) = 2Q
+\]
+
+\begin{problem}{5}
+	If \( (p_1,\dots,p_n) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_n) = - \sum_{i=1}^n p_i \log p_i\) is a concave function. Show also that its maximum is \( \log n \), attained when \( p_i = \frac{1}{n}\) for all $i$.
 \end{problem}
 
 \begin{problem}{6}
