@@ -74,6 +74,8 @@
     \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
                                 % normalem makes italics be italics, not underlines
     \usepackage{mathrsfs}
+
+    \newcommand{\qed}{\hfill $\square$}
     
 
     % Document title
@@ -186,7 +188,7 @@ Let \(S\) be an open set. We know that \(S^c\) is a closed set if and only if fo
 
 Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\). Suppose that \(x\) is not in \(S^c\). Then \(x\) must be in its complementary, \(S\). Since \(S\) is an open set we know that \(\exists \epsilon > 0\) such that \( B(x, \epsilon) \subset S\). \\
 
-Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the succesion \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradictions implies that \(x\) is, in fact, in \(S^c\).
+Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the succesion \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradiction implies that \(x\) is, in fact, in \(S^c\).
 
 \(\boxed{\Leftarrow}\)\\
 
@@ -198,14 +200,14 @@ Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). Thi
 \exists \epsilon > 0 \text{ such that } B(x,\epsilon) \cap S^c = \emptyset \implies B(x,\epsilon) \subset S 
 \]
 
-Thus, showing that $S$ is open. \\
+Thus $S$ is open. \qed \\
 
 \begin{problem}{2}
   If \( S_1, S_2 \) are convex subsets, prove that the following are also convex sets:
   \begin{align*}
     S_{1} \cap S_{2} & = \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\\
     S_{1} + S_{2} & = \{x + x' \ : \ x \in S_{1}, x' \in S_{2}\}\\
-    S_{1} - S_{2} & = \{x - x' \ : \ x \in S_{1}, x0 \in S_{2}\}
+    S_{1} - S_{2} & = \{x - x' \ : \ x \in S_{1}, x' \in S_{2}\}
     \end{align*}
 
 \end{problem}
@@ -213,10 +215,10 @@ Thus, showing that $S$ is open. \\
 \begin{itemize}
 	\item Consider \(S_{1} \cap S_{2}  =  \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\). Let \(x,x' \in S_1 \cap S_2\) and consider the segment
 	\[
-		z \equiv \lambda x + (1-\lambda)x', lambda \in [0,1]
+		z \equiv \lambda x + (1-\lambda)x', \lambda \in [0,1]
 	\]
 	
-	Since \(x\) is in in \(S_1\), which is a convex set, \(z\) will also be in \(S_1\). Likewise, \(z\) will be in \(S_2\), and thus in the intersection \(S_{1} \cap S_{2}\). Since the segment is contained in the intersection, \(S_{1} \cap S_{2}\) is a convex subset.
+	Since \(x\) is in in \(S_1\), which is a convex set, \(z\) will also be in \(S_1\) for any \(\lambda \in [0,1]\). Likewise, \(z\) will be in \(S_2\), and thus in the intersection \(S_{1} \cap S_{2}\). Since the segment is contained in the intersection, \(S_{1} \cap S_{2}\) is a convex subset.
 	
 	\item Consider \(S_{1} + S_{2}  =  \{x + z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x+z \in S_1 + S_2\) and \(x'+z' \in S_1+S_2\). Also, consider the segment
 	\begin{align*}
@@ -229,7 +231,7 @@ Thus, showing that $S$ is open. \\
 	\]
 	so the segment is in the sum set, and thus, the set \(S_1 + S_2\) is convex.
 	
-	\item Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
+	\item We use the same process done in the previous set. Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
 	\begin{align*}
 	\lambda(x-z) + (1-\lambda)(x'-z') & = \lambda x - \lambda z + (1-\lambda)x' - (1-\lambda z')\\
 	& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} - \underbrace{\left( \lambda z + (1-\lambda)z'\right)}_{z'' \in S_2}  
@@ -246,21 +248,19 @@ Thus, showing that $S$ is open. \\
   If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( S_{min} = \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
 \end{problem}
 
-Let \(y\) be the minimum of \(f(x)\): \(y = \min_x f(x)\). Then \( S_{min} = \{x \in S : \ f(x) = y \} \). We need need to show that for all \(x, x' \in S_{min}\) and for all \(\lambda \in [0,1]\):
+We omit the case where \(S_{min} = \emptyset\), since the empty set is convex. Now, let \(y\) be the minimum of \(f(x)\): \(y = \min_x f(x)\). Then \( S_{min} = \{x \in S : \ f(x) = y \} \). We need need to show that for all \(x, x' \in S_{min}\) and for all \(\lambda \in [0,1]\):
 
 \[
 	z \equiv \lambda x + (1-\lambda) x' \in S_{min} \leftrightarrow f(z) = y
 \]
 
 Since \(S\) is convex, \(z\) is in \(S\), and since \(f\) is also convex:
-
 \begin{align*}
 	f(z) & = f\left(\lambda x + (1-\lambda) x'\right) \\
 	& \leq \lambda f(x) + (1-\lambda) f(x') \\
 	& = \lambda y + (1-\lambda) y \\
 	& = y \\
 \end{align*}
-
 where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\), the equality holds \(f(z) = y\). This means that \(z\) is in \(S_{min}\), therefore \(S_{min}\) is a convex set.
 
 \begin{problem}{4}
@@ -311,14 +311,12 @@ That is, we are multiplying the \(k-th\) row of the \(Q\) matrix and multiplying
 	= 2 \ Qw + b
 \]
 
-In order to obtain the gradient take partial derivative over the \(l-th\) component in \ref{eq-4}:
- 
+In order to obtain the Hessian, we take partial derivatives over the \(l-th\) component in \ref{eq-4}:
 \begin{align*}
 	\frac{\partial^2 q}{\partial w_k \partial w_l} (w) & = \frac{\partial q}{\partial w_l} \left( \frac{\partial q}{\partial w_k} \right) (w) \\
 	& = \frac{\partial q}{\partial w_l} \left( 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k} \right) (w) \\
 	& = 2 \; Q_{kl}
 \end{align*}
-
 Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\). That is:
 
 \[
@@ -328,6 +326,52 @@ Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\)
 \begin{problem}{5}
 	If \( (p_1,\dots,p_n) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_n) = - \sum_{i=1}^n p_i \log p_i\) is a concave function. Show also that its maximum is \( \log n \), attained when \( p_i = \frac{1}{n}\) for all $i$.
 \end{problem}
+
+
+In this problem, since we are dealing with probabilities, two new constraints appear:
+\begin{align*}
+\sum_{i=1}^n p_i = 1\\
+p_i \geq 0 \quad \forall i =1,\dots,n
+\end{align*}
+They will be used later.\\
+
+Let us compute the gradient and Hessian of \(H\) to see that it is concave. Firstly, we have that
+\[
+\frac{\partial H}{\partial p_i} = - \log(p_i) - 1, \quad \forall i = 1,\dots,n
+\]
+and, hence,
+\[
+\frac{\partial^2 H}{\partial p_i \partial p_j} = - \frac{\lambda_{ij}}{p_i}  
+\]
+Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite diagonal matrix, so \(H\) is concave.\\
+
+In order to find the minimum entropy, we have to solve the following optimization problem:
+\begin{align*}
+&\max_{(p_1,\dots,p_n)} H(p_1,\dots,p_n)\\
+&\text{s.t.}\\
+&\sum_{i=1}^n p_i -1 = 0\\
+&p_i \geq 0 \quad \forall i =1,\dots,n 
+\end{align*}
+Consider the lagrangian of this problem:
+\[
+L\left(\{p_i\}_{i=1}^n, \lambda\right) = - \sum_{i=1}^n p_i \log(p_i) + \lambda\left(\sum_{i=1}^n p_i -1\right).   
+\]
+We can obtain its gradient derivating with respect to each variable
+\[
+\frac{\partial L}{\partial p_i} = - \log p_i - 1 + \lambda, \quad \frac{\partial L}{\partial \lambda} =  \sum_{i=1}^n p_i -1.
+\]
+Using this derivatives, we have to equate them to zero, which is solving the following equations system:
+\[
+\begin{cases}
+  \log p_i = \lambda - 1, \quad i = 1,\dots,n \\
+  \sum_{i=1}^n p_i = 1
+\end{cases}  
+\]
+Looking at the first equation, the \(p_i\) have no interdependencies, they are constant and have the same value. Also, since they have to add \(1\), the only possible solution is that each \(p_i = \frac{1}{n}\). Lastly, we can compute the maximum value of the Entropy:
+\[
+H\left(\{p_i\}_{i=1}^n\right) = - \sum_{i=1}^n \frac{1}{n} \log \left(\frac{1}{n}\right)  = - \frac{1}{n} \left(\sum_{i=1}^n \log 1 - \log n\right) = \frac{1}{n} \cdot n \log n = \log n, 
+\]
+as we wanted to see. \qed
 
 \begin{problem}{6}
   We want to solve the following constrained restriction problem:
@@ -342,6 +386,41 @@ Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\)
           \item Use them to solve the problem. For this consider separately the \((\alpha = \beta = 0)\), \((\alpha > 0, \beta = 0)\), \((\alpha = 0, \beta > 0)\), \((\alpha > 0, \beta > 0)\) cases.
 \end{enumerate}
 \end{problem}
+
+Writing the \textbf{Lagrangian} in terms of \(\alpha,\beta,\lambda\) is pretty straightforward:
+\[
+L(x,y,\alpha,\beta,\lambda) = x^{2} + 2y^{2} + 4xy + \lambda(x+y - 1) + \alpha x + \beta y .
+\]
+Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are: the gradient of the Lagrangian equals to zero and the inequality restrictions (multiplied by its corresponding constant) also equal to zero. In our case, the \textbf{KKT conditions} are:
+\begin{align*}
+\frac{\partial L}{\partial x}  = 2x + 4y + \lambda + \alpha  & = 0\\ 
+\frac{\partial L}{\partial y}  = 4y + 4x + \lambda + \beta & = 0\\ 
+\alpha x & = 0\\
+\beta y & = 0
+\end{align*}
+Now, we want to solve this equations system to see if we can find a minimum of our problem. We have the following cases:
+
+\begin{itemize}
+\item Case \(\alpha = \beta = 0\).\\
+In this case, the system is
+\begin{align*}
+2x + 4y + \lambda  & = 0\\ 
+4y + 4x + \lambda  & = 0\\ 
+\end{align*}
+If we substitute \(4y\) from the first equation into the second one, we obtain
+\[
+-2x - \lambda + 4x + \lambda = 0 \implies 2x = 0  \implies x = 0,
+\]
+and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((0,1)\).
+\item Case \(\alpha, \beta > 0\).\\
+In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
+\item Case \(\alpha > 0, \beta = 0\).\\
+Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a \emph{KKT point} \((0,1)\), which is the same that we obtained in the first case.\\
+\item Case \(\alpha = 0, \beta > 0\).\\
+Using the same reasoning, we obtain \((1,0)\) as a new \emph{KKT} point.
+\end{itemize}
+
+Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). If we evaluate our initial funciton
 
 \begin{problem}{7}
 	We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
