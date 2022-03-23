@@ -200,7 +200,7 @@ Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). Thi
 \exists \epsilon > 0 \text{ such that } B(x,\epsilon) \cap S^c = \emptyset \implies B(x,\epsilon) \subset S 
 \]
 
-Thus $S$ is open. \qed \\
+Thus, $S$ is open. \qed \\
 
 \begin{problem}{2}
   If \( S_1, S_2 \) are convex subsets, prove that the following are also convex sets:
@@ -242,7 +242,6 @@ Thus $S$ is open. \qed \\
 	\]
 	so the segment is in the difference set, and thus, the set \(S_1 - S_2\) is convex.
 \end{itemize}
-
 
 \begin{problem}{3}
   If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( S_{min} = \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
@@ -431,35 +430,49 @@ Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). If
 \end{problem}
 
 Firstly, consider the Lagrangian for this problem
+
 \begin{align*}
-L(w,b,\lambda) & = \frac{1}{2} \norm{w}^2 - \sum \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]\\
-& = \frac{1}{2} w \cdot w - w \sum \lambda_p y^p  x^p - b \sum \lambda_p y_p + \sum \lambda_p \\
-& = w \left(\frac{1}{2}w -\sum \lambda_p y^p  x^p \right) b \sum \lambda_p y_p + \sum \lambda_p
+L(w,b,\alpha) & = \frac{1}{2} \norm{w}^2 - \sum_p \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]\\
+& = \frac{1}{2} w \cdot w - w \sum_p \alpha_p y^p  x^p - b \sum_p \alpha_p y^p + \sum_p \alpha_p \\
+& = w \left(\frac{1}{2}w -\sum_p \alpha_p y^p  x^p \right) - b \sum_p \alpha_p y^p + \sum_p \alpha_p
 \end{align*}
 
 Then, we have to compute the gradient of the Lagrangian
 
 \[
-	\nabla_w L(w,b,\lambda) = w - \sum \lambda_p y^p x^p = 0 \implies w = \sum \lambda_p y^p x^p
+	\nabla_w L(w,b,\alpha) = w - \sum_p \alpha_p y^p x^p = 0 \implies w = \sum_p \alpha_p y^p x^p
 \]
 \[
-	\frac{\partial L}{\partial b} = - \sum \lambda_p y^p = 0  
+	\frac{\partial L}{\partial b} = - \sum_p \alpha_p y^p = 0  
 \]
 
-Lastly, we have to use the optimalas that we have found in the expression of the Lagrangian:
+Lastly, we have to use these equalities in the expression of the Lagrangian:
 
 \begin{align*}
-	L(w,b,\alpha) &= \sum \alpha_p  - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
-	& = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p y^p \alpha_q y^q x^p x^q = - \alpha
+	L(w,b,\alpha) & = \sum \alpha_p - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
+	& = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p \alpha_q y^p y^q x^p x^q
 \end{align*}
 
-Our optimization problem has turned today
-\[
-\max_{\alpha} \sum \alpha^p - \frac{1}{2}\sum \alpha_p \alpha_q y^p y^q x^p x^q  
-\]
-subject to \(\alpha^p, \sum \alpha_p y^p = 0\).
+By defining the matrix \(Q\) with value \(y^p y^q x^p x^q\) in position \((p,q)\), ur dual optimization problem gets simplified into
 
-Let us state the KKT conditions for this problem.
+\begin{cases}
+	\max_{\alpha} \sum_p \alpha^p - \frac{1}{2} \alpha^T Q \alpha \\ 
+	\text{s.t. (\alpha^p, \sum \alpha_p y^p = 0}
+\end{cases}
+
+At this point we may realize that we have completely removed the dependency \(b\) from our problem. Let us state the KKT conditions for this problem. There are:
+
+\begin{align*}
+	\nambda_w f(x^*) + \sum_i \lambda_i \nambda g_i (x^*) & = 0 \\
+	\lambda_i g_i(x^*) & = 0
+\end{align*}
+
+For our particular problem we obtain:
+
+\begin{align*}
+	w + \sum_p \alpha_p y^p x^p & = 0 \\ TODO LA SIGUEITNTE LINEA
+	\lambda_i g_i(x^*) & = 0
+\end{align*}
 
 \begin{problem}{8}
   A typical Linear Programming (LP) problem can be stated as the following constrained optimization problem:
@@ -486,7 +499,7 @@ CHECK!!!\\
 
 \begin{problem}{11}
   If \( Q \) is a symmetric, positive definite \( d \times d \) matrix, show that \( f(x) = x^TQx, \ x \in \mathbb{R}^d \), is a convex function.
-  \end{problem}
+\end{problem}
 
 \begin{problem}{12}
   Let \( f:\mathbb{R}^d \to \mathbb{R} \)  be a function and assume that \( epi(f) \subset \mathbb{R}^d \times \mathbb{R} \)  is convex. Prove that then \( f \)  is convex.

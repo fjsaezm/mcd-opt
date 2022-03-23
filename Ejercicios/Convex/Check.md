@@ -1,7 +1,9 @@
-1. Ja
-2. Ja
-3. Ja
-4. Ja
+Done - Reviewed
+
+1. Jo - Ja
+2. Jo - Ja
+3. Jo - Ja
+4. Jo - Ja
 5. Ja
 6.
 7.
