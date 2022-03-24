@@ -75,7 +75,10 @@
                                 % normalem makes italics be italics, not underlines
     \usepackage{mathrsfs}
 
+  
     \newcommand{\qed}{\hfill $\square$}
+
+    \newtheorem{nth}{Theorem}
     
 
     % Document title
@@ -143,6 +146,7 @@
 % COMMANDS
 
 \newcommand\norm[1]{\lVert#1\rVert}
+\newcommand\abs[1]{\lvert#1\rvert}
 \newcommand\R{\mathbb R}
     
 
@@ -264,6 +268,10 @@ where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\)
 
 \begin{problem}{4}
   Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian.
+  \[
+  \nabla q(w) = Qw + b, \quad Hq(w) = Q  
+  \]
+  \emph{Hint: expand \(q(w)\) and take the partials with respect to \(w_i\) and \(w_i,w_j\).}
 \end{problem}
 
 Let us start by unrolling the quadratic form expression:
@@ -323,20 +331,20 @@ Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\)
 \]
 
 \begin{problem}{5}
-	If \( (p_1,\dots,p_n) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_n) = - \sum_{i=1}^n p_i \log p_i\) is a concave function. Show also that its maximum is \( \log n \), attained when \( p_i = \frac{1}{n}\) for all $i$.
+	If \( (p_1,\dots,p_K) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_K) = - \sum_{i=1}^K p_i \log p_i\) is a concave function. Show also that its maximum is \( \log K \), attained when \( p_i = \frac{1}{K}\) for all $i$.
 \end{problem}
 
 
 In this problem, since we are dealing with probabilities, two new constraints appear:
 \begin{align*}
-\sum_{i=1}^n p_i = 1\\
+\sum_{i=1}^K p_i = 1\\
 p_i \geq 0 \quad \forall i =1,\dots,n
 \end{align*}
 They will be used later.\\
 
 Let us compute the gradient and Hessian of \(H\) to see that it is concave. Firstly, we have that
 \[
-\frac{\partial H}{\partial p_i} = - \log(p_i) - 1, \quad \forall i = 1,\dots,n
+\frac{\partial H}{\partial p_i} = - \log(p_i) - 1, \quad \forall i = 1,\dots,K
 \]
 and, hence,
 \[
@@ -346,29 +354,29 @@ Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite di
 
 In order to find the minimum entropy, we have to solve the following optimization problem:
 \begin{align*}
-&\max_{(p_1,\dots,p_n)} H(p_1,\dots,p_n)\\
+&\max_{(p_1,\dots,p_K)} H(p_1,\dots,p_K)\\
 &\text{s.t.}\\
-&\sum_{i=1}^n p_i -1 = 0\\
-&p_i \geq 0 \quad \forall i =1,\dots,n 
+&\sum_{i=1}^K p_i -1 = 0\\
+&p_i \geq 0 \quad \forall i =1,\dots,K 
 \end{align*}
 Consider the lagrangian of this problem:
 \[
-L\left(\{p_i\}_{i=1}^n, \lambda\right) = - \sum_{i=1}^n p_i \log(p_i) + \lambda\left(\sum_{i=1}^n p_i -1\right).   
+L\left(\{p_i\}_{i=1}^K, \lambda\right) = - \sum_{i=1}^K p_i \log(p_i) + \lambda\left(\sum_{i=1}^K p_i -1\right).   
 \]
 We can obtain its gradient derivating with respect to each variable
 \[
-\frac{\partial L}{\partial p_i} = - \log p_i - 1 + \lambda, \quad \frac{\partial L}{\partial \lambda} =  \sum_{i=1}^n p_i -1.
+\frac{\partial L}{\partial p_i} = - \log p_i - 1 + \lambda, \quad \frac{\partial L}{\partial \lambda} =  \sum_{i=1}^K p_i -1.
 \]
 Using this derivatives, we have to equate them to zero, which is solving the following equations system:
 \[
 \begin{cases}
-  \log p_i = \lambda - 1, \quad i = 1,\dots,n \\
-  \sum_{i=1}^n p_i = 1
+  \log p_i = \lambda - 1, \quad i = 1,\dots,K \\
+  \sum_{i=1}^K p_i = 1
 \end{cases}  
 \]
-Looking at the first equation, the \(p_i\) have no interdependencies, they are constant and have the same value. Also, since they have to add \(1\), the only possible solution is that each \(p_i = \frac{1}{n}\). Lastly, we can compute the maximum value of the Entropy:
+Looking at the first equation, the \(p_i\) have no interdependencies, they are constant and have the same value. Also, since they have to add \(1\), the only possible solution is that each \(p_i = \frac{1}{K}\). Lastly, we can compute the maximum value of the Entropy:
 \[
-H\left(\{p_i\}_{i=1}^n\right) = - \sum_{i=1}^n \frac{1}{n} \log \left(\frac{1}{n}\right)  = - \frac{1}{n} \left(\sum_{i=1}^n \log 1 - \log n\right) = \frac{1}{n} \cdot n \log n = \log n, 
+H\left(\{p_i\}_{i=1}^K\right) = - \sum_{i=1}^K \frac{1}{K} \log \left(\frac{1}{K}\right)  = - \frac{1}{K} \left(\sum_{i=1}^K \log 1 - \log K\right) = \frac{1}{K} \cdot K \log K = \log K, 
 \]
 as we wanted to see. \qed
 
@@ -419,7 +427,13 @@ Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), res
 Using the same reasoning, we obtain \((1,0)\) as a new \emph{KKT} point.
 \end{itemize}
 
-Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). If we evaluate our initial funciton
+Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). Now, we make use of the following theorem:
+
+\begin{nth}
+If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^*\) is an optimum of this problem. (Slide 18)
+\end{nth}
+
+So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\). 
 
 \begin{problem}{7}
 	We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
@@ -455,15 +469,17 @@ Lastly, we have to use these equalities in the expression of the Lagrangian:
 
 By defining the matrix \(Q\) with value \(y^p y^q x^p x^q\) in position \((p,q)\), ur dual optimization problem gets simplified into
 
+\[
 \begin{cases}
 	\max_{\alpha} \sum_p \alpha^p - \frac{1}{2} \alpha^T Q \alpha \\ 
-	\text{s.t. (\alpha^p, \sum \alpha_p y^p = 0}
+	\text{s.t.} \alpha^p, \sum \alpha_p y^p = 0
 \end{cases}
+\]
 
 At this point we may realize that we have completely removed the dependency \(b\) from our problem. Let us state the KKT conditions for this problem. There are:
 
 \begin{align*}
-	\nambda_w f(x^*) + \sum_i \lambda_i \nambda g_i (x^*) & = 0 \\
+	\lambda_w f(x^*) + \sum_i \lambda_i \lambda g_i (x^*) & = 0 \\
 	\lambda_i g_i(x^*) & = 0
 \end{align*}
 
@@ -497,39 +513,89 @@ Hence, the gradient respect to \(x\) of the lagrangian is:
 CHECK!!!\\
 (this Lagrangian must have dimension \(d\)). 
 
+\begin{problem}{9}
+We know that, theoretically, the minimum SVC primal \(f^*\) and the maximum SVC dual \(q^*\) are equal. Check this in this case by writing \(q^*\) and \(f^*\) in terms of the \(\alpha_p^*\) and checking that both expressions coincide.
+\end{problem}
+
+\begin{problem}{10}
+We want to apply out Lagrangian theory to solve the homogeneous constrained Ridge problem (i.e., with a model \(w\cdot x\)
+\[
+\text{arg}\min_{w} \text{ mse}(w) = \frac{1}{n} \sum_{p=1}^n (t^p - w \cdot x^p)^2, \quad \text{s.t.} \quad \norm{w}_2^2 \leq \rho^2.  
+\]
+Write its Lagrangian and, using the lecture slides, the detailed formulation of the KKT conditions at an optimal \(w^*\) and multiplier \(\lambda^*\).\\
+Assuming that \(\lambda^* > 0\), use the gradient KKT condition to show that \(w^*\) also solves a standard Ridge regression problem for the optimal value \(\lambda^*\) of the regularization parameter.\\
+Assuming now that \(\lambda^* = 0\), use again the slides to write down the solution in this case and use this solution to get a lower bound for \(\rho\).
+\end{problem}
+
+HECHO EN CLASE
+
 \begin{problem}{11}
   If \( Q \) is a symmetric, positive definite \( d \times d \) matrix, show that \( f(x) = x^TQx, \ x \in \mathbb{R}^d \), is a convex function.
 \end{problem}
+
+HECHO EN CLASE
 
 \begin{problem}{12}
   Let \( f:\mathbb{R}^d \to \mathbb{R} \)  be a function and assume that \( epi(f) \subset \mathbb{R}^d \times \mathbb{R} \)  is convex. Prove that then \( f \)  is convex.
 
 \end{problem}
 
+Consider the set
+\[
+\text{epi}(f) = \{(x,t)\in \R^d \times R \ : \ t \geq f(x)\}.  
+\]
+This set is, by hypothesis, convex. That is, for any \((x,t),(x',t') \in \text{epi}(f)\), we have
+\[
+\lambda(x,t) + (1-\lambda)(x',t')  = \left(\lambda x + (1-\lambda)x', \lambda t + (1-\lambda)t'\right) \in \text{epi}(f)\quad \forall \lambda \in [0,1]. 
+\]
+This implies that
+\begin{equation}\label{epi:1}
+f(\lambda x + (1-\lambda)x') \leq \lambda t + (1-\lambda)t', \quad \forall \lambda \in [0,1].
+\end{equation}
+Also, since each of the points belongs to \(\text{epi}(f)\), we have that:
+\begin{equation}\label{epi:2}
+\lambda f(x) + (1-\lambda)f(x') \leq \lambda t + (1-\lambda)t', \quad \forall \lambda \in [0,1]  
+\end{equation}
+Lastly, if we substract Equation \eqref{epi:2} from Equation \eqref{epi:1} we obtain:
+\begin{align*}
+&f(\lambda x + (1-\lambda)x')  - \left( \lambda f(x) + (1-\lambda)f(x')\right)  \leq 0, &\quad \forall \lambda \in [0,1]
+\\ \implies & f(\lambda x + (1-\lambda)x') \leq  \lambda f(x) + (1-\lambda)f(x'), &\quad \forall \lambda \in [0,1].
+\end{align*}
+Lastly, recalling that \((x,f(x)) \in \text{epi}(f)\) for all \(x \in S\), we obtain that \(f\) is convex. \qed \\
 
 
 \begin{problem}{13}
-
   Let \( f : \mathbb{R}^d \to \mathbb{R} \) be a convex function. Prove that \( \operatorname{epi}(f) \) is a closed set and that \( (x, f(x)) \in \partial \operatorname{epi}(f) \)  .
 \end{problem}
+
+
 
 \begin{problem}{14}
   Prove that if \( f \)  is strictly convex, it has a unique global minimum.
 \end{problem}
 
+HECHO EN CLASE\\
 
 \begin{problem}{15}
-  Let \( f,g: S \subset \mathbb{R}^d \to \mathbb{R} \)  be two convex functions on the convex set \( S \) . Prove that, as subsets, \( \partial(f+g)(x) \subset \partial f(x) + \partial g(x) \) for any $x\in S$.
+  Let \( f,g: S \subset \mathbb{R}^d \to \mathbb{R} \)  be two convex functions on the convex set \( S \) . Prove that, as subsets, \(  \partial f(x) + \partial g(x) \subset \partial(f+g)(x) \) for any $x\in S$.
   \end{problem}
 
+JAVI LO TIENE HECHO ES TRIVIAL \\
 
 \begin{problem}{16}
   Compute the proximal of \( f(x) = 0 \) and of \( g(x) = \frac{1}{2}\|x\|^2 \).
 \end{problem}
 
+HECHO EN CLASE\\
 
 \begin{problem}{17}
   Assume that \( f \)  is convex. Prove that for any \( \lambda > 0, \partial(\lambda f)(x) = \lambda \partial f(x) \) as subsets.
+\end{problem}
+
+HECHO EN CLASE \\
+
+\begin{problem}{18}
+Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z - \epsilon}\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\)
 \end{problem}
 
 
@@ -537,5 +603,10 @@ CHECK!!!\\
 \begin{problem}{19}Compute the proximals of the hinge \( f(x) = max\{0, -x\}  \) and the \( \epsilon \)-insensitive \( g(x)=max\{0, |x| - \epsilon\} \) loss functions.
   \end{problem}
 
+  HECHO EN CLASE\\
+
+  \begin{problem}{20}
+    We have seen that we can solve the constrained Ridge problem by a Projected Gradient algorithm. Using the lecture slides, write down in as much detail as you can the computations needed at each iteration of the algorithm.
+  \end{problem}
 
 \end{document}

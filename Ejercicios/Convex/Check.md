@@ -5,13 +5,13 @@ Done - Reviewed
 3. Jo - Ja
 4. Jo - Ja
 5. Ja
-6.
+6. Ja
 7.
 8.
 9.
 10.
 11.
-12.
+12. Ja
 13.
 14.
 15.
