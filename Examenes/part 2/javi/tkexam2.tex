@@ -1,0 +1,188 @@
+\documentclass[a4paper]{article}
+
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-3.25cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0in}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage{blindtext} % Package to generate dummy text
+\usepackage{charter} % Use the Charter font
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+\usepackage{amsthm, amsmath, amssymb} % Mathematical typesetting
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true,
+            linkcolor = black,
+            citecolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor} % Facilities for controlling restricted text
+\usepackage{listings} % Environment for non-formatted code, !uses style file!
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+ % Environment for f-structures, !uses style file!
+\usepackage{booktabs} % Enhances quality of tables
+\usepackage{tikz-qtree} % Easy tree drawing tool
+ % Configuration for b-trees and b+-trees, !uses style file!
+\usepackage[backend=biber,style=numeric,
+            sorting=nyt]{biblatex} % Complete reimplementation of bibliographic facilities
+\addbibresource{ecl.bib}
+\usepackage{csquotes} % Context sensitive quotation facilities
+\usepackage[yyyymmdd]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\renewcommand{\dateseparator}{-} % Sets dateseparator to '-'
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} % Blank out the default header
+\fancyfoot[L]{} % Custom footer text
+\fancyfoot[C]{} % Custom footer text
+\fancyfoot[R]{\thepage} % Custom footer text
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+\usepackage{mathtools}
+\usepackage{amsmath}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\usepackage{cancel}
+\usepackage{minted}
+\usepackage{float}
+%-------------------------------
+
+%----------------------------------------------------------------------------------------
+
+%-------------------------------
+%	ENVIRONMENT SECTION
+%-------------------------------
+\pagestyle{fancy}
+\usepackage{mdframed}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Define solution environment
+\newenvironment{solution}
+    {\textit{Solución}}
+    {}
+
+
+%-------------------------------------------------------------------------------------------
+%	CUSTOM COMMANDS
+%-------------------------------
+\newcommand{\gaussian}{\frac{1}{\sigma\sqrt{2\pi}}\exp\left(- \frac{(x-\mu)^2}{2\sigma^2}\right)}
+\newcommand{\R}{\mathbb R}
+
+\newtheorem{thm}{Teorema}
+\newtheorem{lema}{Lema}
+
+\newtheorem{ndef}{Definición}
+
+\def\inline{\lstinline[basicstyle=\ttfamily,keywordstyle={}]}
+
+
+\begin{document}
+
+%-------------------------------
+%	TITLE SECTION
+%-------------------------------
+
+\fancyhead[C]{}
+\hrule \medskip % Upper rule
+\begin{minipage}{0.295\textwidth}
+\raggedright
+\footnotesize
+Francisco Javier Sáez Maldonado \hfill\\
+77448344F \hfill\\
+franciscojavier.saez@estudiante.uam.es
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\centering
+\large
+Take Home Exam 2\\
+\normalsize
+Convex Optimization\\
+\end{minipage}
+\begin{minipage}{0.295\textwidth}
+\raggedleft
+\today\hfill\\
+\end{minipage}
+\medskip\hrule
+\bigskip
+
+%-------------------------------
+%	CONTENTS
+%-------------------------------
+
+\begin{problem}{1}
+We have worked out the elementary vision of Lagrange multipliers, assuming that , from \(g(x,y) = 0\), we can find a function \(y = h(x)\) such that \(g(x,h(x)) = 0\).\\
+
+But sometimes, what we get is that there is an \(h\) such that \(g(x,h(x)) = 0\). Rewrite the Lagrange multiplier analysis in the lecture slides under this assumption.
+\end{problem}
+
+Consider \(f,g:\R^2 \to \R\), and the following minimization problem:
+\begin{equation}
+\min f(x,y) \ \ \text{s.t.  } g(x,y) = 0 
+\end{equation}
+
+Now, we can use the \textbf{implicit function theorem} to find a dependence between the variables of the restriction. This theorem (not completely formally) \textbf{states} the following: let \(g:\R^{n+m} \to \R^m\) be a continuously differentiable function, \((x,y) \in \R^{n+m}\) such that \(g(x,y) = 0\). If the jacobian with respect to the variables in \(y\) is invertible, then there exists an open subset \(U\) such that \(h(x) = y\) and \(g(x,h(x)) = 0\) for all \(x \in U\). \\
+
+\textbf{Assuming} that the \textbf{conditions for this theorem are matched}, we can apply it to the \textbf{jacobian with respect to the variables in y} to obtain an \(U'\) where \(h(y) = x\) and \(f(h(y),y) = 0\) for all \(y \in U\). Thus, we can write:
+\[
+f(x,y) = f(h(y),y) =  \psi(y) 
+\]
+The, we can keep the procedure as it is done in the slides. Let us see this:\\
+
+Consider that \(y^*\) is a minimum with \(x^* = h(y^*)\). Then, we have:
+\[
+0 = \psi'(y^*) = \frac{\partial f}{\partial x} (x^*, y^*)h'(y^*) + \frac{\partial f}{\partial y}(x^*, y^*).
+\]
+Using that \((x^*,y^*)\) is a minimum and that \(g(h(y),y) = 0\), we have that:
+\[
+0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = \frac{a}{b}   
+\]
+
+
+
+
+\begin{problem}{2}
+We want to solve the following constrained restriction problem:
+\begin{align*}
+  \min \quad       & x^{2} + 2xy + 2y^2 - 3x + y \\
+  \text{s.t} \quad & x + y = 1            \\
+                   & x,y \geq 0.
+\end{align*}
+Argue first that \(f\) is convex and then:
+\begin{enumerate}
+  \item Write its Lagrangian with \(\alpha,\beta\) the multipliers of the inequality constraints.
+  \item Write the KKT conditions.
+  \item Use them to solve the problem. For this consider separately the \((\alpha = \beta = 0)\), \((\alpha > 0, \beta = 0)\), \((\alpha = 0, \beta > 0)\), \((\alpha > 0, \beta > 0)\) cases.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+Let \(f: S \subset \R^d \to \R\) be a convex function on the convex set \(S\) and we exetnd it to an \(\tilde f : \R^d \to \R\) as:
+\[
+\tilde f(x) = \begin{cases}
+f(x) & \text{ if } x \in S\\
++\infty & \text{ if } i \notin S 
+\end{cases}
+\]
+Show that \(\tilde f\) is a convex function on \(\R^d\). Assume that \(a+\infty = \infty\) and \(a\cdot \infty = \infty\) for \(a > 0\).
+\end{problem}
+
+Consider \(x,x' \in \R^d\). We can consider two cases:
+
+\begin{enumerate}
+\item If \(x,x' \in S\), since \(S\) is convex, \(\lambda x + (1-\lambda)x' \in S\) for any \(\lambda \in [0,1]\). Also, we know that in \(S\) we have \(f(x) = \tilde f(x)\) and the same happens for \(x'\). Applying this and that \(f\) is convex in \(S\):
+\[
+\tilde f(\lambda x + (1-\lambda)x')    
+\]
+\end{enumerate}
+
+\end{document}
