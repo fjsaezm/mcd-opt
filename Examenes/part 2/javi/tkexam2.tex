@@ -144,7 +144,7 @@ Consider that \(y^*\) is a minimum with \(x^* = h(y^*)\). Then, we have:
 \]
 Using that \((x^*,y^*)\) is a minimum and that \(g(h(y),y) = 0\), we have that:
 \[
-0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = \frac{a}{b}   
+0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = - \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})}
 \]
 
 
@@ -165,8 +165,64 @@ Argue first that \(f\) is convex and then:
 \end{enumerate}
 \end{problem}
 
+Let us first see that \(f\) is convex. We know that a characterization of convex functions is that they have a definite positive hessian matrix \(Hf\). Firstly, we observe that the gradient of \(f\) is
+\[
+\nabla f(x,y) = \left( 2x + 2y - 3, 2x + 4y + 1\right).
+\]
+Hence, the hessian of \(f\) is
+\[
+Hf = \begin{pmatrix} 2 & 2 \\ 2 & 4 \end{pmatrix}
+\]
+
+This matrix is positive definite, since it is Hermitian (it is real-valued and symmetric) and we can apply the \textbf{Sylvester's criterion} to see that all the minor determinants (which are \(2\) and \(4\)) are positive. Hence, \(f\) is convex. Now, given that \(f\) is convex, we can make use of the \textbf{theorem} that states that if \(f,g_{i} \in C^{1}\) and convex, and \(h_{j}\) are affine, then a KKT point \(x^{*}\) is an optimum of the original problem. Since our problem matches these conditions, we will find the candidates to KKT points.\\
+
+The \textbf{Lagrangian} of \(f\) in terms of \(\alpha,\beta,\lambda\) is:
+\[
+  L(x,y,\alpha,\beta,\lambda) = x^{2} + 2xy + 2y^{2} - 3x + y + \lambda(x+y - 1) + \alpha x + \beta y .
+\]
+Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are:
+
+\begin{align*}
+  \nabla f(x^{*}) + \sum_{i}^m\lambda_{i} \nabla g_{i}(x^*) + \sum_{i}^p\mu_{j} \nabla h_{j}(x^*) = 0, \\
+  \lambda_{i}g_{i}(x^*) = 0
+\end{align*}
+
+
+
+With \(\lambda_{i} \geq 0\). If we apply them to our problem, \textbf{our KKT conditions} are:
+
+\begin{align*}
+  2x + 2y - 3 + \lambda + \alpha & = 0 \\
+ 2x + 4y + 1 +  \lambda + \beta  & = 0 \\
+  \alpha x                                                    & = 0 \\
+  \beta y                                                     & = 0
+\end{align*}
+Now, we want to solve this equations system to see if we can find a minimum of our problem. We have the following cases:
+
+\begin{itemize}
+  \item Case \(\alpha = \beta = 0\).\\
+        In this case, the system is
+        \begin{align*}
+          2x + 2y - 3 + \lambda & = 0 \\
+          2x + 4y +1 + \lambda & = 0 \\
+        \end{align*}
+        If we substitute \(2x\) from the first equation into the second one, we obtain
+        \[
+          -2y +3 - \lambda +4y + 1 + \lambda = 0 \implies 2y = 4  \implies y = 2,
+        \]
+        and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((-1,2)\). However, using this point in the first KKT condition, we obtain: \(-2 + 4 - 3 + \lambda = 0\), \(\lambda = -1\), which is \textbf{not a valid value} for \(\lambda\), so we \textbf{discard} this KKT point.
+  \item Case \(\alpha, \beta > 0\).\\
+        In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT candidate points} are obtained.
+  \item Case \(\alpha > 0, \beta = 0\).\\
+        Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a possible \emph{KKT point} \((0,1)\). If we use this point in the second KKT condition, we obtain \(0+4+1 + \lambda = 0\), \(\lambda = -5\), which is not a valid value for \(\lambda\), so we discard again this KKT point.
+  \item Case \(\alpha = 0, \beta > 0\).\\
+        Using the same reasoning, we obtain \((1,0)\) as a possible \emph{KKT point}. We check the \(\lambda\) condition using the first KKT condition: \(1 + 0 -3 + \lambda = 0\), \(\lambda = 2\), so we obtain a \textbf{KKT factible} point.
+\end{itemize}
+
+Since we have a \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
+
 \begin{problem}{3}
-Let \(f: S \subset \R^d \to \R\) be a convex function on the convex set \(S\) and we exetnd it to an \(\tilde f : \R^d \to \R\) as:
+Let \(f: S \subset \R^d \to \R\) be a convex function on the convex set \(S\) and we extend it to an \(\tilde f : \R^d \to \R\) as:
 \[
 \tilde f(x) = \begin{cases}
 f(x) & \text{ if } x \in S\\
@@ -176,13 +232,45 @@ f(x) & \text{ if } x \in S\\
 Show that \(\tilde f\) is a convex function on \(\R^d\). Assume that \(a+\infty = \infty\) and \(a\cdot \infty = \infty\) for \(a > 0\).
 \end{problem}
 
-Consider \(x,x' \in \R^d\). We can consider two cases:
+Let \(x,x' \in \R^d\) and consider the segment \(\lambda x + (1-\lambda)x'\) with \(\lambda in [0,1]\). We can consider two cases:
 
 \begin{enumerate}
-\item If \(x,x' \in S\), since \(S\) is convex, \(\lambda x + (1-\lambda)x' \in S\) for any \(\lambda \in [0,1]\). Also, we know that in \(S\) we have \(f(x) = \tilde f(x)\) and the same happens for \(x'\). Applying this and that \(f\) is convex in \(S\):
-\[
-\tilde f(\lambda x + (1-\lambda)x')    
-\]
+\item If \(x,x' \in S\), since \(S\) is convex, \(\lambda x + (1-\lambda)x' \in S\) for any \(\lambda \in [0,1]\). Also, we know that in \(S\) we have \(f(x) = \tilde f(x)\) and the same happens for \(x'\). Then, for any \(\lambda \in [0,1]\):
+\begin{align*}
+  \tilde f(\lambda x + (1-\lambda)x') & = f(\lambda x + (1-\lambda)x') \stackrel{(1)}{\leq}\lambda f(x) + (1-\lambda )f(x') = \lambda \tilde f(x) + (1-\lambda) \tilde f(x')
+\end{align*}
+        where, in \((1)\) we have used the convexity of \(f\).
+
+  \item If \(x \in S\) and \(x' \notin S\), the convexity inequality is trivial since \(\tilde f(x') = +\infty\), so, using that we assume that \(a \cdot +\infty = +\infty\), we see that for any \(\lambda \in [0,1]\)
+        \[
+        \tilde f ( \lambda x + (1-\lambda)x' ) \leq \lambda \tilde f(x) + (1-\lambda) \tilde f(x') = + \infty
+        \]
+  The case where \(x' \in S\) and \(x \notin S\) is analogous.
 \end{enumerate}
+
+We have seen that the definition of convexity is fulfilled for any \(x,x' \in \R^{d}\), so \(\tilde f\) is convex.
+
+
+
+\begin{problem}{4}
+  Prove \textbf{Jensen's inequality} : if \(f\) is convex on \(\R^{d}\) and \(\sum_{1}^{k} \lambda_{i}=1\), with \(0 \leq \lambda_{i} \leq 1\), we have for any \(x_{1}, \ldots, x_{k} \in \mathrm{R}^{n}\)
+    \[
+        f\left(\sum_{1}^{k} \lambda_{i} x_{i}\right) \leq \sum_{1}^{k} \lambda_{i} f\left(x_{i}\right)
+    \]
+    Hint: just write \(\sum_{1}^{k} \lambda_{i} x_{i}=\lambda_{1} x_{1}+\left(1-\lambda_{1}\right)v\)  for an appropriate \(v\) and apply repeatedly the definition of a convex function. Start with \(k=3\) and carry on.
+\end{problem}
+
+\begin{problem}{5}
+    Prove that the following function is convex
+    \[
+    f(x) =
+    \begin{cases}
+        x^{2}-1 \quad & |x|>1 \\
+        0  \quad & |x| \leq 1
+    \end{cases}
+    \]
+    and compute its proximal. Which are the fixed points of this proximal?
+\end{problem}
+
 
 \end{document}
