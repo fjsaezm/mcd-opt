@@ -36,7 +36,7 @@
             sorting=nyt]{biblatex} % Complete reimplementation of bibliographic facilities
 \addbibresource{ecl.bib}
 \usepackage{csquotes} % Context sensitive quotation facilities
-\usepackage[yyyymmdd]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\usepackage[ddmmyyyy]{datetime} % Uses YEAR-MONTH-DAY format for dates
 \renewcommand{\dateseparator}{-} % Sets dateseparator to '-'
 \usepackage{fancyhdr} % Headers and footers
 \pagestyle{fancy} % All pages have headers and footers
@@ -63,12 +63,12 @@
 
 
 \newenvironment{problem}[2][Problem]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
+    { \begin{mdframed}[backgroundcolor=gray!20] \vspace*{0.1cm} \textbf{#1 #2}.}
+    {  \end{mdframed}\vspace{0.3cm}}
 
 % Define solution environment
 \newenvironment{solution}
-    {\textit{Solución}}
+    {\textit{Solution.}\\}
     {}
 
 
@@ -78,10 +78,6 @@
 \newcommand{\gaussian}{\frac{1}{\sigma\sqrt{2\pi}}\exp\left(- \frac{(x-\mu)^2}{2\sigma^2}\right)}
 \newcommand{\R}{\mathbb R}
 
-\newtheorem{thm}{Teorema}
-\newtheorem{lema}{Lema}
-
-\newtheorem{ndef}{Definición}
 
 \def\inline{\lstinline[basicstyle=\ttfamily,keywordstyle={}]}
 
@@ -124,30 +120,49 @@ We have worked out the elementary vision of Lagrange multipliers, assuming that 
 
 But sometimes, what we get is that there is an \(h\) such that \(g(x,h(x)) = 0\). Rewrite the Lagrange multiplier analysis in the lecture slides under this assumption.
 \end{problem}
-
+\begin{solution}
 Consider \(f,g:\R^2 \to \R\), and the following minimization problem:
-\begin{equation}
-\min f(x,y) \ \ \text{s.t.  } g(x,y) = 0 
+\begin{equation}\label{p1:problem}
+\min f(x,y) \ \ \text{s.t.  } g(x,y) = 0. 
 \end{equation}
 
 Now, we can use the \textbf{implicit function theorem} to find a dependence between the variables of the restriction. This theorem (not completely formally) \textbf{states} the following: let \(g:\R^{n+m} \to \R^m\) be a continuously differentiable function, \((x,y) \in \R^{n+m}\) such that \(g(x,y) = 0\). If the jacobian with respect to the variables in \(y\) is invertible, then there exists an open subset \(U\) such that \(h(x) = y\) and \(g(x,h(x)) = 0\) for all \(x \in U\). \\
 
 \textbf{Assuming} that the \textbf{conditions for this theorem are matched}, we can apply it to the \textbf{jacobian with respect to the variables in y} to obtain an \(U'\) where \(h(y) = x\) and \(f(h(y),y) = 0\) for all \(y \in U\). Thus, we can write:
 \[
-f(x,y) = f(h(y),y) =  \psi(y) 
+f(x,y) = f(h(y),y) =  \psi(y).
 \]
-The, we can keep the procedure as it is done in the slides. Let us see this:\\
+Then, we can keep the procedure as it is done in the slides. Let us see this:\\
 
 Consider that \(y^*\) is a minimum with \(x^* = h(y^*)\). Then, we have:
-\[
+\begin{equation}\label{p1:fprime}
 0 = \psi'(y^*) = \frac{\partial f}{\partial x} (x^*, y^*)h'(y^*) + \frac{\partial f}{\partial y}(x^*, y^*).
-\]
+\end{equation}
 Using that \((x^*,y^*)\) is a minimum and that \(g(h(y),y) = 0\), we have that:
+\begin{equation}\label{p1:gprime}
+0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = - \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})}.
+\end{equation}
+Then, if we combine Equations \eqref{p1:fprime} and \eqref{p1:gprime}, we arrive at
+\begin{align*}
+0 & = - \frac{\partial f}{\partial x}(x^*,y^*) \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})} + \frac{\partial f}{\partial y}(x^*, y^*)\\
+& = - \frac{\partial f}{\partial x}(x^*,y^*)\frac{\partial g}{\partial y}(x^{*},y^{*}) +  \frac{\partial f}{\partial y}(x^*, y^*)\frac{\partial g}{\partial x}(x^{*},y^{*}).
+\end{align*}
+This means that, at \((x^*,y^*)\), \(\nabla F \perp \left(- \frac{\partial f}{\partial y}, \frac{\partial f}{\partial x}\right)\) and, since \(\left(- \frac{\partial f}{\partial y}, \frac{\partial f}{\partial x}\right) \perp \nabla g\), we have 
 \[
-0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = - \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})}
+\nabla f \parallel \nabla g, \text{ that is } \nabla f(x^*,y^*) = -\mu^* \nabla g(x^*,y^*),
 \]
+for some \(\mu^* \neq 0\). Thus, \textbf{for the Lagrangian}
+\[
+L(x,y,\mu) = f(x,y) + \mu g(x,y),
+\]
+we have that at a \emph{minimum} \((x^*,y^*)\) there exists a \(\mu^* \neq 0\) such that
+\begin{equation}\label{p1:nabla:lagr}
+\nabla L(x^*,y^*,\mu^*) = \nabla f(x^*,y^*) + \mu^* \nabla g(x^*,y^*) = 0 
+\end{equation}
 
+With all this, we have observed that a way to solve the problem in Equation \eqref{p1:problem} is to define its Lagrangian an solve simultaneously the Equation \eqref{p1:nabla:lagr} and the constraint \(g(x,y) = 0\).
 
+\end{solution}
 
 
 \begin{problem}{2}
@@ -165,6 +180,7 @@ Argue first that \(f\) is convex and then:
 \end{enumerate}
 \end{problem}
 
+\begin{solution}
 Let us first see that \(f\) is convex. We know that a characterization of convex functions is that they have a definite positive hessian matrix \(Hf\). Firstly, we observe that the gradient of \(f\) is
 \[
 \nabla f(x,y) = \left( 2x + 2y - 3, 2x + 4y + 1\right).
@@ -204,7 +220,7 @@ Now, we want to solve this equations system to see if we can find a minimum of o
         In this case, the system is
         \begin{align*}
           2x + 2y - 3 + \lambda & = 0 \\
-          2x + 4y +1 + \lambda & = 0 \\
+          2x + 4y +1 + \lambda & = 0
         \end{align*}
         If we substitute \(2x\) from the first equation into the second one, we obtain
         \[
@@ -221,6 +237,8 @@ Now, we want to solve this equations system to see if we can find a minimum of o
 
 Since we have a \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
 
+\end{solution}
+
 \begin{problem}{3}
 Let \(f: S \subset \R^d \to \R\) be a convex function on the convex set \(S\) and we extend it to an \(\tilde f : \R^d \to \R\) as:
 \[
@@ -231,6 +249,8 @@ f(x) & \text{ if } x \in S\\
 \]
 Show that \(\tilde f\) is a convex function on \(\R^d\). Assume that \(a+\infty = \infty\) and \(a\cdot \infty = \infty\) for \(a > 0\).
 \end{problem}
+
+\begin{solution}
 
 Let \(x,x' \in \R^d\) and consider the segment \(\lambda x + (1-\lambda)x'\) with \(\lambda in [0,1]\). We can consider two cases:
 
@@ -249,8 +269,7 @@ Let \(x,x' \in \R^d\) and consider the segment \(\lambda x + (1-\lambda)x'\) wit
 \end{enumerate}
 
 We have seen that the definition of convexity is fulfilled for any \(x,x' \in \R^{d}\), so \(\tilde f\) is convex.
-
-
+\end{solution}
 
 \begin{problem}{4}
   Prove \textbf{Jensen's inequality} : if \(f\) is convex on \(\R^{d}\) and \(\sum_{1}^{k} \lambda_{i}=1\), with \(0 \leq \lambda_{i} \leq 1\), we have for any \(x_{1}, \ldots, x_{k} \in \mathrm{R}^{n}\)
@@ -259,6 +278,10 @@ We have seen that the definition of convexity is fulfilled for any \(x,x' \in \R
     \]
     Hint: just write \(\sum_{1}^{k} \lambda_{i} x_{i}=\lambda_{1} x_{1}+\left(1-\lambda_{1}\right)v\)  for an appropriate \(v\) and apply repeatedly the definition of a convex function. Start with \(k=3\) and carry on.
 \end{problem}
+
+\begin{solution}
+
+\end{solution}
 
 \begin{problem}{5}
     Prove that the following function is convex
@@ -271,6 +294,10 @@ We have seen that the definition of convexity is fulfilled for any \(x,x' \in \R
     \]
     and compute its proximal. Which are the fixed points of this proximal?
 \end{problem}
+
+\begin{solution}
+
+\end{solution}
 
 
 \end{document}
