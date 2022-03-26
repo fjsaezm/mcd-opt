@@ -596,7 +596,29 @@ which means that \(\xi_1 + \xi_2 \in \partial \left(f+g\right)(x) \), as we want
 Compute the proximal of \( f(x) = 0 \) and of \( g(x) = \frac{1}{2}\|x\|^2 \).
 \end{problem}
 
-HECHO EN CLASE\\
+Let us directly compute the proximal of $f$ directly:
+
+\[
+	\text{prox}_f(x) = \arg \min_z 0 + \frac{1}{2} \parallel x - z \parallel^2 = x.
+\]
+
+We will asume $g$ is born in $\R$ for more generality. For its proximal we have:
+
+\[
+	\text{prox}_g(x) = \arg \min_z \underbrace{\frac{1}{2}z^2 + \frac{1}{2} \parallel x - z \parallel^2 = x}_{\equiv h(z)}
+\]
+
+We equalize the gradient of $h$ to $0$ to find the minimum:
+
+\[
+	0 = \nabla h(z) = z + z - x \implies z = \frac{1}{2}x
+\]
+
+Hence
+
+\[
+\text{prox}_g(x) =  \frac{1}{2} x
+\] \\
 
 \begin{problem}{17}
 Assume that \( f \)  is convex. Prove that for any \( \lambda > 0, \partial(\lambda f)(x) = \lambda \partial f(x) \) as subsets.
