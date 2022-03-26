@@ -26,6 +26,7 @@
 \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
 
 \usepackage{float}
+\usepackage{tikz}
 \floatplacement{figure}{H} % forces figures to be placed at the correct location
 
 
@@ -683,17 +684,181 @@
 	\end{itemize}
 	
 	\begin{problem}{18}
-		Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z - \epsilon}\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\).
+		Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z} - \epsilon\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\).
 	\end{problem}
 	
 	
 	
 	
 	\begin{problem}{19}
-		Compute the proximals of the hinge \( f(x) = max\{0, -x\}  \) and the \( \epsilon \)-insensitive \( g(x)=max\{0, |x| - \epsilon\} \) loss functions.
+		Compute the proximals of the hinge \( f(x) = \max\{0, -x\}  \) and the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss functions.
 	\end{problem}
 	
-	HECHO EN CLASE\\
+	We start by computing $(\text{Id} + \partial f)(x)$:
+	
+	\makebox[\textwidth][c]{\[
+		\partial f(x) = \begin{cases}
+			-1 \quad & x < 0 \\
+			[-1, 0] \quad & x = 0 \\
+			0 \quad & x > 0 \\
+		\end{cases}
+		\quad
+		\lambda\partial f(x) = \begin{cases}
+			-\lambda \quad & x < 0 \\
+			[-\lambda, 0] \quad & x = 0 \\
+			0 \quad & x > 0 \\
+		\end{cases}
+		\quad
+		(\text{Id} + \lambda\partial f)(x) = \begin{cases}
+			-\lambda + x \quad & x < 0 \\
+			[-\lambda, 0] \quad & x = 0 \\
+			x \quad & x > 0 \\
+		\end{cases}
+		\]}
+	
+	Let us plot the previous function:
+	
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=3]
+			\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
+			\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)(x)$};
+			\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {\x-0.5});
+			\draw[thick, domain=-0.5:0, smooth, variable=\y, blue] plot ({0}, {\y});
+			\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
+			
+			% ticks
+			\node[inner sep=1pt,] at (0.2, -0.5) {$-\lambda$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	To obtain the proximal we simply compute the inverse by rotating $90$ degrees around the origin and flipping around the vertical axis.
+	
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=3]
+			\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
+			\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
+			\draw[thick, domain=-1:-0.5, smooth, variable=\x, blue] plot ({\x}, {\x+0.5});
+			\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {0});
+			\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
+			
+			% ticks
+			\node[inner sep=1pt,] at (-0.5, 0.2) {$-\lambda$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	Thus, the requested proximal is:
+	
+	\[
+	\text{prox}_f(x) \begin{cases}
+		x + \lambda \quad & x \le -\lambda \\
+		0 \quad & -\lambda \le x \le 0  \\
+		x \quad & x \ge 0 \\
+	\end{cases}
+	\]
+	
+	We repeat this process for the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss function:
+	
+	\makebox[\textwidth][c]{\[
+		\partial g(x) = \begin{cases}
+			-1 \quad & x < -\epsilon \\
+			[-1, 0] \quad & x = -\epsilon \\
+			0 \quad & |x| < \epsilon \\
+			[0, 1] \quad & x = \epsilon \\
+			1 \quad & x > \epsilon \\
+		\end{cases}
+		\quad
+		\lambda\partial g(x) = \begin{cases}
+			-\lambda \quad & x < -\epsilon \\
+			[-\lambda, 0] \quad & x = -\epsilon \\
+			0 \quad & |x| < \epsilon \\
+			[0, \lambda] \quad & x = \epsilon \\
+			\lambda \quad & x > \epsilon \\
+		\end{cases}
+		\quad
+		(\text{Id} + \lambda\partial g)(x) = \begin{cases}
+			-\lambda+x \quad & x < -\epsilon \\
+			[-\lambda-\epsilon, -\epsilon] \quad & x = -\epsilon \\
+			x \quad & |x| < \epsilon \\
+			[\epsilon, \lambda+\epsilon] \quad & x = \epsilon \\
+			\lambda+x \quad & x > \epsilon \\
+		\end{cases}
+		\]}
+	
+	Again, we plot the previous function:
+	
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=2]
+			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+			\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
+			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
+			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
+			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
+			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
+			
+			% Dashed lines
+			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+			\path[draw=gray, dashed, thick] (-1,-2) -- (0,-2);
+			\path[draw=gray, dashed, thick] (0,2) -- (1,2);
+			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+			
+			% ticks
+			\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
+			\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
+			\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
+			\node[inner sep=1pt,] at (0.55, -2) {$-\lambda-\epsilon$};
+			\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
+			\node[inner sep=1pt,] at (-0.45, 2) {$\lambda+\epsilon$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	Again, we use the graphical method to compute the inverse:
+	
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=1.9]
+			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+			\draw[->] (0, -2) -- (0, 2) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
+			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
+			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
+			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
+			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
+			
+			% Dashed lines
+			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+			\path[draw=gray, dashed, thick] (-2,-1) -- (-2,0);
+			\path[draw=gray, dashed, thick] (2,0) -- (2,1);
+			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+			
+			% ticks
+			\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
+			\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
+			\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
+			\node[inner sep=1pt,] at (-2, 0.2) {$-\lambda-\epsilon$};
+			\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
+			\node[inner sep=1pt,] at (2, -0.2) {$\lambda+\epsilon$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	Finally, the requested proximal is:
+	
+	\[
+	\text{prox}_g(x) \begin{cases}
+		x + \lambda \quad & x \le -\epsilon-\lambda \\
+		-\epsilon \quad &  -\epsilon-\lambda \le x \le -\epsilon \\
+		x \quad & |x| < \epsilon \\
+		\epsilon \quad &  \epsilon \le x \le \epsilon+\lambda \\
+		x-\lambda \quad & x \ge \epsilon+\lambda \\
+	\end{cases}
+	\]
 	
 	\begin{problem}{20}
 		We have seen that we can solve the constrained Ridge problem by a Projected Gradient algorithm. Using the lecture slides, write down in as much detail as you can the computations needed at each iteration of the algorithm.
