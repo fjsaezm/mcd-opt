@@ -624,7 +624,26 @@ Hence
 Assume that \( f \)  is convex. Prove that for any \( \lambda > 0, \partial(\lambda f)(x) = \lambda \partial f(x) \) as subsets.
 \end{problem}
 
-HECHO EN CLASE \\
+We will prove this result with a double inclusion. Let $A \equiv \partial(\lambda f)(x)$ and $B \equiv \lambda \partial f(x)$
+
+\begin{itemize}
+	\item Case $A \subseteq B$: Let $xi \in A$, then for all $z$:
+	
+	\[
+		\lambda f(z) \ge \lambda f(x) + \xi (z-x) \implies f(z) \ge f(x) + \frac{\xi}{\lambda}(z-x)
+	\]
+	
+	where we used that $\lambda > 0$. This implies that $\frac{\xi}{\lambda} \in \partial f(x)$. Defining $\mu \equiv \frac{\xi}{\lambda} \in \partial f(x)$ we obtain $\xi = \lambda \mu \in \lambda \cdot \partial f(x) = B$.
+	
+	\item Case $B \subseteq A$: Let $\xi \in B$, then $\xi = \lambda \mu$ with $\mu \in \partial f(x)$. Hence, for all $z$:
+	
+	\begin{align*}
+		f(z) \ge f(x) + \mu(z-x) & \implies \lambda f(z) \ge \lambda f(x) + \lambda\mu(z-x) \\
+		& \implies (\lambda f)(z) \ge (\lambda f)(x) + (\lambda\mu)(z-x) \\
+		& \implies \xi = \lambda \mu \in \partial(\lambda f)(x)
+	\end{align*}
+	
+\end{itemize}
 
 \begin{problem}{18}
 Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z - \epsilon}\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\)
