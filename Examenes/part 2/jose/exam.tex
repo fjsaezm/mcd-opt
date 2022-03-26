@@ -698,10 +698,10 @@
 				\Longleftrightarrow \quad & \left(\lambda x + (1 - \lambda) y\right)^2 - 1 \le \lambda \left(x^2 - 1\right) \\
 				\Longleftrightarrow \quad & \lambda x^2 - \lambda + 1 - \left(\lambda x + (1 - \lambda) y\right)^2 & \ge 0 \\
 				\Longleftrightarrow \quad & \lambda x^2 + (1 - \lambda) - \lambda^2 x^2 - (1 - \lambda)^2 y^2 - 2\lambda (1 - \lambda) x y & \ge 0\\
-				\Longleftrightarrow \quad & (1 - \lambda) + x^2 (1 - \lambda) - (1 - \lambda)^2 y^2 - 2\lambda (1 - \lambda) x y & \ge 0 \\
-				(1) \Longleftrightarrow \quad & 1 + x^2 - (1 - \lambda) y^2 - 2\lambda x y & \ge 0 \\
-				\Longleftrightarrow \quad & x^2 + y^2 + 2xy + 1 - y^2 & \ge 0 \\
-				\Longleftrightarrow \quad & \underbrace{(x - y)^2}_{\ge 0} + \underbrace{1 - y^2}_{\ge 0} & \ge 0\\
+				\Longleftrightarrow \quad & (1 - \lambda) + x^2 \lambda(1 - \lambda) - (1 - \lambda)^2 y^2 - 2\lambda (1 - \lambda) x y & \ge 0 \\
+				(1) \Longleftrightarrow \quad & 1 + \lambda x^2 - (1 - \lambda) y^2 - 2\lambda x y & \ge 0 \\
+				\Longleftrightarrow \quad & \lambda(x^2 + y^2 + 2xy) + 1 - y^2 & \ge 0 \\
+				\Longleftrightarrow \quad & \underbrace{\lambda(x - y)^2}_{\ge 0} + \underbrace{1 - y^2}_{\ge 0} & \ge 0\\
 			\end{align*}
 			
 			where in $(1)$ we divided by $(1-\lambda)$ and used that $(1 - \lambda) > 0$. In the last inequality we know that \(1 - y^2 \ge 0\) because \(|y| \le 1\). 
@@ -737,70 +737,80 @@
 		\end{cases}
 		\]}
 	
-	In order to obtain the proximal $\text{prox}_f(x) = (\text{Id} + \partial f)^{-1}(x)$, we plot the perviously obtain function:
+	In order to obtain the proximal $\text{prox}_f(x) = (\text{Id} + \partial f)^{-1}(x)$, we plot the previously obtained function:
 	
-	\makebox[\textwidth][c]{
-		\resizebox{250}{250}{%
-			\centering
-			\begin{tikzpicture}
-				\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
-				\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
-				\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
-				\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
-				\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
-				\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
-				\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
-				
-				% Dashed lines
-				\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
-				\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
-				\path[draw=gray, dashed, thick] (-1,-2) -- (0,-2);
-				\path[draw=gray, dashed, thick] (0,2) -- (1,2);
-				\path[draw=gray, dashed, thick] (1,0) -- (1,1);
-				\path[draw=gray, dashed, thick] (0,1) -- (1,1);
-				
-				% ticks
-				\node[font=\scriptsize,inner sep=1pt,] at (-1, 0.2) {$-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (1, -0.2) {$1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (0.25, -1) {$-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (0.55, -2) {$-2\lambda-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (-0.2, 1) {$1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (-0.45, 2) {$2\lambda+1$};
-			\end{tikzpicture}
-	}}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=1.9]
+			\draw[->] (-2, 0) -- (2, 0) node[right] {$x$};
+			\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
+			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
+			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
+			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
+			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
+			
+			% Dashed lines
+			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+			\path[draw=gray, dashed, thick] (-1,-2) -- (0,-2);
+			\path[draw=gray, dashed, thick] (0,2) -- (1,2);
+			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+			
+			% ticks
+			\node[inner sep=1pt,] at (-1, 0.2) {$-1$};
+			\node[inner sep=1pt,] at (1, -0.2) {$1$};
+			\node[inner sep=1pt,] at (0.25, -1) {$-1$};
+			\node[inner sep=1pt,] at (0.55, -2) {$-2\lambda-1$};
+			\node[inner sep=1pt,] at (-0.2, 1) {$1$};
+			\node[inner sep=1pt,] at (-0.45, 2) {$2\lambda+1$};
+		\end{tikzpicture}
+	\end{figure}
 	
 	And then compute its inverse by rotating $90$ degrees clockwise around the origin and flipping around the vertical axis:
 	
-	\makebox[\textwidth][c]{
-		\resizebox{250}{250}{%
-			\centering
-			\begin{tikzpicture}
-				\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
-				\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
-				\draw[thin, domain=-2:2, smooth, variable=\x, red] plot ({\x}, {\x});
-				\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
-				\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
-				\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
-				\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
-				\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
-				
-				% Dashed lines
-				\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
-				\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
-				\path[draw=gray, dashed, thick] (-2,-1) -- (-2,0);
-				\path[draw=gray, dashed, thick] (2,0) -- (2,1);
-				\path[draw=gray, dashed, thick] (1,0) -- (1,1);
-				\path[draw=gray, dashed, thick] (0,1) -- (1,1);
-				
-				% ticks
-				\node[font=\scriptsize,inner sep=1pt,] at (-1, 0.2) {$-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (1, -0.2) {$1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (0.25, -1) {$-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (-2, 0.2) {$-2\lambda-1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (-0.2, 1) {$1$};
-				\node[font=\scriptsize,inner sep=1pt,] at (2, -0.2) {$2\lambda+1$};
-			\end{tikzpicture}
-	}}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=2]
+			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+			\draw[->] (0, -2) -- (0, 2) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
+			\draw[thin, domain=-2:2, smooth, variable=\x, red] plot ({\x}, {\x});
+			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
+			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
+			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
+			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
+			
+			% Dashed lines
+			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+			\path[draw=gray, dashed, thick] (-2,-1) -- (-2,0);
+			\path[draw=gray, dashed, thick] (2,0) -- (2,1);
+			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+			
+			% ticks
+			\node[inner sep=1pt,] at (-1, 0.2) {$-1$};
+			\node[inner sep=1pt,] at (1, -0.2) {$1$};
+			\node[inner sep=1pt,] at (0.25, -1) {$-1$};
+			\node[inner sep=1pt,] at (-2, 0.2) {$-2\lambda-1$};
+			\node[inner sep=1pt,] at (-0.2, 1) {$1$};
+			\node[inner sep=1pt,] at (2, -0.2) {$2\lambda+1$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	From the figure we may obtain the analytic expression of the proximal:
+	
+	\[
+	\text{prox}_f(x) \begin{cases}
+		x + 2\lambda \quad & x \le -\epsilon-\lambda \\
+		-1 \quad &  -2\lambda-1 \le x \le -1 \\
+		x \quad & |x| < 1 \\
+		1 \quad & 1 \le x \le 2\lambda + 1 \\
+		x-2\lambda \quad & x \ge 2\lambda + 1 \\
+	\end{cases}
+	\]
 	
 	Finally, the fixed points are those that match the identity function (the red line in the previous figure). Those are $[-1,1]$. As we already know, these are the minimums of our original function $f$.
 	

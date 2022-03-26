@@ -18,5 +18,5 @@ Done - Reviewed
 16. Jo - 
 17. Jo -
 18.
-19.
+19. Jo -
 20.
