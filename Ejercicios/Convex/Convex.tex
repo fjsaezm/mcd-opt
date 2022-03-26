@@ -348,9 +348,9 @@ Let us compute the gradient and Hessian of \(H\) to see that it is concave. Firs
 \]
 and, hence,
 \[
-  \frac{\partial^2 H}{\partial p_i \partial p_j} = - \frac{\lambda_{ij}}{p_i}
+  \frac{\partial^2 H}{\partial p_i \partial p_j} = - \frac{\delta{ij}}{p_i},
 \]
-Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite diagonal matrix, so \(H\) is concave.\\
+where $\delta_{ij}$ is \href{https://en.wikipedia.org/wiki/Kronecker_delta}{the Kroneker delta}. Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite diagonal matrix, so \(H\) is concave.\\
 
 In order to find the minimum entropy, we have to solve the following optimization problem:
 \begin{align*}
@@ -367,7 +367,7 @@ We can obtain its gradient derivating with respect to each variable
 \[
   \frac{\partial L}{\partial p_i} = - \log p_i - 1 + \lambda, \quad \frac{\partial L}{\partial \lambda} =  \sum_{i=1}^K p_i -1.
 \]
-Using this derivatives, we have to equate them to zero, which is solving the following equations system:
+Using this derivatives, we have to equalize them to zero, which is solving the following equations system:
 \[
   \begin{cases}
     \log p_i = \lambda - 1, \quad i = 1,\dots,K \\
@@ -378,7 +378,7 @@ Looking at the first equation, the \(p_i\) have no interdependencies, they are c
 \[
   H\left(\{p_i\}_{i=1}^K\right) = - \sum_{i=1}^K \frac{1}{K} \log \left(\frac{1}{K}\right)  = - \frac{1}{K} \left(\sum_{i=1}^K \log 1 - \log K\right) = \frac{1}{K} \cdot K \log K = \log K,
 \]
-as we wanted to see. \qed
+as we wanted to prove. \qed
 
 \begin{problem}{6}
 We want to solve the following constrained restriction problem:
@@ -418,7 +418,7 @@ Now, we want to solve this equations system to see if we can find a minimum of o
         \[
           -2x - \lambda + 4x + \lambda = 0 \implies 2x = 0  \implies x = 0,
         \]
-        and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((0,1)\).
+        and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((0,1)\). Any non-negative values of $\alpha$ and $\beta$ are valid to satisfy both hte KKT conditions and our problem restrictions.
   \item Case \(\alpha, \beta > 0\).\\
         In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
   \item Case \(\alpha > 0, \beta = 0\).\\
@@ -433,7 +433,7 @@ Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). No
   If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^*\) is an optimum of this problem. (Slide 18)
 \end{nth}
 
-So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\).
+So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\). \\
 
 \begin{problem}{7}
 We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
@@ -590,7 +590,7 @@ And, if we add both inequalitys:
   f(x') + g(x')        & > f(x) + g(x) + (\xi_1 + \xi_2)(x-x')        \\
   \left(f+g\right)(x') & >\left(f+g\right)(x) + (\xi_1 + \xi_2)(x-x')
 \end{align*}
-which means that \(\xi_1 + \xi_2 \in \partial \left(f+g\right)(x) \), as we wanted to see. \qed
+which means that \(\xi_1 + \xi_2 \in \partial \left(f+g\right)(x) \), as we wanted to see. \qed \\
 
 \begin{problem}{16}
 Compute the proximal of \( f(x) = 0 \) and of \( g(x) = \frac{1}{2}\|x\|^2 \).
