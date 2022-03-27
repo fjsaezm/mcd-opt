@@ -75,10 +75,11 @@
 \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
 % normalem makes italics be italics, not underlines
 \usepackage{mathrsfs}
+\usepackage[ruled,vlined]{algorithm2e}
 
 
 \newcommand{\qed}{\hfill $\square$}
-
+\SetKwComment{Comment}{$\triangleright$\ }{}
 \newtheorem{nth}{Theorem}
 
 
@@ -112,6 +113,7 @@
 
 
 % Exact colors from NB
+\definecolor{urlcolor}{HTML}{303F9F}
 \definecolor{incolor}{HTML}{303F9F}
 \definecolor{outcolor}{HTML}{D84315}
 \definecolor{cellborder}{HTML}{CFCFCF}
@@ -152,151 +154,151 @@
 
 
 \begin{document}
-	
-	%-------------------------------
-	%	TITLE SECTION
-	%-------------------------------
-	
-	\fancyhead[C]{}
-	\hrule \medskip % Upper rule
-	\begin{minipage}{0.295\textwidth}
-		\raggedright
-		\footnotesize
-		Francisco Javier Sáez Maldonado \hfill\\
-		José Antonio Álvarez Ocete \hfill\\
-	\end{minipage}
-	\begin{minipage}{0.4\textwidth}
-		\centering
-		\large
-		Ejercicios Programación Lineal\\
-		\normalsize
-		Optimización\\
-	\end{minipage}
-	\begin{minipage}{0.295\textwidth}
-		\raggedleft
-		\today\hfill\\
-	\end{minipage}
-	\medskip\hrule
-	\bigskip
-	
-	%-------------------------------
-	%	CONTENTS
-	% -------------------------------
-	
-	\begin{problem}{1}
-		Show that if \( S \) is an open set, its complement \( S^c \) is closed, and viceversa.
-	\end{problem}
-	
-	\(\boxed{\Rightarrow}\)\\
-	
-	Let \(S\) be an open set. We know that \(S^c\) is a closed set if and only if for any sequence of elements \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\), then \(x \in S^c\). \\
-	
-	Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\). Suppose that \(x\) is not in \(S^c\). Then \(x\) must be in its complementary, \(S\). Since \(S\) is an open set we know that \(\exists \epsilon > 0\) such that \( B(x, \epsilon) \subset S\). \\
-	
-	Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the succesion \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradiction implies that \(x\) is, in fact, in \(S^c\).
-	
-	\(\boxed{\Leftarrow}\)\\
-	
-	Let \(S\) be a set such that its complement $S^c$ is closed (that is, \(S^c = cl(S^c)\)). Let us show that \(S\) is open. \\
-	
-	Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). This implies that
-	
-	\[
+
+%-------------------------------
+%	TITLE SECTION
+%-------------------------------
+
+\fancyhead[C]{}
+\hrule \medskip % Upper rule
+\begin{minipage}{0.295\textwidth}
+	\raggedright
+	\footnotesize
+	Francisco Javier Sáez Maldonado \hfill\\
+	José Antonio Álvarez Ocete \hfill\\
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	\centering
+	\large
+	Ejercicios Programación Lineal\\
+	\normalsize
+	Optimización\\
+\end{minipage}
+\begin{minipage}{0.295\textwidth}
+	\raggedleft
+	\today\hfill\\
+\end{minipage}
+\medskip\hrule
+\bigskip
+
+%-------------------------------
+%	CONTENTS
+% -------------------------------
+
+\begin{problem}{1}
+Show that if \( S \) is an open set, its complement \( S^c \) is closed, and viceversa.
+\end{problem}
+
+\(\boxed{\Rightarrow}\)\\
+
+Let \(S\) be an open set. We know that \(S^c\) is a closed set if and only if for any sequence of elements \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\), then \(x \in S^c\). \\
+
+Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\). Suppose that \(x\) is not in \(S^c\). Then \(x\) must be in its complementary, \(S\). Since \(S\) is an open set we know that \(\exists \epsilon > 0\) such that \( B(x, \epsilon) \subset S\). \\
+
+Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the succesion \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradiction implies that \(x\) is, in fact, in \(S^c\).
+
+\(\boxed{\Leftarrow}\)\\
+
+Let \(S\) be a set such that its complement $S^c$ is closed (that is, \(S^c = cl(S^c)\)). Let us show that \(S\) is open. \\
+
+Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). This implies that
+
+\[
 	\exists \epsilon > 0 \text{ such that } B(x,\epsilon) \cap S^c = \emptyset \implies B(x,\epsilon) \subset S
-	\]
-	
-	Thus, $S$ is open. \qed \\
-	
-	\begin{problem}{2}
-		If \( S_1, S_2 \) are convex subsets, prove that the following are also convex sets:
-		\begin{align*}
-			S_{1} \cap S_{2} & = \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\} \\
-			S_{1} + S_{2}    & = \{x + x' \ : \ x \in S_{1}, x' \in S_{2}\}       \\
-			S_{1} - S_{2}    & = \{x - x' \ : \ x \in S_{1}, x' \in S_{2}\}
-		\end{align*}
-		
-	\end{problem}
-	
-	\begin{itemize}
-		\item Consider \(S_{1} \cap S_{2}  =  \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\). Let \(x,x' \in S_1 \cap S_2\) and consider the segment
-		\[
-		z \equiv \lambda x + (1-\lambda)x', \lambda \in [0,1]
-		\]
-		
-		Since \(x\) is in in \(S_1\), which is a convex set, \(z\) will also be in \(S_1\) for any \(\lambda \in [0,1]\). Likewise, \(z\) will be in \(S_2\), and thus in the intersection \(S_{1} \cap S_{2}\). Since the segment is contained in the intersection, \(S_{1} \cap S_{2}\) is a convex subset.
-		
-		\item Consider \(S_{1} + S_{2}  =  \{x + z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x+z \in S_1 + S_2\) and \(x'+z' \in S_1+S_2\). Also, consider the segment
-		\begin{align*}
-			\lambda(x+z) + (1-\lambda)(x'+z') & = \lambda x + \lambda z + (1-\lambda)x' + (1-\lambda z')                                                     \\
-			& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} + \underbrace{\lambda z + (1-\lambda)z'}_{z'' \in S_2}
-		\end{align*}
-		Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
-		\[
-		x'' + z'' \in S_1 + S_2
-		\]
-		so the segment is in the sum set, and thus, the set \(S_1 + S_2\) is convex.
-		
-		\item We use the same process done in the previous set. Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
-		\begin{align*}
-			\lambda(x-z) + (1-\lambda)(x'-z') & = \lambda x - \lambda z + (1-\lambda)x' - (1-\lambda z')                                                                   \\
-			& = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} - \underbrace{\left( \lambda z + (1-\lambda)z'\right)}_{z'' \in S_2}
-		\end{align*}
-		Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
-		\[
-		x'' - z'' \in S_1 - S_2
-		\]
-		so the segment is in the difference set, and thus, the set \(S_1 - S_2\) is convex.
-	\end{itemize}
-	
-	\begin{problem}{3}
-		If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( S_{min} = \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
-	\end{problem}
-	
-	We omit the case where \(S_{min} = \emptyset\), since the empty set is convex. Now, let \(y\) be the minimum of \(f(x)\): \(y = \min_x f(x)\). Then \( S_{min} = \{x \in S : \ f(x) = y \} \). We need need to show that for all \(x, x' \in S_{min}\) and for all \(\lambda \in [0,1]\):
-	
-	\[
+\]
+
+Thus, $S$ is open. \qed \\
+
+\begin{problem}{2}
+If \( S_1, S_2 \) are convex subsets, prove that the following are also convex sets:
+\begin{align*}
+	S_{1} \cap S_{2} & = \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\} \\
+	S_{1} + S_{2}    & = \{x + x' \ : \ x \in S_{1}, x' \in S_{2}\}       \\
+	S_{1} - S_{2}    & = \{x - x' \ : \ x \in S_{1}, x' \in S_{2}\}
+\end{align*}
+
+\end{problem}
+
+\begin{itemize}
+	\item Consider \(S_{1} \cap S_{2}  =  \{x \ : \ x \in S_{1} \text{ and } x \in S_{2}\}\). Let \(x,x' \in S_1 \cap S_2\) and consider the segment
+	      \[
+		      z \equiv \lambda x + (1-\lambda)x', \lambda \in [0,1]
+	      \]
+
+	      Since \(x\) is in in \(S_1\), which is a convex set, \(z\) will also be in \(S_1\) for any \(\lambda \in [0,1]\). Likewise, \(z\) will be in \(S_2\), and thus in the intersection \(S_{1} \cap S_{2}\). Since the segment is contained in the intersection, \(S_{1} \cap S_{2}\) is a convex subset.
+
+	\item Consider \(S_{1} + S_{2}  =  \{x + z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x+z \in S_1 + S_2\) and \(x'+z' \in S_1+S_2\). Also, consider the segment
+	      \begin{align*}
+		      \lambda(x+z) + (1-\lambda)(x'+z') & = \lambda x + \lambda z + (1-\lambda)x' + (1-\lambda z')                                                     \\
+		                                        & = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} + \underbrace{\lambda z + (1-\lambda)z'}_{z'' \in S_2}
+	      \end{align*}
+	      Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
+	      \[
+		      x'' + z'' \in S_1 + S_2
+	      \]
+	      so the segment is in the sum set, and thus, the set \(S_1 + S_2\) is convex.
+
+	\item We use the same process done in the previous set. Consider \(S_{1} - S_{2}  =  \{x - z \ : \ x \in S_{1}, z \in S_{2}\}\). Now, let \(x-z \in S_1 - S_2\) and \(x'-z' \in S_1-S_2\). Also, consider the segment
+	      \begin{align*}
+		      \lambda(x-z) + (1-\lambda)(x'-z') & = \lambda x - \lambda z + (1-\lambda)x' - (1-\lambda z')                                                                   \\
+		                                        & = \underbrace{\lambda x +(1-\lambda)x'}_{x'' \in S_1} - \underbrace{\left( \lambda z + (1-\lambda)z'\right)}_{z'' \in S_2}
+	      \end{align*}
+	      Where the underbraces are true due to the convexity of \(S_1\) and \(S_2\), so we have
+	      \[
+		      x'' - z'' \in S_1 - S_2
+	      \]
+	      so the segment is in the difference set, and thus, the set \(S_1 - S_2\) is convex.
+\end{itemize}
+
+\begin{problem}{3}
+If \( f: S \to \mathbb{R} \) is a convex function on the convex set \( S \), the set \( S_{min} = \{x : \ x \text{ is a minimum of f} \} \) is a convex set.
+\end{problem}
+
+We omit the case where \(S_{min} = \emptyset\), since the empty set is convex. Now, let \(y\) be the minimum of \(f(x)\): \(y = \min_x f(x)\). Then \( S_{min} = \{x \in S : \ f(x) = y \} \). We need need to show that for all \(x, x' \in S_{min}\) and for all \(\lambda \in [0,1]\):
+
+\[
 	z \equiv \lambda x + (1-\lambda) x' \in S_{min} \leftrightarrow f(z) = y
-	\]
-	
-	Since \(S\) is convex, \(z\) is in \(S\), and since \(f\) is also convex:
-	\begin{align*}
-		f(z) & = f\left(\lambda x + (1-\lambda) x'\right) \\
-		& \leq \lambda f(x) + (1-\lambda) f(x')      \\
-		& = \lambda y + (1-\lambda) y                \\
-		& = y                                        \\
-	\end{align*}
-	where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\), the equality holds \(f(z) = y\). This means that \(z\) is in \(S_{min}\), therefore \(S_{min}\) is a convex set.
-	
-	\begin{problem}{4}
-		Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian.
-		\[
-		\nabla q(w) = Qw + b, \quad Hq(w) = Q
-		\]
-		\emph{Hint: expand \(q(w)\) and take the partials with respect to \(w_i\) and \(w_i,w_j\).}
-	\end{problem}
-	
-	Let us start by unrolling the quadratic form expression:
-	
-	\[
+\]
+
+Since \(S\) is convex, \(z\) is in \(S\), and since \(f\) is also convex:
+\begin{align*}
+	f(z) & = f\left(\lambda x + (1-\lambda) x'\right) \\
+	     & \leq \lambda f(x) + (1-\lambda) f(x')      \\
+	     & = \lambda y + (1-\lambda) y                \\
+	     & = y                                        \\
+\end{align*}
+where we used that \(x, x'\in S_{min}\). But since \(y\) is the minimum of \(f\), the equality holds \(f(z) = y\). This means that \(z\) is in \(S_{min}\), therefore \(S_{min}\) is a convex set.
+
+\begin{problem}{4}
+Given a quadratic form \( q(w) = w^TQw + bw + c \), with \( Q \) a symmetric \( d\times d \) matrix, \( w,b\) being \(d\times 1 \) vectors and \( c \) a real number, derive its gradient and Hessian.
+\[
+	\nabla q(w) = Qw + b, \quad Hq(w) = Q
+\]
+\emph{Hint: expand \(q(w)\) and take the partials with respect to \(w_i\) and \(w_i,w_j\).}
+\end{problem}
+
+Let us start by unrolling the quadratic form expression:
+
+\[
 	q(w) = \sum_{i,j=1}^{d} Q_{ij} w_{i}w_{j} + \sum_{i=1}^{d}b_{i}w_{i} + c,
-	\]
-	
-	and compute the partial derivative over the \(k-th\) component:
-	
-	\[
+\]
+
+and compute the partial derivative over the \(k-th\) component:
+
+\[
 	\frac{\partial q}{\partial w_k} (w) = \sum_{i=1}^{d} Q_{ik} w_{i} + \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k}
-	\]
-	
-	where \(k \in \{1, \ldots, d\}\). By using that \(Q\) is symmetric we obtain:
-	
-	\begin{equation}
-		\label{eq-4}
-		\frac{\partial q}{\partial w_k} (w) = 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k}.
-	\end{equation}
-	
-	That is, we are multiplying the \(k-th\) row of the \(Q\) matrix and multiplying it by \(w\). We can obtain gradient as a product of matrices using the previous expression:
-	
-	\[
+\]
+
+where \(k \in \{1, \ldots, d\}\). By using that \(Q\) is symmetric we obtain:
+
+\begin{equation}
+	\label{eq-4}
+	\frac{\partial q}{\partial w_k} (w) = 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k}.
+\end{equation}
+
+That is, we are multiplying the \(k-th\) row of the \(Q\) matrix and multiplying it by \(w\). We can obtain gradient as a product of matrices using the previous expression:
+
+\[
 	\nabla q(w) = \begin{pmatrix}
 		\frac{\partial q}{\partial w_1} (w) \\
 		\vdots                              \\
@@ -317,551 +319,601 @@
 		b_{d}
 	\end{pmatrix}
 	= 2 \ Qw + b
-	\]
-	
-	In order to obtain the Hessian, we take partial derivatives over the \(l-th\) component in \ref{eq-4}:
-	\begin{align*}
-		\frac{\partial^2 q}{\partial w_k \partial w_l} (w) & = \frac{\partial q}{\partial w_l} \left( \frac{\partial q}{\partial w_k} \right) (w)          \\
-		& = \frac{\partial q}{\partial w_l} \left( 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k} \right) (w) \\
-		& = 2 \; Q_{kl}
-	\end{align*}
-	Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\). That is:
-	
-	\[
+\]
+
+In order to obtain the Hessian, we take partial derivatives over the \(l-th\) component in \ref{eq-4}:
+\begin{align*}
+	\frac{\partial^2 q}{\partial w_k \partial w_l} (w) & = \frac{\partial q}{\partial w_l} \left( \frac{\partial q}{\partial w_k} \right) (w)          \\
+	                                                   & = \frac{\partial q}{\partial w_l} \left( 2 \; \sum_{j=1}^{d} Q_{kj} w_{j} + b_{k} \right) (w) \\
+	                                                   & = 2 \; Q_{kl}
+\end{align*}
+Hence, the Hessian matrix of \(q\) will have \(2 Q_{kl}\) in position \((k, l)\). That is:
+
+\[
 	\text{Hess} \ q(w) = 2Q
-	\]
-	
-	\begin{problem}{5}
-		If \( (p_1,\dots,p_K) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_K) = - \sum_{i=1}^K p_i \log p_i\) is a concave function. Show also that its maximum is \( \log K \), attained when \( p_i = \frac{1}{K}\) for all $i$.
-	\end{problem}
-	
-	
-	In this problem, since we are dealing with probabilities, two new constraints appear:
-	\begin{align*}
-		\sum_{i=1}^K p_i = 1 \\
-		p_i \geq 0 \quad \forall i =1,\dots,n
-	\end{align*}
-	They will be used later.\\
-	
-	Let us compute the gradient and Hessian of \(H\) to see that it is concave. Firstly, we have that
-	\[
+\]
+
+\begin{problem}{5}
+If \( (p_1,\dots,p_K) \) is a probability distribution, prove that its entropy \( H(p_1, \dots, p_K) = - \sum_{i=1}^K p_i \log p_i\) is a concave function. Show also that its maximum is \( \log K \), attained when \( p_i = \frac{1}{K}\) for all $i$.
+\end{problem}
+
+
+In this problem, since we are dealing with probabilities, two new constraints appear:
+\begin{align*}
+	\sum_{i=1}^K p_i = 1 \\
+	p_i \geq 0 \quad \forall i =1,\dots,n
+\end{align*}
+They will be used later.\\
+
+Let us compute the gradient and Hessian of \(H\) to see that it is concave. Firstly, we have that
+\[
 	\frac{\partial H}{\partial p_i} = - \log(p_i) - 1, \quad \forall i = 1,\dots,K
-	\]
-	and, hence,
-	\[
+\]
+and, hence,
+\[
 	\frac{\partial^2 H}{\partial p_i \partial p_j} = - \frac{\delta{ij}}{p_i},
-	\]
-	where $\delta_{ij}$ is \href{https://en.wikipedia.org/wiki/Kronecker_delta}{the Kroneker delta}. Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite diagonal matrix, so \(H\) is concave.\\
-	
-	In order to find the minimum entropy, we have to solve the following optimization problem:
-	\begin{align*}
-		& \max_{(p_1,\dots,p_K)} H(p_1,\dots,p_K) \\
-		& \text{s.t.}                             \\
-		& \sum_{i=1}^K p_i -1 = 0                 \\
-		& p_i \geq 0 \quad \forall i =1,\dots,K
-	\end{align*}
-	Consider the lagrangian of this problem:
-	\[
+\]
+where $\delta_{ij}$ is \href{https://en.wikipedia.org/wiki/Kronecker_delta}{the Kroneker delta}. Lastly, since \(p_i \geq 0\), we have that the Hessian is a negative-definite diagonal matrix, so \(H\) is concave.\\
+
+In order to find the minimum entropy, we have to solve the following optimization problem:
+\begin{align*}
+	 & \max_{(p_1,\dots,p_K)} H(p_1,\dots,p_K) \\
+	 & \text{s.t.}                             \\
+	 & \sum_{i=1}^K p_i -1 = 0                 \\
+	 & p_i \geq 0 \quad \forall i =1,\dots,K
+\end{align*}
+Consider the lagrangian of this problem:
+\[
 	L\left(\{p_i\}_{i=1}^K, \lambda\right) = - \sum_{i=1}^K p_i \log(p_i) + \lambda\left(\sum_{i=1}^K p_i -1\right).
-	\]
-	We can obtain its gradient derivating with respect to each variable
-	\[
+\]
+We can obtain its gradient derivating with respect to each variable
+\[
 	\frac{\partial \mathcal L}{\partial p_i} = - \log p_i - 1 + \lambda, \quad \frac{\partial \mathcal L}{\partial \lambda} =  \sum_{i=1}^K p_i -1.
-	\]
-	Using this derivatives, we have to equalize them to zero, which is solving the following equations system:
-	\[
+\]
+Using this derivatives, we have to equalize them to zero, which is solving the following equations system:
+\[
 	\begin{cases}
 		\log p_i = \lambda - 1, \quad i = 1,\dots,K \\
 		\sum_{i=1}^K p_i = 1
 	\end{cases}
-	\]
-	Looking at the first equation, the \(p_i\) have no interdependencies, they are constant and have the same value. Also, since they have to add \(1\), the only possible solution is that each \(p_i = \frac{1}{K}\). Lastly, we can compute the maximum value of the Entropy:
-	\[
+\]
+Looking at the first equation, the \(p_i\) have no interdependencies, they are constant and have the same value. Also, since they have to add \(1\), the only possible solution is that each \(p_i = \frac{1}{K}\). Lastly, we can compute the maximum value of the Entropy:
+\[
 	H\left(\{p_i\}_{i=1}^K\right) = - \sum_{i=1}^K \frac{1}{K} \log \left(\frac{1}{K}\right)  = - \frac{1}{K} \left(\sum_{i=1}^K \log 1 - \log K\right) = \frac{1}{K} \cdot K \log K = \log K,
-	\]
-	as we wanted to prove. \qed
-	
-	\begin{problem}{6}
-		We want to solve the following constrained restriction problem:
-		\begin{align*}
-			\min \quad       & x^{2} + 2y^{2} + 4xy \\
-			\text{s.t} \quad & x + y = 1            \\
-			& x,y \geq 0.
-		\end{align*}
-		\begin{enumerate}
-			\item Write its Lagrangian with \(\alpha,\beta\) the multipliers of the inequality constraints.
-			\item Write the KKT conditions.
-			\item Use them to solve the problem. For this consider separately the \((\alpha = \beta = 0)\), \((\alpha > 0, \beta = 0)\), \((\alpha = 0, \beta > 0)\), \((\alpha > 0, \beta > 0)\) cases.
-		\end{enumerate}
-	\end{problem}
-	
-	Writing the \textbf{Lagrangian} in terms of \(\alpha,\beta,\lambda\) is pretty straightforward:
-	\[
+\]
+as we wanted to prove. \qed
+
+\begin{problem}{6}
+We want to solve the following constrained restriction problem:
+\begin{align*}
+	\min \quad       & x^{2} + 2y^{2} + 4xy \\
+	\text{s.t} \quad & x + y = 1            \\
+	                 & x,y \geq 0.
+\end{align*}
+\begin{enumerate}
+	\item Write its Lagrangian with \(\alpha,\beta\) the multipliers of the inequality constraints.
+	\item Write the KKT conditions.
+	\item Use them to solve the problem. For this consider separately the \((\alpha = \beta = 0)\), \((\alpha > 0, \beta = 0)\), \((\alpha = 0, \beta > 0)\), \((\alpha > 0, \beta > 0)\) cases.
+\end{enumerate}
+\end{problem}
+
+Writing the \textbf{Lagrangian} in terms of \(\alpha,\beta,\lambda\) is pretty straightforward:
+\[
 	\mathcal L(x,y,\alpha,\beta,\lambda) = x^{2} + 2y^{2} + 4xy + \lambda(x+y - 1) + \alpha x + \beta y .
-	\]
-	Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are: the gradient of the Lagrangian equals to zero and the inequality restrictions (multiplied by its corresponding constant) also equal to zero. In our case, the \textbf{KKT conditions} are:
-	\begin{align*}
-		\frac{\partial \mathcal L}{\partial x}  = 2x + 4y + \lambda + \alpha & = 0 \\
-		\frac{\partial \mathcal L}{\partial y}  = 4y + 4x + \lambda + \beta  & = 0 \\
-		\alpha x                                                    & = 0 \\
-		\beta y                                                     & = 0
-	\end{align*}
-	Now, we want to solve this equations system to see if we can find a minimum of our problem. We have the following cases:
-	
-	\begin{itemize}
-		\item Case \(\alpha = \beta = 0\).\\
-		In this case, the system is
-		\begin{align*}
-			2x + 4y + \lambda & = 0 \\
-			4y + 4x + \lambda & = 0 \\
-		\end{align*}
-		If we substitute \(4y\) from the first equation into the second one, we obtain
-		\[
-		-2x - \lambda + 4x + \lambda = 0 \implies 2x = 0  \implies x = 0,
-		\]
-		and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((0,1)\). Any non-negative values of $\alpha$ and $\beta$ are valid to satisfy both hte KKT conditions and our problem restrictions.
-		\item Case \(\alpha, \beta > 0\).\\
-		In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
-		\item Case \(\alpha > 0, \beta = 0\).\\
-		Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a \emph{KKT point} \((0,1)\), which is the same that we obtained in the first case.\\
-		\item Case \(\alpha = 0, \beta > 0\).\\
-		Using the same reasoning, we obtain \((1,0)\) as a new \emph{KKT} point.
-	\end{itemize}
-	
-	Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). Now, we make use of the following theorem:
-	
-	\begin{nth}
-		If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^*\) is an optimum of this problem. (Slide 18)
-	\end{nth}
-	
-	So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\). \\
-	
-	\begin{problem}{7}
-		We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
-		\[
-		\min_{w,b} \frac{1}{2} \norm{w}^2
-		\]
-		subject to \(y^p\left(w \cdot x^p + b\right) \geq 1\). What are here the KKT conditions?
-	\end{problem}
-	
-	Firstly, consider the Lagrangian for this problem
-	
-	\begin{align*}
-		\mathcal L(w,b;\alpha) & = \frac{1}{2} \norm{w}^2 - \sum_p \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]       \\
-		& = \frac{1}{2} w \cdot w - w \sum_p \alpha_p y^p  x^p - b \sum_p \alpha_p y^p + \sum_p \alpha_p     \\
-		& = w \left(\frac{1}{2}w -\sum_p \alpha_p y^p  x^p \right) - b \sum_p \alpha_p y^p + \sum_p \alpha_p
-	\end{align*}
-	
-	Then, we have to compute the gradient of the Lagrangian
-	
-	\[
+\]
+Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are: the gradient of the Lagrangian equals to zero and the inequality restrictions (multiplied by its corresponding constant) also equal to zero. In our case, the \textbf{KKT conditions} are:
+\begin{align*}
+	\frac{\partial \mathcal L}{\partial x}  = 2x + 4y + \lambda + \alpha & = 0 \\
+	\frac{\partial \mathcal L}{\partial y}  = 4y + 4x + \lambda + \beta  & = 0 \\
+	\alpha x                                                             & = 0 \\
+	\beta y                                                              & = 0
+\end{align*}
+Now, we want to solve this equations system to see if we can find a minimum of our problem. We have the following cases:
+
+\begin{itemize}
+	\item Case \(\alpha = \beta = 0\).\\
+	      In this case, the system is
+	      \begin{align*}
+		      2x + 4y + \lambda & = 0 \\
+		      4y + 4x + \lambda & = 0 \\
+	      \end{align*}
+	      If we substitute \(4y\) from the first equation into the second one, we obtain
+	      \[
+		      -2x - \lambda + 4x + \lambda = 0 \implies 2x = 0  \implies x = 0,
+	      \]
+	      and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((0,1)\). Any non-negative values of $\alpha$ and $\beta$ are valid to satisfy both hte KKT conditions and our problem restrictions.
+	\item Case \(\alpha, \beta > 0\).\\
+	      In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
+	\item Case \(\alpha > 0, \beta = 0\).\\
+	      Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a \emph{KKT point} \((0,1)\), which is the same that we obtained in the first case.\\
+	\item Case \(\alpha = 0, \beta > 0\).\\
+	      Using the same reasoning, we obtain \((1,0)\) as a new \emph{KKT} point.
+\end{itemize}
+
+Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). Now, we make use of the following theorem:
+
+\begin{nth}
+	If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^*\) is an optimum of this problem. (Slide 18)
+\end{nth}
+
+So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\). \\
+
+\begin{problem}{7}
+We have worked out the dual problem for the soft SVC problem. Do the same for the simpler \textbf{hard} SVC problem
+\[
+	\min_{w,b} \frac{1}{2} \norm{w}^2
+\]
+subject to \(y^p\left(w \cdot x^p + b\right) \geq 1\). What are here the KKT conditions?
+\end{problem}
+
+Firstly, consider the Lagrangian for this problem
+
+\begin{align*}
+	\mathcal L(w,b;\alpha) & = \frac{1}{2} \norm{w}^2 - \sum_p \alpha_p \left[ y^p \left(w \cdot x^p +b\right) -1 \right]       \\
+	                       & = \frac{1}{2} w \cdot w - w \sum_p \alpha_p y^p  x^p - b \sum_p \alpha_p y^p + \sum_p \alpha_p     \\
+	                       & = w \left(\frac{1}{2}w -\sum_p \alpha_p y^p  x^p \right) - b \sum_p \alpha_p y^p + \sum_p \alpha_p
+\end{align*}
+
+Then, we have to compute the gradient of the Lagrangian
+
+\[
 	\nabla_w \mathcal L(w,b;\alpha) = w - \sum_p \alpha_p y^p x^p = 0 \implies w = \sum_p \alpha_p y^p x^p
-	\]
-	\[
+\]
+\[
 	\frac{\partial \mathcal L}{\partial b} = - \sum_p \alpha_p y^p = 0
-	\]
-	
-	Lastly, we have to use these equalities in the expression of the Lagrangian:
-	
-	\begin{align*}
-		\mathcal L(w,b;\alpha) & = \sum \alpha_p - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
-		& = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p \alpha_q y^p y^q x^p x^q
-	\end{align*}
-	
-	By defining the matrix \(Q\) with value \(y^p y^q x^p x^q\) in position \((p,q)\), our dual optimization problem gets simplified into
-	
-	\[
+\]
+
+Lastly, we have to use these equalities in the expression of the Lagrangian:
+
+\begin{align*}
+	\mathcal L(w,b;\alpha) & = \sum \alpha_p - \frac{1}{2}\left(\sum_p \alpha_p y^p x^p\right)\left(\sum_q \alpha_q y^q x^q\right) \\
+	                       & = \sum \alpha_p - \frac{1}{2} \sum_{p,q} \alpha_p \alpha_q y^p y^q x^p x^q
+\end{align*}
+
+By defining the matrix \(Q\) with value \(y^p y^q x^p x^q\) in position \((p,q)\), our dual optimization problem gets simplified into
+
+\[
 	\begin{cases}
 		\max_{\alpha} \sum_p \alpha^p - \frac{1}{2} \alpha^T Q \alpha \\
 		\text{s.t. } \alpha^p, \sum \alpha_p y^p = 0
 	\end{cases}
-	\]
-	
-	At this point we may realize that we have completely removed the dependency \(b\) from our problem. The KKT conditions for this problem are:
-	
-	\[
+\]
+
+At this point we may realize that we have completely removed the dependency \(b\) from our problem. The KKT conditions for this problem are:
+
+\[
 	\begin{cases}
-		\nabla_w \mathcal L = w - \sum_p \alpha_p y^p x^p & = 0 \\
+		\nabla_w \mathcal L = w - \sum_p \alpha_p y^p x^p              & = 0 \\
 		\frac{\partial \mathcal L}{\partial b} = - \sum_p \alpha_p y^p & = 0 \\
-		\alpha_p \left(1 - y^p\left(w \cdot x^p + b\right)\right) & = 0
+		\alpha_p \left(1 - y^p\left(w \cdot x^p + b\right)\right)      & = 0
 	\end{cases}
-	\] \\
-	
-	\begin{problem}{8}
-		A typical Linear Programming (LP) problem can be stated as the following constrained optimization problem:
-		\begin{align*}
-			\min_x c \cdot x \quad s.t. \quad x \geq 0, Ax \leq b
-		\end{align*}
-		with \(x \in \R^d\), \(A\) an \(m \times d\) matrix and \(b \in \R^m\). A tool often used in LP is to study the so called dual problem, which in this case is
-		\begin{align*}
-			\min_{z} b \cdot z \quad s.t. \quad z \geq 0, A^T z \leq -c
-		\end{align*}
-		with now \(z \in \R^m\). Apply our Lagrangian dual construction technique to show that this is indeed the dual formulation of the initial LP problem
-	\end{problem}
-	
-	Firstly, we have to write the Lagrangian for this problem:
-	
-	\begin{align*}
-		\mathcal L(x,\lambda,\mu) & = c \cdot x -  \sum_{i=1}^d \lambda_i x_i  + \sum_{j=1}^m \mu_j(a_j \cdot x - b_j) \\
-		& = xc - x\lambda + x\left(A^T \mu\right) - b\mu
-	\end{align*}
-	
-	where $\mu \ge 0$. Hence, the gradient respect to \(x\) of the lagrangian is:
-	\[
+\] \\
+
+\begin{problem}{8}
+A typical Linear Programming (LP) problem can be stated as the following constrained optimization problem:
+\begin{align*}
+	\min_x c \cdot x \quad s.t. \quad x \geq 0, Ax \leq b
+\end{align*}
+with \(x \in \R^d\), \(A\) an \(m \times d\) matrix and \(b \in \R^m\). A tool often used in LP is to study the so called dual problem, which in this case is
+\begin{align*}
+	\min_{z} b \cdot z \quad s.t. \quad z \geq 0, A^T z \leq -c
+\end{align*}
+with now \(z \in \R^m\). Apply our Lagrangian dual construction technique to show that this is indeed the dual formulation of the initial LP problem
+\end{problem}
+
+Firstly, we have to write the Lagrangian for this problem:
+\begin{align*}
+	\mathcal L(x,\lambda,\mu) & = c \cdot x -  \sum_{i=1}^d \lambda_i x_i  + \sum_{j=1}^m \mu_j(a_j \cdot x - b_j) \\
+	                          & = xc - x\lambda + x\left(A^T \mu\right) - b\mu
+\end{align*}
+
+where $\mu \ge 0$. Hence, the gradient respect to \(x\) of the lagrangian is:
+\[
 	\nabla_x \mathcal L = c - \lambda + A^T \mu \implies c = \lambda - A^T\mu
-	\]
-	\[
+\]
+\[
 	\frac{\partial \mathcal L}{\partial \lambda} = -x = 0 \implies x = 0
-	\]
-	
-	Hence, the dual problem is:
-	
-	\[
+\]
+
+Hence, the dual problem is:
+
+\[
 	\begin{cases}
 		\max_\mu - b \mu \\
 		\text{s.t. } c = \lambda - A^T\mu, \quad \mu \ge 0
 	\end{cases}
-	\]
-	
-	Since $\lambda$ doesn't appear in the objective function, we may remove it by changing the restriction from $c = \lambda - A^T\mu$ to $-c \geq A^T\mu$. Additionally, we may change the optimization function from $\max_\mu - b \mu$ to $\min_\mu b \mu$, obtaining:
-	\[
+\]
+
+Since $\lambda$ doesn't appear in the objective function, we may remove it by changing the restriction from $c = \lambda - A^T\mu$ to $-c \geq A^T\mu$. Additionally, we may change the optimization function from $\max_\mu - b \mu$ to $\min_\mu b \mu$, obtaining:
+\[
 	\begin{cases}
 		\min_\mu b \mu \\
 		\text{s.t. } -c \ge A^T\mu, \quad \mu \ge 0
 	\end{cases}
-	\]
-	
-	which was to be demonstrated. \\
-	
-	\begin{problem}{9}
-		We know that, theoretically, the minimum SVC primal \(f^*\) and the maximum SVC dual \(q^*\) are equal. Check this in this case by writing \(q^*\) and \(f^*\) in terms of the \(\alpha_p^*\) and checking that both expressions coincide.
-	\end{problem}
-	
-	\begin{problem}{10}
-		We want to apply out Lagrangian theory to solve the homogeneous constrained Ridge problem (i.e., with a model \(w\cdot x\)
-		\[
-		\text{arg}\min_{w} \text{ mse}(w) = \frac{1}{n} \sum_{p=1}^n (t^p - w \cdot x^p)^2, \quad \text{s.t.} \quad \norm{w}_2^2 \leq \rho^2.
-		\]
-		Write its Lagrangian and, using the lecture slides, the detailed formulation of the KKT conditions at an optimal \(w^*\) and multiplier \(\lambda^*\).\\
-		Assuming that \(\lambda^* > 0\), use the gradient KKT condition to show that \(w^*\) also solves a standard Ridge regression problem for the optimal value \(\lambda^*\) of the regularization parameter.\\
-		Assuming now that \(\lambda^* = 0\), use again the slides to write down the solution in this case and use this solution to get a lower bound for \(\rho\).
-	\end{problem}
-	
-	HECHO EN CLASE
-	
-	\begin{problem}{11}
-		If \( Q \) is a symmetric, positive definite \( d \times d \) matrix, show that \( f(x) = x^TQx, \ x \in \mathbb{R}^d \), is a convex function.
-	\end{problem}
-	
-	If a function $f$ is twicce differentiable, then it is convex if and only if its Hessian matrix is definite positive. In our case, $\text{Hess }f = Q$, which is symmetric and positive definite by hypothesis, proving that $f$ is convex. \\
-	
-	\begin{problem}{12}
-		Let \( f:\mathbb{R}^d \to \mathbb{R} \)  be a function and assume that \( epi(f) \subset \mathbb{R}^d \times \mathbb{R} \)  is convex. Prove that then \( f \)  is convex.
-		
-	\end{problem}
-	
-	Consider the set
-	\[
+\]
+
+which was to be demonstrated. \\
+
+\begin{problem}{9}
+We know that, theoretically, the minimum SVC primal \(f^*\) and the maximum SVC dual \(q^*\) are equal. Check this in this case by writing \(q^*\) and \(f^*\) in terms of the \(\alpha_p^*\) and checking that both expressions coincide.
+\end{problem}
+
+\begin{problem}{10}
+We want to apply out Lagrangian theory to solve the homogeneous constrained Ridge problem (i.e., with a model \(w\cdot x\)
+\[
+	\text{arg}\min_{w} \text{ mse}(w) = \frac{1}{n} \sum_{p=1}^n (t^p - w \cdot x^p)^2, \quad \text{s.t.} \quad \norm{w}_2^2 \leq \rho^2.
+\]
+Write its Lagrangian and, using the lecture slides, the detailed formulation of the KKT conditions at an optimal \(w^*\) and multiplier \(\lambda^*\).\\
+Assuming that \(\lambda^* > 0\), use the gradient KKT condition to show that \(w^*\) also solves a standard Ridge regression problem for the optimal value \(\lambda^*\) of the regularization parameter.\\
+Assuming now that \(\lambda^* = 0\), use again the slides to write down the solution in this case and use this solution to get a lower bound for \(\rho\).
+\end{problem}
+
+HECHO EN CLASE
+
+\begin{problem}{11}
+If \( Q \) is a symmetric, positive definite \( d \times d \) matrix, show that \( f(x) = x^TQx, \ x \in \mathbb{R}^d \), is a convex function.
+\end{problem}
+
+If a function $f$ is twicce differentiable, then it is convex if and only if its Hessian matrix is definite positive. In our case, $\text{Hess }f = Q$, which is symmetric and positive definite by hypothesis, proving that $f$ is convex. \\
+
+\begin{problem}{12}
+Let \( f:\mathbb{R}^d \to \mathbb{R} \)  be a function and assume that \( epi(f) \subset \mathbb{R}^d \times \mathbb{R} \)  is convex. Prove that then \( f \)  is convex.
+
+\end{problem}
+
+Consider the set
+\[
 	\text{epi}(f) = \{(x,t)\in \R^d \times R \ : \ t \geq f(x)\}.
-	\]
-	This set is, by hypothesis, convex. That is, for any \((x,t),(x',t') \in \text{epi}(f)\), we have
-	\[
-	\lambda(x,t) + (1-\lambda)(x',t')  = \left(\lambda x + (1-\lambda)x', \lambda t + (1-\lambda)t'\right) \in \text{epi}(f)\quad \forall \lambda \in [0,1].
-	\]
-	This implies that
-	\begin{equation}\label{epi:1}
-		f(\lambda x + (1-\lambda)x') \leq \lambda t + (1-\lambda)t', \quad \forall \lambda \in [0,1].
-	\end{equation}
-	Also, since each of the points belongs to \(\text{epi}(f)\), we have that:
-	\begin{equation}\label{epi:2}
-		\lambda f(x) + (1-\lambda)f(x') \leq \lambda t + (1-\lambda)t', \quad \forall \lambda \in [0,1]
-	\end{equation}
-	Lastly, if we substract Equation \eqref{epi:2} from Equation \eqref{epi:1} we obtain:
-	\begin{align*}
-		& f(\lambda x + (1-\lambda)x')  - \left( \lambda f(x) + (1-\lambda)f(x')\right)  \leq 0, & \quad \forall \lambda \in [0,1]
-		\\ \implies & f(\lambda x + (1-\lambda)x') \leq  \lambda f(x) + (1-\lambda)f(x'), &\quad \forall \lambda \in [0,1].
-	\end{align*}
-	Lastly, recalling that \((x,f(x)) \in \text{epi}(f)\) for all \(x \in S\), we obtain that \(f\) is convex. \qed \\
-	
-	
-	\begin{problem}{13}
-		Let \( f : \mathbb{R}^d \to \mathbb{R} \) be a convex function. Prove that \( \operatorname{epi}(f) \) is a closed set and that \( (x, f(x)) \in \partial \operatorname{epi}(f) \)  .
-	\end{problem}
-	
-	
-	
-	\begin{problem}{14}
-		Prove that if \( f \)  is strictly convex, it has a unique global minimum.
-	\end{problem}
-	
-	This result is incomplete: with the given hypothesis, it is simply not true. For instance, the function $x \mapsto e^x$ is stricly convex and doesn't have a unique global minimum. \\
-	
-	Let us add an additional hypothesis to create a new result to prove.
-	
-	\begin{itemize}
-		\item Case 1: If we suppose $f$ is born on a compact set, then using Weiestrass theorem we will have at least $1$ minimum.
-		\item Case 2: We may simply suppose that we have at least $1$ minimum, without impossing any restrictions on the dominion of $f$.
-	\end{itemize}
-	
-	In either one of those cases, the additionaly hypothesis is summarized in having at least $1$ minimum. However, this is still not enough. For instance, the function $f:\{-1,1\} \rightarrow \R, f(x) = x^2$ is strictly convex and has two minimums (in the two points of its dominion). The result we will prove is:
-	
-	\emph{\textbf{Proposition.}} Let \( f \) be a strictly convex function. Then  it has at most one global minimum in each connected component.
-	
-	Suppose $x \neq z$ are both global minimums of $f$ in the same connected component and let $\lambda \in (0,1)$. Then:
-	
-	\[
+\]
+It is clear that, for each \(x \in \R^d\), \((x,f(x))\in \text{epi}(f)\). Now, \(\text{epi}(f)\) is convex by hypothesis, so if we consider \(x,x'\in \R^d\), we have:
+\[
+	\lambda(x,f(x)) + (1-\lambda)(x',f(x')) = \left(\lambda x + (1-\lambda)x', \lambda f(x) + (1-\lambda)f(x')\right) \in \text{epi}(f)\quad \forall \lambda \in [0,1].
+\]
+Since for each \(\lambda \in [0,1]\) the obtained point is in \(\text{epi}(f)\), we have
+\[
+	f(\lambda x + (1-\lambda)x') \leq \lambda f(x) + (1-\lambda)f(x'), \quad \forall \lambda \in [0,1].
+\]
+So \(f\) is convex. \qed \\
+
+
+\begin{problem}{13}
+Let \( f : \mathbb{R}^d \to \mathbb{R} \) be a convex function. Prove that \( \operatorname{epi}(f) \) is a closed set and that \( (x, f(x)) \in \partial \operatorname{epi}(f) \)  .
+\end{problem}
+
+We know that a set S is closed if \(cl(S) = S\). Let us prove this when \(S = \operatorname{epi}(f)\), using a double inclusion argument. Firstly, it is clear that $\operatorname{epi}(f) \subseteq cl(\operatorname{epi}(f))$, by the definition of \(cl(S)\). To check the second inclusion, we will see that if \((x,t)\in cl(\operatorname{epi}(f))\), then \((x,t) \in \operatorname{epi}(f)\).
+
+Let \((x,t)\in cl(\operatorname{epi}(f))\). Then, for any \(\delta > 0\),
+\begin{equation}\label{ej13:cap}
+	B((x,t),\delta) \cap 	\operatorname{epi}(f) \neq \emptyset.
+\end{equation}
+
+Suppose that \((x,t)\notin \operatorname{epi}(f)\). Since \(f\) is convex, \(\operatorname{epi}(f)\) is also convex. Using the Projection Theorem, we can find a minimum distance \(d > 0\) from \((x,t)\) to \(\operatorname{epi}(f)\). Thus,
+\[
+	\operatorname{epi}(f) \cap B((x,t), \frac{d}{2}) = \emptyset,
+\]
+which is a contradiction with \eqref{ej13:cap}, so \((x,t) \in \operatorname{epi}(f)\), and \(cl(\operatorname{epi}(f)) = \operatorname{epi}(f)\).
+
+
+\begin{problem}{14}
+Prove that if \( f \)  is strictly convex, it has a unique global minimum.
+\end{problem}
+
+This result is incomplete: with the given hypothesis, it is simply not true. For instance, the function $x \mapsto e^x$ is stricly convex and doesn't have a unique global minimum. \\
+
+Let us add an additional hypothesis to create a new result to prove.
+
+\begin{itemize}
+	\item Case 1: If we suppose $f$ is born on a compact set, then using Weiestrass theorem we will have at least $1$ minimum.
+	\item Case 2: We may simply suppose that we have at least $1$ minimum, without impossing any restrictions on the dominion of $f$.
+\end{itemize}
+
+In either one of those cases, the additionaly hypothesis is summarized in having at least $1$ minimum. However, this is still not enough. For instance, the function $f:\{-1,1\} \rightarrow \R, f(x) = x^2$ is strictly convex and has two minimums (in the two points of its dominion). The result we will prove is:
+
+\emph{\textbf{Proposition.}} Let \( f \) be a strictly convex function. Then  it has at most one global minimum in each connected component.
+
+Suppose $x \neq z$ are both global minimums of $f$ in the same connected component and let $\lambda \in (0,1)$. Then:
+\[
 	f(\lambda x + (1-\lambda)z) < \lambda f(x) + (1-\lambda) f(z) = f^*
-	\]
-	
-	We have find an element $\lambda x + (1-\lambda)z$ (include in the dominion of $f$ because $x$ and $z$ are in the same connected component) that has a lower value of $f$ than the minimum, which is impossible. Hence, $x = z$. \qed \\
-	
-	\begin{problem}{15}
-		Let \( f,g: S \subset \mathbb{R}^d \to \mathbb{R} \)  be two convex functions on the convex set \( S \) . Prove that, as subsets, \(  \partial f(x) + \partial g(x) \subset \partial(f+g)(x) \) for any $x\in S$.
-	\end{problem}
-	
-	We already know that \(\xi \in \partial f(x)\) implies that \(f(x') > f(x) + \xi(x-x')\) for all \(x' \in S\). Let us apply this definition to obtain the result.\\
-	Consider \(\xi_1 \in \partial f(x)\) and \(\xi_2 \in \partial g(x)\). Then, \(\xi_1 + \xi_2 \in \partial f(x) + \partial g(x)\). Now, using the definition for each of the \(\xi_i\) with \(i = 1,2\), we obtain:
-	\[
+\]
+
+We have find an element $\lambda x + (1-\lambda)z$ (include in the dominion of $f$ because $x$ and $z$ are in the same connected component) that has a lower value of $f$ than the minimum, which is impossible. Hence, $x = z$. \qed \\
+
+\begin{problem}{15}
+Let \( f,g: S \subset \mathbb{R}^d \to \mathbb{R} \)  be two convex functions on the convex set \( S \) . Prove that, as subsets, \(  \partial f(x) + \partial g(x) \subset \partial(f+g)(x) \) for any $x\in S$.
+\end{problem}
+
+We already know that \(\xi \in \partial f(x)\) implies that \(f(x') > f(x) + \xi(x-x')\) for all \(x' \in S\). Let us apply this definition to obtain the result.\\
+Consider \(\xi_1 \in \partial f(x)\) and \(\xi_2 \in \partial g(x)\). Then, \(\xi_1 + \xi_2 \in \partial f(x) + \partial g(x)\). Now, using the definition for each of the \(\xi_i\) with \(i = 1,2\), we obtain:
+\[
 	f(x') > f(x) + \xi_1 (x-x'), \quad g(x') > g(x) + \xi_2(x-x')
-	\]
-	And, if we add both inequalitys:
-	\begin{align*}
-		f(x') + g(x')        & > f(x) + g(x) + (\xi_1 + \xi_2)(x-x')        \\
-		\left(f+g\right)(x') & >\left(f+g\right)(x) + (\xi_1 + \xi_2)(x-x')
-	\end{align*}
-	which means that \(\xi_1 + \xi_2 \in \partial \left(f+g\right)(x) \), as we wanted to see. \qed \\
-	
-	\begin{problem}{16}
-		Compute the proximal of \( f(x) = 0 \) and of \( g(x) = \frac{1}{2}\|x\|^2 \).
-	\end{problem}
-	
-	Let us directly compute the proximal of $f$ directly:
-	
-	\[
+\]
+And, if we add both inequalitys:
+\begin{align*}
+	f(x') + g(x')        & > f(x) + g(x) + (\xi_1 + \xi_2)(x-x')        \\
+	\left(f+g\right)(x') & >\left(f+g\right)(x) + (\xi_1 + \xi_2)(x-x')
+\end{align*}
+which means that \(\xi_1 + \xi_2 \in \partial \left(f+g\right)(x) \), as we wanted to see. \qed \\
+
+\begin{problem}{16}
+Compute the proximal of \( f(x) = 0 \) and of \( g(x) = \frac{1}{2}\|x\|^2 \).
+\end{problem}
+
+Let us directly compute the proximal of $f$ directly:
+\[
 	\text{prox}_f(x) = \arg \min_z 0 + \frac{1}{2} \parallel x - z \parallel^2 = x.
-	\]
-	
-	We will asume $g$ is born in $\R$ for more generality. For its proximal we have:
-	
-	\[
+\]
+
+We will asume $g$ is born in $\R$ for more generality. For its proximal we have:
+\[
 	\text{prox}_g(x) = \arg \min_z \underbrace{\frac{1}{2}z^2 + \frac{1}{2} \parallel x - z \parallel^2}_{\equiv h(z)}
-	\]
-	
-	We equalize the gradient of $h$ to $0$ to find the minimum:
-	
-	\[
+\]
+We equalize the gradient of $h$ to $0$ to find the minimum:
+\[
 	0 = \nabla h(z) = z + z - x \implies z = \frac{1}{2}x
-	\]
-	
-	Hence
-	
-	\[
+\]
+Hence
+\[
 	\text{prox}_g(x) =  \frac{1}{2} x
-	\] \\
-	
-	\begin{problem}{17}
-		Assume that \( f \)  is convex. Prove that for any \( \lambda > 0, \partial(\lambda f)(x) = \lambda \partial f(x) \) as subsets.
-	\end{problem}
-	
-	We will prove this result with a double inclusion. Let $A \equiv \partial(\lambda f)(x)$ and $B \equiv \lambda \partial f(x)$
-	
-	\begin{itemize}
-		\item Case $A \subseteq B$: Let $xi \in A$, then for all $z$:
-		
-		\[
-		\lambda f(z) \ge \lambda f(x) + \xi (z-x) \implies f(z) \ge f(x) + \frac{\xi}{\lambda}(z-x)
-		\]
-		
-		where we used that $\lambda > 0$. This implies that $\frac{\xi}{\lambda} \in \partial f(x)$. Defining $\mu \equiv \frac{\xi}{\lambda} \in \partial f(x)$ we obtain $\xi = \lambda \mu \in \lambda \cdot \partial f(x) = B$.
-		
-		\item Case $B \subseteq A$: Let $\xi \in B$, then $\xi = \lambda \mu$ with $\mu \in \partial f(x)$. Hence, for all $z$:
-		
-		\begin{align*}
-			f(z) \ge f(x) + \mu(z-x) & \implies \lambda f(z) \ge \lambda f(x) + \lambda\mu(z-x) \\
-			& \implies (\lambda f)(z) \ge (\lambda f)(x) + (\lambda\mu)(z-x) \\
-			& \implies \xi = \lambda \mu \in \partial(\lambda f)(x)
-		\end{align*}
-	\end{itemize}
-	
-	\begin{problem}{18}
-		Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z} - \epsilon\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\).
-	\end{problem}
-	
-	
-	
-	
-	\begin{problem}{19}
-		Compute the proximals of the hinge \( f(x) = \max\{0, -x\}  \) and the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss functions.
-	\end{problem}
-	
-	We start by computing $(\text{Id} + \partial f)(x)$:
-	
-	\makebox[\textwidth][c]{\[
+\] \\
+
+\begin{problem}{17}
+Assume that \( f \)  is convex. Prove that for any \( \lambda > 0, \partial(\lambda f)(x) = \lambda \partial f(x) \) as subsets.
+\end{problem}
+
+We will prove this result with a double inclusion. Let $A \equiv \partial(\lambda f)(x)$ and $B \equiv \lambda \partial f(x)$
+
+\begin{itemize}
+	\item Case $A \subseteq B$: Let $xi \in A$, then for all $z$:
+	      \[
+		      \lambda f(z) \ge \lambda f(x) + \xi (z-x) \implies f(z) \ge f(x) + \frac{\xi}{\lambda}(z-x)
+	      \]
+	      where we used that $\lambda > 0$. This implies that $\frac{\xi}{\lambda} \in \partial f(x)$. Defining $\mu \equiv \frac{\xi}{\lambda} \in \partial f(x)$ we obtain $\xi = \lambda \mu \in \lambda \cdot \partial f(x) = B$.
+
+	\item Case $B \subseteq A$: Let $\xi \in B$, then $\xi = \lambda \mu$ with $\mu \in \partial f(x)$. Hence, for all $z$:
+	      \begin{align*}
+		      f(z) \ge f(x) + \mu(z-x) & \implies \lambda f(z) \ge \lambda f(x) + \lambda\mu(z-x)       \\
+		                               & \implies (\lambda f)(z) \ge (\lambda f)(x) + (\lambda\mu)(z-x) \\
+		                               & \implies \xi = \lambda \mu \in \partial(\lambda f)(x)
+	      \end{align*}
+\end{itemize}
+
+\begin{problem}{18}
+Prove that the \(\epsilon-\)insensitive loss function \(\ell_\epsilon(z) = \max\{0,\abs{z} - \epsilon\}\) is convex. Give also its subgradient \(\partial \ell_\epsilon(x)\) at any \(x \in \R\).
+\end{problem}
+
+
+
+
+\begin{problem}{19}
+Compute the proximals of the hinge \( f(x) = \max\{0, -x\}  \) and the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss functions.
+\end{problem}
+
+We start by computing $(\text{Id} + \partial f)(x)$:
+
+\makebox[\textwidth]{
+	$
 		\partial f(x) = \begin{cases}
-			-1 \quad & x < 0 \\
+			-1 \quad      & x < 0 \\
 			[-1, 0] \quad & x = 0 \\
-			0 \quad & x > 0 \\
+			0 \quad       & x > 0
 		\end{cases}
 		\quad
 		\lambda\partial f(x) = \begin{cases}
-			-\lambda \quad & x < 0 \\
+			-\lambda \quad      & x < 0 \\
 			[-\lambda, 0] \quad & x = 0 \\
-			0 \quad & x > 0 \\
+			0 \quad             & x > 0
 		\end{cases}
 		\quad
 		(\text{Id} + \lambda\partial f)(x) = \begin{cases}
-			-\lambda + x \quad & x < 0 \\
+			-\lambda + x \quad  & x < 0 \\
 			[-\lambda, 0] \quad & x = 0 \\
-			x \quad & x > 0 \\
+			x \quad             & x > 0
 		\end{cases}
-		\]}
-	
-	Let us plot the previous function:
-	
-	\begin{figure}
-		\centering
-		\begin{tikzpicture}[scale=3]
-			\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
-			\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)(x)$};
-			\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {\x-0.5});
-			\draw[thick, domain=-0.5:0, smooth, variable=\y, blue] plot ({0}, {\y});
-			\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
-			
-			% ticks
-			\node[inner sep=1pt,] at (0.2, -0.5) {$-\lambda$};
-		\end{tikzpicture}
-	\end{figure}
-	
-	To obtain the proximal we simply compute the inverse by rotating $90$ degrees around the origin and flipping around the vertical axis.
-	
-	\begin{figure}
-		\centering
-		\begin{tikzpicture}[scale=3]
-			\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
-			\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
-			\draw[thick, domain=-1:-0.5, smooth, variable=\x, blue] plot ({\x}, {\x+0.5});
-			\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {0});
-			\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
-			
-			% ticks
-			\node[inner sep=1pt,] at (-0.5, 0.2) {$-\lambda$};
-		\end{tikzpicture}
-	\end{figure}
-	
-	Thus, the requested proximal is:
-	
-	\[
+	$
+}
+
+Let us plot the previous function:
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=3]
+		\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
+		\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)(x)$};
+		\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {\x-0.5});
+		\draw[thick, domain=-0.5:0, smooth, variable=\y, blue] plot ({0}, {\y});
+		\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
+
+		% ticks
+		\node[inner sep=1pt,] at (0.2, -0.5) {$-\lambda$};
+	\end{tikzpicture}
+\end{figure}
+
+To obtain the proximal we simply compute the inverse by rotating $90$ degrees around the origin and flipping around the vertical axis.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=3]
+		\draw[->] (-1, 0) -- (1, 0) node[right] {$x$};
+		\draw[->] (0, -1) -- (0, 1) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
+		\draw[thick, domain=-1:-0.5, smooth, variable=\x, blue] plot ({\x}, {\x+0.5});
+		\draw[thick, domain=-0.5:0, smooth, variable=\x, blue] plot ({\x}, {0});
+		\draw[thick, domain=0:0.75, smooth, variable=\x, blue] plot ({\x}, {\x});
+
+		% ticks
+		\node[inner sep=1pt,] at (-0.5, 0.2) {$-\lambda$};
+	\end{tikzpicture}
+\end{figure}
+
+Thus, the requested proximal is:
+
+\[
 	\text{prox}_f(x) \begin{cases}
-		x + \lambda \quad & x \le -\lambda \\
-		0 \quad & -\lambda \le x \le 0  \\
-		x \quad & x \ge 0 \\
+		x + \lambda \quad & x \le -\lambda       \\
+		0 \quad           & -\lambda \le x \le 0 \\
+		x \quad           & x \ge 0              \\
 	\end{cases}
-	\]
-	
-	We repeat this process for the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss function:
-	
-	\makebox[\textwidth][c]{\[
+\]
+
+We repeat this process for the \( \epsilon \)-insensitive \( g(x)=\max\{0, |x| - \epsilon\} \) loss function:
+
+\makebox[\textwidth][c]{$
 		\partial g(x) = \begin{cases}
-			-1 \quad & x < -\epsilon \\
-			[-1, 0] \quad & x = -\epsilon \\
-			0 \quad & |x| < \epsilon \\
-			[0, 1] \quad & x = \epsilon \\
-			1 \quad & x > \epsilon \\
+			-1 \quad      & x < -\epsilon  \\
+			[-1, 0] \quad & x = -\epsilon  \\
+			0 \quad       & |x| < \epsilon \\
+			[0, 1] \quad  & x = \epsilon   \\
+			1 \quad       & x > \epsilon   \\
 		\end{cases}
 		\quad
 		\lambda\partial g(x) = \begin{cases}
-			-\lambda \quad & x < -\epsilon \\
-			[-\lambda, 0] \quad & x = -\epsilon \\
-			0 \quad & |x| < \epsilon \\
-			[0, \lambda] \quad & x = \epsilon \\
-			\lambda \quad & x > \epsilon \\
+			-\lambda \quad      & x < -\epsilon  \\
+			[-\lambda, 0] \quad & x = -\epsilon  \\
+			0 \quad             & |x| < \epsilon \\
+			[0, \lambda] \quad  & x = \epsilon   \\
+			\lambda \quad       & x > \epsilon   \\
 		\end{cases}
 		\quad
 		(\text{Id} + \lambda\partial g)(x) = \begin{cases}
-			-\lambda+x \quad & x < -\epsilon \\
-			[-\lambda-\epsilon, -\epsilon] \quad & x = -\epsilon \\
-			x \quad & |x| < \epsilon \\
-			[\epsilon, \lambda+\epsilon] \quad & x = \epsilon \\
-			\lambda+x \quad & x > \epsilon \\
+			-\lambda+x \quad                     & x < -\epsilon  \\
+			[-\lambda-\epsilon, -\epsilon] \quad & x = -\epsilon  \\
+			x \quad                              & |x| < \epsilon \\
+			[\epsilon, \lambda+\epsilon] \quad   & x = \epsilon   \\
+			\lambda+x \quad                      & x > \epsilon   \\
 		\end{cases}
-		\]}
-	
-	Again, we plot the previous function:
-	
-	\begin{figure}
-		\centering
-		\begin{tikzpicture}[scale=2]
-			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
-			\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
-			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
-			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
-			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
-			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
-			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
-			
-			% Dashed lines
-			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
-			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
-			\path[draw=gray, dashed, thick] (-1,-2) -- (0,-2);
-			\path[draw=gray, dashed, thick] (0,2) -- (1,2);
-			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
-			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
-			
-			% ticks
-			\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
-			\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
-			\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
-			\node[inner sep=1pt,] at (0.55, -2) {$-\lambda-\epsilon$};
-			\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
-			\node[inner sep=1pt,] at (-0.45, 2) {$\lambda+\epsilon$};
-		\end{tikzpicture}
-	\end{figure}
-	
-	Again, we use the graphical method to compute the inverse:
-	
-	\begin{figure}
-		\centering
-		\begin{tikzpicture}[scale=1.9]
-			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
-			\draw[->] (0, -2) -- (0, 2) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
-			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
-			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
-			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
-			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
-			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
-			
-			% Dashed lines
-			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
-			\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
-			\path[draw=gray, dashed, thick] (-2,-1) -- (-2,0);
-			\path[draw=gray, dashed, thick] (2,0) -- (2,1);
-			\path[draw=gray, dashed, thick] (1,0) -- (1,1);
-			\path[draw=gray, dashed, thick] (0,1) -- (1,1);
-			
-			% ticks
-			\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
-			\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
-			\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
-			\node[inner sep=1pt,] at (-2, 0.2) {$-\lambda-\epsilon$};
-			\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
-			\node[inner sep=1pt,] at (2, -0.2) {$\lambda+\epsilon$};
-		\end{tikzpicture}
-	\end{figure}
-	
-	Finally, the requested proximal is:
-	
-	\[
+	$}
+
+Again, we plot the previous function:
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=2]
+		\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+		\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
+		\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
+		\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
+		\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+		\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
+		\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
+
+		% Dashed lines
+		\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+		\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+		\path[draw=gray, dashed, thick] (-1,-2) -- (0,-2);
+		\path[draw=gray, dashed, thick] (0,2) -- (1,2);
+		\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+		\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+
+		% ticks
+		\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
+		\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
+		\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
+		\node[inner sep=1pt,] at (0.55, -2) {$-\lambda-\epsilon$};
+		\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
+		\node[inner sep=1pt,] at (-0.45, 2) {$\lambda+\epsilon$};
+	\end{tikzpicture}
+\end{figure}
+
+Again, we use the graphical method to compute the inverse:
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[scale=1.9]
+		\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+		\draw[->] (0, -2) -- (0, 2) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
+		\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
+		\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
+		\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
+		\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
+		\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
+
+		% Dashed lines
+		\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
+		\path[draw=gray, dashed, thick] (-1,-1) -- (0,-1);
+		\path[draw=gray, dashed, thick] (-2,-1) -- (-2,0);
+		\path[draw=gray, dashed, thick] (2,0) -- (2,1);
+		\path[draw=gray, dashed, thick] (1,0) -- (1,1);
+		\path[draw=gray, dashed, thick] (0,1) -- (1,1);
+
+		% ticks
+		\node[inner sep=1pt,] at (-1, 0.2) {$-\epsilon$};
+		\node[inner sep=1pt,] at (1, -0.2) {$\epsilon$};
+		\node[inner sep=1pt,] at (0.25, -1) {$-\epsilon$};
+		\node[inner sep=1pt,] at (-2, 0.2) {$-\lambda-\epsilon$};
+		\node[inner sep=1pt,] at (-0.2, 1) {$\epsilon$};
+		\node[inner sep=1pt,] at (2, -0.2) {$\lambda+\epsilon$};
+	\end{tikzpicture}
+\end{figure}
+
+Finally, the requested proximal is:
+
+\[
 	\text{prox}_g(x) \begin{cases}
-		x + \lambda \quad & x \le -\epsilon-\lambda \\
-		-\epsilon \quad &  -\epsilon-\lambda \le x \le -\epsilon \\
-		x \quad & |x| < \epsilon \\
-		\epsilon \quad &  \epsilon \le x \le \epsilon+\lambda \\
-		x-\lambda \quad & x \ge \epsilon+\lambda \\
+		x + \lambda \quad & x \le -\epsilon-\lambda               \\
+		-\epsilon \quad   & -\epsilon-\lambda \le x \le -\epsilon \\
+		x \quad           & |x| < \epsilon                        \\
+		\epsilon \quad    & \epsilon \le x \le \epsilon+\lambda   \\
+		x-\lambda \quad   & x \ge \epsilon+\lambda                \\
 	\end{cases}
-	\]
-	
-	\begin{problem}{20}
-		We have seen that we can solve the constrained Ridge problem by a Projected Gradient algorithm. Using the lecture slides, write down in as much detail as you can the computations needed at each iteration of the algorithm.
-	\end{problem}
-	
+\]
+
+\begin{problem}{20}
+We have seen that we can solve the constrained Ridge problem by a Projected Gradient algorithm. Using the lecture slides, write down in as much detail as you can the computations needed at each iteration of the algorithm.
+\end{problem}
+
+Consider that we have a data matrix \(\mathbf{X}\) and a target vector \(\mathbf{y}\). Then, the constrained Ridge problem is
+\[
+	\min_{w,b}\frac{1}{2} \operatorname{mse}(w,b)= \frac{1}{2n}\sum_{p=1}^n (y_p-w^Tx_p-b)^2 \quad \text{s.t.} \quad \|w\|_2\leq \rho.
+\]
+This can be matricially formulated as
+\[
+	\min_{\mathbf{w}\in S} \, f(\mathbf{ w})=\frac{1}{2n}\|\mathbf{y} - \mathbf{Xw}\|^2,
+\]
+where $S=\mathbb R \times \bar B(0, \rho)$, which is a nEC set. This problem can be reformulated as follows:
+\[
+	\min_{\mathbf{w} \in \mathbb R^{d+1}} f(\mathbf{w}) + i_S\mathbf{w}), \quad \text{where} \quad i_S(\mathbf{w})=\begin{cases}0 & \text{if } \mathbf{w}\in S,\\ +\infty & \text{if } \mathbf{w} \notin S.\end{cases}
+\]
+
+Recall that \(\mathbf{w}\in \R^{d+1}\) because we are adding the \emph{bias} \(b\) to the \(\mathbf{w}\) vector. We will have to take this into account later. In the Projected Gradient algorithm, we neet to compute  $\operatorname{prox}_{\lambda i_S}(\mathbf{w})$. However, in this case it can be proved that it is the same as computing $P_S(\mathbf{w})$, where $P_S$ is the (Euclidean) projection operator
+\[
+	P_S(x)=\arg\min_{y\in S} \|x-y\|_2.
+\]
+
+The Projected algorithm is the following:
+We want to apply the Projected Gradient algorithm to a concrete problem. Recall that this algorithm can be described as:
+
+\begin{algorithm}[H]
+	\SetNoFillComment
+	\SetAlgoLined
+	\SetCommentSty{itshape}
+	\DontPrintSemicolon
+	\KwData{$\epsilon, x_0$}
+	k=0\;
+	\For{$k=1,2,\dots$}{
+	Choose a step size $\lambda_k$\;
+	$x_{k+1}=P_S(x_k-\lambda_k\nabla f(x_k))$\hspace{2.9em}\;
+	\If(\hspace{4em}){$\|x_{k+1}- x_k\|\leq \epsilon$}{
+	\Return $ x_{k+1}$\;
+	}
+	}
+	\caption{Projected Gradient.}
+\end{algorithm}
+
+As we can see, this algorithm is almost the classic \emph{Gradient Descent} algorithm. The difference between this version and the classic one, is that in this case we are projecting back to the \(S\) set to be sure that our solution satisfies the constraints.
+
+In our case, the projection \(P_S\) is easy to compute, since it is a projection of \textbf{only the second component} to the euclidean ball:
+\[
+	P_S(\mathbf{w}) = P_S(b, w) = \left(b, \frac{\rho w}{\max\{\rho, \|w\|\}}\right).
+\]
+
+The only remaining thing to do is to compute the gradient $\nabla f(\mathbf{w})$:
+\[
+	\nabla f(\mathbf{w})^T = \left(\frac{\partial f(b, w)}{\partial b}, \nabla_w \, f(b, w)^T \right) =  -\frac{1}{n}\left(\boldsymbol{1}^T(y-\mathbf{X}\mathbf{w}), \, X^T(y-\mathbf{X}\mathbf{w})\right),
+\]
+where $\boldsymbol{1}$ is an $n\times 1$ vector of ones. All in all, the gradient update step for a point $\mathbf{w}_k = (b_k, w_k^T)^T$ amounts to computing
+\[
+	\mathbf{w}_{k+1} = P_S(\mathbf{w}_k-\lambda_k\nabla f(\mathbf{w}_k)) = \left(b_k + \frac{\lambda_k}{n} \boldsymbol{1}^T(y-\mathbf{X}\mathbf{w}), \, \rho \frac{w_k + \dfrac{\lambda_k}{n} X^T(y-\mathbf{X}\mathbf{w})}{\max \left\{ \rho, \|w_k + \frac{\lambda_k}{n} X^T(y-\mathbf{X} \mathbf{w})\|\right\}} \right)^T.
+\]
+And these would be all the needed components to apply this algorithm to the constrained Ridge Regression problem.
+
+
 \end{document}

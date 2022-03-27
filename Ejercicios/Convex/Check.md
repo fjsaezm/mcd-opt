@@ -6,17 +6,17 @@ Done - Reviewed
 4. Jo - Ja
 5. Ja - Jo
 6. Ja - Jo
-7. Jo -
-8. Jo -
+7. Jo - Ja
+8. Jo - Ja
 9.
 10.
 11. Jo - 
-12. Ja - DEP
-13.
-14. Jo - 
+12. Ja - 
+13. Ja
+14. Jo - Ja
 15. Ja - Jo
-16. Jo - 
-17. Jo -
+16. Jo - Ja
+17. Jo - Ja
 18.
 19. Jo -
-20.
+20. Ja
