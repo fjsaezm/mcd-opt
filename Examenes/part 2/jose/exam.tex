@@ -475,7 +475,7 @@
 	
 	That is, at $(x^*, y^*)$, $\nabla f \perp \left( \frac{\partial h}{\partial x}, -\frac{\partial h}{\partial y} \right)$ and, since $\left( \frac{\partial h}{\partial x}, -\frac{\partial h}{\partial y} \right) \perp \nabla h$, we have $\nabla f \parallel \nabla h$, i.e. $\nabla f(x^*, y^*) = - \mu^* \nabla h(x^*, y^*)$ for some $\mu^* \neq 0$.
 	
-	Thus, for the \textbf{Lagranian}
+	Thus, for the \textbf{Lagrangian}
 	
 	\[
 	\mathcal L(x, y; \mu) = f(x,y) + \mu h(x,y),
@@ -526,13 +526,13 @@
 	
 	which shows that \(\text{Hess }f\) is positive definite, and thus, convex.
 	
-	Next, let us solve the given minimization problem. We start by computing the Lagranian. We have to change the sign of the inequalities \(x,y \ge 0\) to \(-x,-y \le 0\) to this end:
+	Next, let us solve the given minimization problem. We start by computing the Lagrangian. We have to change the sign of the inequalities \(x,y \ge 0\) to \(-x,-y \le 0\) to this end:
 	
 	\[
 	\mathcal L(x,y; \alpha, \beta, \gamma) = x^2 + 2xy + 2y^2 - 3x + \gamma(1 - x - y) + y -\alpha x - \beta y
 	\]
 	
-	In order to compute the KKT conditions for this problem we compute the partial derivatives of the Lagranian:
+	In order to compute the KKT conditions for this problem we compute the partial derivatives of the Lagrangian:
 	
 	\begin{align*}
 		\frac{\partial \mathcal L}{\partial x}(x,y; \alpha, \beta, \gamma) & = 2x + 2y -3 - \gamma - \alpha \\

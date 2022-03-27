@@ -27,6 +27,7 @@
 
 \usepackage{float}
 \usepackage{tikz}
+\usepackage{bm}
 \floatplacement{figure}{H} % forces figures to be placed at the correct location
 
 
@@ -542,12 +543,73 @@
 		\[
 		\text{arg}\min_{w} \text{ mse}(w) = \frac{1}{n} \sum_{p=1}^n (t^p - w \cdot x^p)^2, \quad \text{s.t.} \quad \norm{w}_2^2 \leq \rho^2.
 		\]
-		Write its Lagrangian and, using the lecture slides, the detailed formulation of the KKT conditions at an optimal \(w^*\) and multiplier \(\lambda^*\).\\
-		Assuming that \(\lambda^* > 0\), use the gradient KKT condition to show that \(w^*\) also solves a standard Ridge regression problem for the optimal value \(\lambda^*\) of the regularization parameter.\\
+		Write its Lagrangian and, using the lecture slides, the detailed formulation of the KKT conditions at an optimal \(w^*\) and multiplier \(\lambda^*\).
+		
+		Assuming that \(\lambda^* > 0\), use the gradient KKT condition to show that \(w^*\) also solves a standard Ridge regression problem for the optimal value \(\lambda^*\) of the regularization parameter.
+		
 		Assuming now that \(\lambda^* = 0\), use again the slides to write down the solution in this case and use this solution to get a lower bound for \(\rho\).
 	\end{problem}
 	
-	HECHO EN CLASE
+	Let us write the Lagrangian for this problem:
+	
+	\[
+	\mathcal L(w, ; \lambda) = \frac{1}{2} \text{mse}(w) + \lambda \left(\parallel w \parallel^2 - \rho\right)
+	\]
+	
+	Then, we compute the gradient of the Lagranian:
+	
+	\[
+	0 = \nabla_w \mathcal L(w; \lambda) = \frac{1}{n}x^T(xw - y) + \lambda w
+	\]
+	
+	The complete KKT conditions are:
+	
+	\begin{equation*}
+		\begin{cases}
+			\nabla_w \mathcal L = \frac{1}{n}x^T(xw - y) + \lambda w & = 0 \\
+			\lambda \left(\parallel w \parallel^2 - \rho\right) & = 0
+		\end{cases}
+	\end{equation*}
+	
+	At the optimal point $(w^*, \lambda^*)$ we obtain:
+	
+	\begin{equation}
+		\label{eq10}
+		\begin{cases}
+			\frac{1}{n}x^T(xw^* - y) + \lambda^* w^* & = 0 \\
+			\lambda^* \left(\parallel w^* \parallel^2 - \rho\right) & = 0
+		\end{cases}
+	\end{equation}
+	
+	Let us distinguish cases:
+	
+	\begin{itemize}
+		\item Case $\lambda^\star > 0$: Using the second KKT condition we obtain \(\|\bm{w}^\star\|^2 = \rho > 0\), so \(\bm{w} \neq 0\). 
+		Using the following equality
+		\[
+		\frac{1}{n} (\bm{X}^T \bm{X} + \lambda^\star \bm{I})\bm{w}^\star - \bm{X}^T\bm{t} = 0,
+		\]
+		it is clear that \(\bm{w}^\star\) verifies
+		\[\begin{aligned}
+			\bm{w}^\star &= \left[ \frac{1}{n} (\bm{X}^T \bm{X} + \lambda^\star \bm{I})\right]^{-1}\bm{X}^T \bm{t}\\
+			&= \arg \min_{\bm{w}} \frac{1}{2n} \|\bm{X}^T \bm{w} - \bm{t}\| + \lambda^\star \|\bm{w}\|^2.
+		\end{aligned}\]
+		As a result, \(\bm{w}^\star\) is the solution of the Ridge regression problem with regularizer \(\lambda^\star\).
+		\item Case \(\lambda^\star = 0\): The KKT conditions simplify as
+		\[
+		\frac{1}{n} \left(\bm{X}^T \bm{X}\bm{w}^\star\right) - \bm{X}^T\bm{t} = 0,
+		\]
+		with 
+		\[
+		\bm{w}^\star = \left[ \frac{1}{n} \bm{X}^T \bm{X}\right]^{-1}\bm{X}^T \bm{t} = n(\bm X^T\bm X)^{-1} \bm X^T\bm{t}.
+		\]
+		Using the problem restriction,
+		\[
+		\|\bm{w}^\star\|_2 \leq \rho \implies \| n(\bm X^T\bm X)^{-1} \bm X^T\bm{t} \|_2 \leq \rho.
+		\]
+	\end{itemize}
+	
+	
 	
 	\begin{problem}{11}
 		If \( Q \) is a symmetric, positive definite \( d \times d \) matrix, show that \( f(x) = x^TQx, \ x \in \mathbb{R}^d \), is a convex function.
