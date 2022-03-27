@@ -9,7 +9,7 @@ Done - Reviewed
 7. Jo - Ja
 8. Jo - Ja
 9.
-10.
+10. Lui (tengo que revisarlo)
 11. Jo - 
 12. Ja - 
 13. Ja
@@ -17,6 +17,6 @@ Done - Reviewed
 15. Ja - Jo
 16. Jo - Ja
 17. Jo - Ja
-18.
+18. Ja - 
 19. Jo -
 20. Ja

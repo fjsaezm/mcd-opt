@@ -222,18 +222,18 @@ Argue first that \(f\) is convex and then:
           \end{align*}
           If we substitute \(2x\) from the first equation into the second one, we obtain
           \[
-            -2y +3 - \lambda +4y + 1 + \lambda = 0 \implies 2y = 4  \implies y = 2,
+            -2y +3 - \lambda +4y + 1 + \lambda = 0 \implies 2y = 4  \implies y = -2,
           \]
-          and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((-1,2)\). However, using this point in the first KKT condition, we obtain: \(-2 + 4 - 3 + \lambda = 0\), \(\lambda = -1\), which is \textbf{not a valid value} for \(\lambda\), so we \textbf{discard} this KKT point.
+          and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((3,-2)\). However, using this point in the first KKT condition, we obtain: \(6 -  4 - 3 + \lambda = 0\), \(\lambda = -1\), which is \textbf{not a valid value} for \(\lambda\), so we \textbf{discard} this KKT point.
     \item Case \(\alpha, \beta > 0\).\\
-          In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT candidate points} are obtained.
+          In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
     \item Case \(\alpha > 0, \beta = 0\).\\
           Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a possible \emph{KKT point} \((0,1)\). If we use this point in the second KKT condition, we obtain \(0+4+1 + \lambda = 0\), \(\lambda = -5\), which is not a valid value for \(\lambda\), so we discard again this KKT point.
     \item Case \(\alpha = 0, \beta > 0\).\\
-          Using the same reasoning, we obtain \((1,0)\) as a possible \emph{KKT point}. We check the \(\lambda\) condition using the first KKT condition: \(1 + 0 -3 + \lambda = 0\), \(\lambda = 2\), so we obtain a \textbf{KKT factible} point.
+          Using the same reasoning, we obtain \((1,0)\) as a possible \emph{KKT point}. We check the \(\lambda\) condition using the first KKT condition: \(1 + 0 -3 + \lambda = 0\), \(\lambda = 2\), so we obtain a \textbf{KKT point}.
   \end{itemize}
 
-  Since we have a \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
+  Since we have an \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
 
 \end{solution}
 
@@ -354,7 +354,7 @@ and compute its proximal. Which are the fixed points of this proximal?
   \[
     \text{prox}_f(x) = \text{arg}\ \min_u \{f(u) + \frac{1}{2}(u-x)^2\}.
   \]
-  We can now analitically compute the proximal operator, making distinctions between the different possible cases for our problem. In general, the proximinal operator is unrolled as:
+  We can now analytically compute the proximal operator, making distinctions between the different possible cases for our problem. In general, the proximal operator is unrolled as:
   \begin{equation}\label{ej5:prox}
     \text{prox}_f(x) = \text{arg}\ \min_u \begin{cases}
       u^2 - 1 + \frac{1}{2}(u-x)^2 & \text{ if } \abs{u} > 1    \\
@@ -369,18 +369,18 @@ and compute its proximal. Which are the fixed points of this proximal?
           \[
             \left(u^2 - 1 + \frac{1}{2}(u-x)^2\right)' = 2u + u -x = 0 \Longleftrightarrow  u = \frac{x}{3}.
           \]
-          This, however, is \textbf{not possible} since we are considering that \(\abs{x} \leq 1\) and \(\abs{u}>1\), so there is no compatible value to match both restrictions. In the \textbf{second case}, we see that it is a strictly possitive function with a minimum of \(0\) when \(u = x\). This is a possible point since the restrictions are fulfilled.\\
+          This, however, is \textbf{not possible} since we are considering that \(\abs{x} \leq 1\) and \(\abs{u}>1\), so there is no compatible value to match both restrictions. In the \textbf{second case}, we see that it is a strictly positive function with a minimum of \(0\) when \(u = x\). This is a possible point since the restrictions are fulfilled.\\
 
           We have found that when \(\abs{x} \leq 1\), then \(\text{prox}_f(x) = x\).
 
     \item Case \(\abs{x} > 1 \).\\
 
-          Now, when \(\abs{u} > 1\) we have the same minimum \(u = \frac{x}{3}\). If \(\abs{x} \geq 3\), we again obtain that \(\text{prox}_f(x) = x\). However, since \(\abs{x} > 1\), the \(u\) condition cannot be fullfilled when \(\abs{x} \in (1,3)\), so the minimum has to be obtained in the extreme points of the interval \((-1,1)\) for \(u\). Taking this into account,
+          Now, when \(\abs{u} > 1\) we have the same minimum \(u = \frac{x}{3}\). If \(\abs{x} \geq 3\), we again obtain that \(\text{prox}_f(x) = x\). However, since \(\abs{x} > 1\), the \(u\) condition cannot be fulfilled when \(\abs{x} \in (1,3)\), so the minimum has to be obtained in the extreme points of the interval \((-1,1)\) for \(u\). Taking this into account,
           \begin{itemize}
             \item If \(x < -1\), then \(\text{arg}\min_u u^2 - 1 + \frac{1}{2}(u-x)^2 = -1\)
             \item If \(x > 1\), then \(\text{arg}\min_u u^2 - 1 + \frac{1}{2}(u-x)^2 = 1\)
           \end{itemize}
-          When \(abs{u} \leq 1\), the exact same reasonament is followed.
+          When \(\abs{u} \leq 1\), the exact same reasoning is followed.
   \end{enumerate}
 
 
