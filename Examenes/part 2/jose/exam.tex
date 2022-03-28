@@ -744,11 +744,11 @@
 		\begin{tikzpicture}[scale=1.9]
 			\draw[->] (-2, 0) -- (2, 0) node[right] {$x$};
 			\draw[->] (0, -3) -- (0, 3) node[above] {$(\text{Id} + \partial f)(x)$};
-			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x}, {\x-1});
+			\draw[thick, domain=-1.5:-1, smooth, variable=\x, blue] plot ({\x}, {2*\x});
 			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({-1}, {\y});
 			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
 			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({1}, {\y});
-			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x}, {\x+1});
+			\draw[thick, domain=1:1.5, smooth, variable=\x, blue] plot ({\x}, {2*\x});
 			
 			% Dashed lines
 			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
@@ -776,11 +776,11 @@
 			\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
 			\draw[->] (0, -2) -- (0, 2) node[above] {$(\text{Id} + \partial f)^{-1}(x)$};
 			\draw[thin, domain=-2:2, smooth, variable=\x, red] plot ({\x}, {\x});
-			\draw[thick, domain=-2:-1, smooth, variable=\x, blue] plot ({\x-1}, {\x});
+			\draw[thick, domain=-3:-2, smooth, variable=\x, blue] plot ({\x}, {\x/2});
 			\draw[thick, domain=-2:-1, smooth, variable=\y, blue] plot ({\y}, {-1});
 			\draw[thick, domain=-1:1, smooth, variable=\x, blue] plot ({\x}, {\x});
 			\draw[thick, domain=1:2, smooth, variable=\y, blue] plot ({\y}, {1});
-			\draw[thick, domain=1:2, smooth, variable=\x, blue] plot ({\x+1}, {\x});
+			\draw[thick, domain=2:3, smooth, variable=\x, blue] plot ({\x}, {\x/2});
 			
 			% Dashed lines
 			\path[draw=gray, dashed, thick] (-1,-1) -- (-1,0);
@@ -804,11 +804,11 @@
 	
 	\[
 	\text{prox}_f(x) \begin{cases}
-		x + 2\lambda \quad & x \le -\epsilon-\lambda \\
+		\frac{x}{2\lambda + 1} \quad & x \le -\epsilon-\lambda \\
 		-1 \quad &  -2\lambda-1 \le x \le -1 \\
 		x \quad & |x| < 1 \\
 		1 \quad & 1 \le x \le 2\lambda + 1 \\
-		x-2\lambda \quad & x \ge 2\lambda + 1 \\
+		\frac{x}{2\lambda + 1} \quad & x \ge 2\lambda + 1 \\
 	\end{cases}
 	\]
 	

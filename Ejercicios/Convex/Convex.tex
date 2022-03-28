@@ -93,7 +93,7 @@
 
 \newenvironment{problem}[2][Exercise]
 { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-	{\hspace{0.0cm}\newline\newline \emph{Authors: \(50\%\) José Antonio, \(\%50\) Javier}  \end{mdframed}}
+	{\hspace{0.0cm}\newline\newline \emph{Authors: \(50\%\) José Antonio, \(50\%\) Javier}  \end{mdframed}}
 
 % Define solution environment
 \newenvironment{solution}
@@ -435,7 +435,7 @@ Now, we want to solve this equations system to see if we can find a minimum of o
 Until now, we have two candidates to be the optimal one: \(\{(0,1),(1,0)\}\). Now, we make use of the following theorem:
 
 \begin{nth}
-	If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^*\) is an optimum of this problem. (Slide 18)
+	If in a minimization problem with restrictions \(g_i(x), h_j(x) \in C^1\), if we assume \(f\) to be convex and \(h_j\) to be affine, then a KKT point \(x^\star\) is an optimum of this problem. (Slide 18)
 \end{nth}
 
 So, we can evaluate the function on our KKT points to find the minimum. We obtain that \(f(1,0) = 1, f(0,1) = 2\), so the minimum is reached in \((1,0)\) with optimal value \(1\). \\
@@ -537,7 +537,7 @@ Since $\lambda$ doesn't appear in the objective function, we may remove it by ch
 which was to be demonstrated. \\
 
 \begin{problem}{9}
-We know that, theoretically, the minimum SVC primal \(f^*\) and the maximum SVC dual \(q^*\) are equal. Check this in this case by writing \(q^*\) and \(f^*\) in terms of the \(\alpha_p^*\) and checking that both expressions coincide.
+We know that, theoretically, the minimum SVC primal \(f^\star\) and the maximum SVC dual \(q^\star\) are equal. Check this in this case by writing \(q^\star\) and \(f^\star\) in terms of the \(\alpha_p^\star\) and checking that both expressions coincide.
 \end{problem}
 
 The primal SVC problem is defined as
@@ -621,42 +621,43 @@ The complete KKT conditions are:
 	\end{cases}
 \end{equation*}
 
-At the optimal point $(w^*, \lambda^*)$ we obtain:
+At the optimal point $(w^\star, \lambda^\star)$ we obtain:
 
 \begin{equation}
 	\label{eq10}
 	\begin{cases}
-		\frac{1}{n}x^T(xw^* - y) + \lambda^* w^*                & = 0 \\
-		\lambda^* \left(\parallel w^* \parallel^2 - \rho\right) & = 0
+		\frac{1}{n}x^T(xw^\star - y) + \lambda^\star w^\star            & = 0 \\
+		\lambda^\star \left(\parallel w^\star \parallel^2 - \rho\right) & = 0
 	\end{cases}
 \end{equation}
 
 Let us distinguish cases:
 
 \begin{itemize}
-	\item Case $\lambda^\star > 0$: Using the second KKT condition we obtain \(\|\bm{w}^\star\|^2 = \rho > 0\), so \(\bm{w} \neq 0\).
+	\item Case $\lambda^\star > 0$: Using the second KKT condition we obtain \(\|w^\star\|^2 = \rho > 0\), so \(w \neq 0\).
 	      Using the following equality
 	      \[
-		      \frac{1}{n} (\bm{X}^T \bm{X} + \lambda^\star \bm{I})\bm{w}^\star - \bm{X}^T\bm{t} = 0,
+		      \frac{1}{n} (x^2 + \lambda^\star \bm{I})w^\star - x^Ty = 0,
 	      \]
-	      it is clear that \(\bm{w}^\star\) verifies
+	      it is clear that \(w^\star\) verifies
 	      \[\begin{aligned}
-			      \bm{w}^\star & = \left[ \frac{1}{n} (\bm{X}^T \bm{X} + \lambda^\star \bm{I})\right]^{-1}\bm{X}^T \bm{t}     \\
-			                   & = \arg \min_{\bm{w}} \frac{1}{2n} \|\bm{X}^T \bm{w} - \bm{t}\| + \lambda^\star \|\bm{w}\|^2.
+			      w^\star & = \left[ \frac{1}{n} (x^2 + \lambda^\star \bm{I})\right]^{-1}x^T y  \\
+			              & = \arg \min_{w} \frac{1}{2n} \|x^T w - y\| + \lambda^\star \|w\|^2.
 		      \end{aligned}\]
-	      As a result, \(\bm{w}^\star\) is the solution of the Ridge regression problem with regularizer \(\lambda^\star\).
+	      As a result, \(w^\star\) is the solution of the Ridge regression problem with regularizer \(\lambda^\star\).
 	\item Case \(\lambda^\star = 0\): The KKT conditions simplify as
 	      \[
-		      \frac{1}{n} \left(\bm{X}^T \bm{X}\bm{w}^\star\right) - \bm{X}^T\bm{t} = 0,
+		      \frac{1}{n} \left(x^2w^\star\right) - x^Ty = 0,
 	      \]
 	      with
 	      \[
-		      \bm{w}^\star = \left[ \frac{1}{n} \bm{X}^T \bm{X}\right]^{-1}\bm{X}^T \bm{t} = n(\bm X^T\bm X)^{-1} \bm X^T\bm{t}.
+		      w^\star = \left[ \frac{1}{n} x^2\right]^{-1}x^T y = n(x^2)^{-1} x^Ty.
 	      \]
 	      Using the problem restriction,
 	      \[
-		      \|\bm{w}^\star\|_2 \leq \rho \implies \| n(\bm X^T\bm X)^{-1} \bm X^T\bm{t} \|_2 \leq \rho.
+		      \|w^\star\|_2 \leq \rho \implies \| n(x^2)^{-1} x^T y\|_2 \leq \rho
 	      \]
+	      which provides a lower bound for $\rho$. \\
 \end{itemize}
 
 
@@ -669,7 +670,6 @@ If a function $f$ is twice differentiable, then it is convex if and only if its 
 
 \begin{problem}{12}
 Let \( f:\mathbb{R}^d \to \mathbb{R} \)  be a function and assume that \( epi(f) \subset \mathbb{R}^d \times \mathbb{R} \)  is convex. Prove that then \( f \)  is convex.
-
 \end{problem}
 
 Consider the set
@@ -719,7 +719,7 @@ If this happened, we could say that moving the value of  \((x,f(x)- \frac{\delta
 Prove that if \( f \)  is strictly convex, it has a unique global minimum.
 \end{problem}
 
-This result is incomplete: with the given hypothesis, it is simply not true. For instance, the function $x \mapsto e^x$ is strictly convex and doesn't have a unique global minimum. \\
+This result is incomplete: with the given hypothesis, it is simply not true. For instance, the function $x \mapsto e^x$ is strictly convex and doesn't have a unique global minimum.
 
 Let us add an additional hypothesis to create a new result to prove.
 
@@ -730,11 +730,13 @@ Let us add an additional hypothesis to create a new result to prove.
 
 In either one of those cases, the additionally hypothesis is summarized in having at least $1$ minimum. However, this is still not enough. For instance, the function $f:\{-1,1\} \rightarrow \R, f(x) = x^2$ is strictly convex and has two minimums (in the two points of its dominion). The result we will prove is:
 
-\emph{\textbf{Proposition.}} Let \( f \) be a strictly convex function. Then  it has at most one global minimum in each connected component.
+\begin{nprop}
+	Let \( f \) be a strictly convex function. Then  it has at most one global minimum in each connected component.
+\end{nprop}
 
 Suppose $x \neq z$ are both global minimums of $f$ in the same connected component and let $\lambda \in (0,1)$. Then:
 \[
-	f(\lambda x + (1-\lambda)z) < \lambda f(x) + (1-\lambda) f(z) = f^*
+	f(\lambda x + (1-\lambda)z) < \lambda f(x) + (1-\lambda) f(z) = f^\star
 \]
 
 We have find an element $\lambda x + (1-\lambda)z$ (include in the dominion of $f$ because $x$ and $z$ are in the same connected component) that has a lower value of $f$ than the minimum, which is impossible. Hence, $x = z$. \qed \\
@@ -823,22 +825,24 @@ Then, it is clear that
 \[
 	\text{epi}(\ell_\epsilon(z)) = \text{epi}(f_1) \cap \mathcal H.
 \]
-Lastly, using that the finite intersection of convex sets is convex (this is pretty straightforward to see, since each pair of points \(x,x'\) in the intersection is in both convex sets, in particular it is in one of them, and so does the segment that aligns the points, so the segment is contained in the intersection, proving that the intersection is convex), we obtain that \(\text{epi}(\ell_\epsilon(z))\) is convex and the proposition tells us that \(\ell_\epsilon(z)\) is also convex.\\
+Lastly, using that the finite intersection of convex sets is convex (this is pretty straightforward to see, since each pair of points \(x,x'\) in the intersection is in both convex sets, in particular it is in one of them, and so does the segment that aligns the points, so the segment is contained in the intersection, proving that the intersection is convex), we obtain that \(\text{epi}(\ell_\epsilon(z))\) is convex and the proposition tells us that \(\ell_\epsilon(z)\) is also convex.
 
 This function is also differentiable in \(R \backslash \{-\epsilon,\epsilon\}\). We can give its subgradient dividing it in parts. Let us rewrite the function:
 \[
 	\ell_\epsilon(z) = \begin{cases}
-		-x-\epsilon & \text{ if } x < - \epsilon           \\
-		0           & \text{ if } -\epsilon < x < \epsilon \\
-		x-\epsilon  & \text{ if } x> \epsilon
+		-x-\epsilon & \text{ if } x \le - \epsilon             \\
+		0           & \text{ if } -\epsilon \le x \le \epsilon \\
+		x-\epsilon  & \text{ if } x \ge \epsilon
 	\end{cases}
 \]
 Lastly, its subgradient is:
 \[
 	\partial \ell_\epsilon(z) = \begin{cases}
-		-1 & \text{ if } x < - \epsilon           \\
-		0  & \text{ if } -\epsilon < x < \epsilon \\
-		1  & \text{ if } x> \epsilon
+		-1     & \text{ if } x < - \epsilon           \\
+		[-1,0] & \text{ if } x = - \epsilon           \\
+		0      & \text{ if } -\epsilon < x < \epsilon \\
+		[0,1]  & \text{ if } x = \epsilon             \\
+		1      & \text{ if } x> \epsilon
 	\end{cases}
 \]
 
@@ -1029,7 +1033,7 @@ This can be matricially formulated as
 \]
 where $S=\mathbb R \times \bar B(0, \rho)$, which is a nEC set. This problem can be reformulated as follows:
 \[
-	\min_{\mathbf{w} \in \mathbb R^{d+1}} f(\mathbf{w}) + i_S\mathbf{w}), \quad \text{where} \quad i_S(\mathbf{w})=\begin{cases}0 & \text{if } \mathbf{w}\in S,\\ +\infty & \text{if } \mathbf{w} \notin S.\end{cases}
+	\min_{\mathbf{w} \in \mathbb R^{d+1}} \left(f(\mathbf{w}) + i_S\mathbf{w}\right), \quad \text{where} \quad i_S(\mathbf{w})=\begin{cases}0 & \text{if } \mathbf{w}\in S,\\ +\infty & \text{if } \mathbf{w} \notin S.\end{cases}
 \]
 
 Recall that \(\mathbf{w}\in \R^{d+1}\) because we are adding the \emph{bias} \(b\) to the \(\mathbf{w}\) vector. We will have to take this into account later. In the Projected Gradient algorithm, we need to compute  $\operatorname{prox}_{\lambda i_S}(\mathbf{w})$. However, in this case it can be proved that it is the same as computing $P_S(\mathbf{w})$, where $P_S$ is the (Euclidean) projection operator
