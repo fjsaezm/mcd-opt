@@ -172,9 +172,7 @@
 \begin{minipage}{0.4\textwidth}
 	\centering
 	\large
-	Ejercicios Programación Lineal\\
-	\normalsize
-	Optimización\\
+	Exercises on Convex and Constrained Optimization\\
 \end{minipage}
 \begin{minipage}{0.295\textwidth}
 	\raggedleft
@@ -192,7 +190,6 @@ Show that if \( S \) is an open set, its complement \( S^c \) is closed, and vic
 \end{problem}
 
 \(\boxed{\Rightarrow}\)\\
-
 Let \(S\) be an open set. We know that \(S^c\) is a closed set if and only if for any sequence of elements \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\), then \(x \in S^c\). \\
 
 Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} \subset S^c\) such that \(\{x_n\} \longrightarrow x\). Suppose that \(x\) is not in \(S^c\). Then \(x\) must be in its complementary, \(S\). Since \(S\) is an open set we know that \(\exists \epsilon > 0\) such that \( B(x, \epsilon) \subset S\). \\
@@ -200,7 +197,6 @@ Let us use this characterization to prove that \(S^c\) is closed. Let \(\{x_n\} 
 Since \(\{x_n\} \longrightarrow x\), for any \(\delta > 0 \exists n \in \mathbb{N}\) such that \( \parallel x - x_n \parallel < \delta\). In particular, for \(\delta = \epsilon\) there is a element of the sequence \(x_n\) in \( B(x, \epsilon) \subset S\), but \(\{x_n\} \subset S^c\). This contradiction implies that \(x\) is, in fact, in \(S^c\).
 
 \(\boxed{\Leftarrow}\)\\
-
 Let \(S\) be a set such that its complement $S^c$ is closed (that is, \(S^c = cl(S^c)\)). Let us show that \(S\) is open. \\
 
 Let \(x \in S\). Then, \(x \notin S^c\), which implies \(x \notin cl(S^c)\). This implies that
@@ -560,28 +556,16 @@ and also that
 We can use this expressions in the primal SVC problem to obtain the following equality chain:
 
 \begin{align*}
-	\frac{1}{2}\norm{w}^2 + C \sum_p \xi_p & \stackrel{(1)}{=} \frac{1}{2} \sum_{p,q} \alpha^*_p y^p x^p y^q x^q (\alpha^*_q)'  + (\alpha^*_p + \beta^*_p)\sum_p(1 - y^p(w^*x^p + b^*))                       \\
-	                                       & = \frac{1}{2}\alpha ' Q \alpha + \alpha^*_p \sum_p(1 - y^p(w^*x^p + b^*)) + \beta^*_p \sum_p(1 - y^p(w^*x^p + b^*))                                              \\
-	                                       & \stackrel{(2)}{=} \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p -  \alpha^*_p\sum_p  y^p (w^*x^p + b^*) + \sum_p \beta^*_p \xi^*_p                           \\
-	                                       & = \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p - \sum_{p,q} \alpha_p^* y^p y^q x^q x^p (\alpha_p^*) ' + b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p \\
-	                                       & = \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p - \alpha ' Q \alpha + b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p                                    \\
-	                                       & = \sum_p \alpha^*_p - \frac{1}{2}\alpha ' Q \alpha + b^*\underbrace{\sum_p \alpha_p^* y_p}_{= 0} + \underbrace{\sum_p \beta^*_p \xi^*_p}_{= 0}                   \\
-	                                       & = \sum_p \alpha^*_p - \frac{1}{2}\alpha^T Q \alpha
+	\frac{1}{2}\norm{w}^2 + C \sum_p \xi_p & \stackrel{(1)}{=} \frac{1}{2} \sum_{p,q} \alpha^*_p y^p x^p y^q x^q (\alpha^*_q)'  + (\alpha^*_p + \beta^*_p)\sum_p(1 - y^p(w^*x^p + b^*))                           \\
+	                                       & = \frac{1}{2}(\alpha^*) Q \alpha^*+ \alpha^*_p \sum_p(1 - y^p(w^*x^p + b^*)) + \beta^*_p \sum_p(1 - y^p(w^*x^p + b^*))                                               \\
+	                                       & \stackrel{(2)}{=} \frac{1}{2}(\alpha^*) ' Q \alpha^* + \sum_p \alpha^*_p -  \alpha^*_p\sum_p  y^p (w^*x^p + b^*) + \sum_p \beta^*_p \xi^*_p                          \\
+	                                       & = \frac{1}{2}(\alpha^*)' Q \alpha^* + \sum_p \alpha^*_p - \sum_{p,q} \alpha_p^* y^p y^q x^q x^p (\alpha_p^*) ' + b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p \\
+	                                       & = \frac{1}{2}(\alpha^*)' Q \alpha^* + \sum_p \alpha^*_p - (\alpha^*)' Q \alpha^*+ b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p                                \\
+	                                       & = \sum_p \alpha^*_p - \frac{1}{2}(\alpha^*)' Q \alpha^*+ b^*\underbrace{\sum_p \alpha_p^* y_p}_{= 0} + \underbrace{\sum_p \beta^*_p \xi^*_p}_{= 0}                   \\
+	                                       & = \sum_p \alpha^*_p - \frac{1}{2}(\alpha^*)' Q \alpha^*
 \end{align*}
-
-Where, in \((1)\) we have introduced the optimal \(w^*\) and \(C\) and in \((2)\) we have done the same using \(\xi_p^*\). As we can see, we have arrived at almost the expression of the dual problem:
-\[
-	\Theta (\alpha) = \sum_p \alpha^*_p - \frac{1}{2}\alpha^T Q \alpha.
-\]
-Recall that the maximum of \(\Theta(\alpha)\) is the minimum o the primal problem, since we are using the \textbf{optimal values}.
-
-We know from the theory slides that the dual problem is
-\begin{align*}
-	\min_{\alpha} \frac{1}{2}\alpha^T Q \alpha - \sum_p \alpha^*_p \\
-	s.t.                                                           \\
-	\sum \alpha_p y^p = 0, \ 0 \leq \alpha^p \leq C
-\end{align*}
-Lastly, our exercise ends noting that maximizing \(f\) is the same as minimizing \(-f\), and noting that \(-\Theta(\alpha)\) is the function to minimize in the dual SVC problem, proving that \(f^* = q^*\).\\
+Where, in  \((1)\) we have used the expressions of \(w^*\) and \(C\) and in \((2)\) we have done the same with \(\xi_p^*\).\\
+We note that this expression is minus the \textbf{optimal} of the dual SVC problem, which makes sense since in the dual problem we are maximizing and here we are minimizing, so we have proved that \(f^* = q^*\).\\
 
 
 % --------------------------------------------------------------------
