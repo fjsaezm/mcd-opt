@@ -548,63 +548,41 @@ The primal SVC problem is defined as
 We are going to see that the minimum of this function, say \(f^*\), is equal to the maximum of the dual function \(\mathcal D\), say \(q^*\).
 
 
-\textit{Solution.} The Lagrangian for this problem is
-\begin{align*}
-	\mathcal L(w, b, \xi; \alpha) & =\frac{1}{2}\|w\|^2 + \frac{C}{2}\sum_{p=1}^n \xi_p^2 - \sum_{p} \alpha_p[y_p(w^Tx_p+b)-1+\xi_p]                                                         \\
-	                              & = w^T\left(\frac{1}{2}w - \sum_p \alpha_p y_px_p\right) + \sum_p \xi_p\left(\frac{C}{2}\xi_p - \alpha_p\right) - b\sum_p \alpha_p y_p + \sum_p \alpha_p,
-\end{align*}
-with $\alpha_p\geq 0$. To get the dual function we solve $\nabla_w\, \mathcal L = 0$, $\frac{\partial \mathcal L}{\partial b}=0$ and $\frac{\partial \mathcal L}{\partial \xi_p}=0$, which yield the KKT stationarity conditions:
-\begin{equation}
-	\label{eq:kkt1}
-	0=\nabla_w\, \mathcal L = w - \sum_p \alpha_p y_px_p \implies w = \sum_p \alpha_p y_px_p.
-\end{equation}
-\begin{equation}
-	\label{eq:kkt2}
-	0=\frac{\partial \mathcal L}{\partial b} = \sum_{p} \alpha_p y_p.
-\end{equation}
-\begin{equation}
-	\label{eq:kkt3}
-	0=\frac{\partial \mathcal L}{\partial \xi_p} = 2\frac{C}{2}\xi_p - \alpha_p \implies C\xi_p = \alpha_p, \quad 1\leq p \leq n.
-\end{equation}
-Substituting back in the Lagrangian we arrive at the dual function
-\begin{align*}
-	\Theta(\alpha) & = -\frac{1}{2} \sum_{p, q}\alpha_p \alpha_q y_p y_q x_p^T x_q - \frac{1}{2C}\sum_p \alpha_p^2 - b \overbrace{\sum_p \alpha_py_p}^{0} + \sum_p \alpha_p \\
-	               & = -\frac{1}{2} \sum_{p, q}\alpha_p \alpha_q  \left(y_p y_qx_p^T x_q + \frac{\delta_{pq}}{C}\right) + \sum_p \alpha_p                                   \\
-	               & = -\frac{1}{2}\alpha^T\left(Q+ \frac{I}{C}\right)\alpha + \sum_p \alpha_p,
-\end{align*}
-with constraints $\sum_p \alpha_p y_p=0$ and $\alpha_p\geq 0$. In the above expression, $Q$ is the symmetric matrix given by $Q_{pq}=y_py_qx_p^Tx_q$, $I$ is the identity matrix, $\alpha=(\alpha_1,\dots,\alpha_n)^T$, and $\delta_{pq}$ is Kronecker's delta function, defined to be $1$ if $p=q$ and $0$ otherwise. We know that strong duality holds in this case, so flipping the sign to get a minimization problem, the dual problem has the following expression:
+Recall that, the relation between the optimal \(w^*\) from the primal problem and the \(\alpha^*\) from the dual problem is:
 \[
-	\min_{\alpha\in\mathbb R^n} \left\{\frac{1}{2}\alpha^T\left(Q+ \frac{I}{C}\right)\alpha - \sum_p \alpha_p\right\} \quad \text{s.t.} \quad \begin{cases}
-		\displaystyle \sum_p \alpha_p y_p=0, \\
-		\alpha_p\geq 0,                      \\
-		1\leq p \leq n.
-	\end{cases}
+	w^* = \sum_p \alpha^*_p y^p x^p
+\]
+and also that
+\[
+	\xi_p^* = 1-y^p(w^*x^p + b^*) \quad \text{and} \quad C = \alpha^*_p + \beta^*_p.
 \]
 
-The KKT complementary slackness conditions in this case are
-\begin{equation}
-	\label{eq:kkt-slack}
-	\alpha_p^*[y_p((w^*)^Tx_p+b^*)-1+\xi_p^*] =0, \quad 1\leq p\leq n.
-\end{equation}
+We can use this expressions in the primal SVC problem to obtain the following equality chain:
 
-To derive the optimal primal solution from the dual one, we resort to the KKT conditions. Firstly, from \eqref{eq:kkt1} we have
-\[
-	w^* = \sum_{p=1}^n \alpha_p^*y_px_p.
-\]
-Secondly, from \eqref{eq:kkt3} we conclude that
-\[
-	\xi_p^* = \frac{\alpha_p^*}{C},\quad 1\leq p\leq n.
-\]
-Now, observe that in a non-trivial classification setting where we have at least one positive and one negative example, at least one of the $\alpha^*_p$ is non-zero (otherwise we would have $y_pb^*\geq 1$ for all $p$ and every example would be of the same class). If we take any $\alpha_p^*>0$, the conditions in \eqref{eq:kkt-slack} tell us that
 \begin{align*}
-	0 & =y_p((w^*)^Tx_p+b^*)-1+\xi_p^*                                                           \\
-	  & = y_p\left(\sum_{q=1}^n \alpha_q^*y_qx_q^Tx_p +b^*\right) - 1 + \frac{\alpha_p^*}{C}     \\
-	  & = y_p\sum_{q=1}^n \alpha_q^*y_q\left(x_q^Tx_p + \frac{\delta_{pq}}{C}\right)+ y_pb^* -1.
+	\frac{1}{2}\norm{w}^2 + C \sum_p \xi_p & \stackrel{(1)}{=} \frac{1}{2} \sum_{p,q} \alpha^*_p y^p x^p y^q x^q (\alpha^*_q)'  + (\alpha^*_p + \beta^*_p)\sum_p(1 - y^p(w^*x^p + b^*))                       \\
+	                                       & = \frac{1}{2}\alpha ' Q \alpha + \alpha^*_p \sum_p(1 - y^p(w^*x^p + b^*)) + \beta^*_p \sum_p(1 - y^p(w^*x^p + b^*))                                              \\
+	                                       & \stackrel{(2)}{=} \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p -  \alpha^*_p\sum_p  y^p (w^*x^p + b^*) + \sum_p \beta^*_p \xi^*_p                           \\
+	                                       & = \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p - \sum_{p,q} \alpha_p^* y^p y^q x^q x^p (\alpha_p^*) ' + b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p \\
+	                                       & = \frac{1}{2}\alpha ' Q \alpha  + \sum_p \alpha^*_p - \alpha ' Q \alpha + b^*\sum_p \alpha_p^* y_p + \sum_p \beta^*_p \xi^*_p                                    \\
+	                                       & = \sum_p \alpha^*_p - \frac{1}{2}\alpha ' Q \alpha + b^*\underbrace{\sum_p \alpha_p^* y_p}_{= 0} + \underbrace{\sum_p \beta^*_p \xi^*_p}_{= 0}                   \\
+	                                       & = \sum_p \alpha^*_p - \frac{1}{2}\alpha^T Q \alpha
 \end{align*}
-Thus, solving for $b^*$ we get the optimal primal bias term in closed form\footnote{Although in theory the formula works for any support vector, to increase the stability of the method in practice and compensate for numerical errors it is advised to average the values of $b^*$ obtained for each $\alpha^*_p>0$.}:
+
+Where, in \((1)\) we have introduced the optimal \(w^*\) and \(C\) and in \((2)\) we have done the same using \(\xi_p^*\). As we can see, we have arrived at almost the expression of the dual problem:
 \[
-	b^* = \frac{1}{y_p} - \sum_{q=1}^n \alpha_q^*y_q\left(x_q^Tx_p + \frac{\delta_{pq}}{C}\right)=y_p - \sum_{q=1}^n \alpha_q^*y_q\left(x_q^Tx_p + \frac{\delta_{pq}}{C}\right).
+	\Theta (\alpha) = \sum_p \alpha^*_p - \frac{1}{2}\alpha^T Q \alpha.
 \]
+Recall that the maximum of \(\Theta(\alpha)\) is the minimum o the primal problem, since we are using the \textbf{optimal values}.
+
+We know from the theory slides that the dual problem is
+\begin{align*}
+	\min_{\alpha} \frac{1}{2}\alpha^T Q \alpha - \sum_p \alpha^*_p \\
+	s.t.                                                           \\
+	\sum \alpha_p y^p = 0, \ 0 \leq \alpha^p \leq C
+\end{align*}
+Lastly, our exercise ends noting that maximizing \(f\) is the same as minimizing \(-f\), and noting that \(-\Theta(\alpha)\) is the function to minimize in the dual SVC problem, proving that \(f^* = q^*\).\\
+
 
 % --------------------------------------------------------------------
 % --------------------------------------------------------------------
