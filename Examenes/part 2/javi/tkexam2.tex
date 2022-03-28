@@ -197,17 +197,17 @@ Argue first that \(f\) is convex and then:
 
   The \textbf{Lagrangian} of \(f\) in terms of \(\alpha,\beta,\lambda\) is:
   \[
-    L(x,y,\alpha,\beta,\lambda) = x^{2} + 2xy + 2y^{2} - 3x + y + \lambda(x+y - 1) + \alpha x + \beta y .
+    L(x,y,\alpha,\beta,\lambda) = x^{2} + 2xy + 2y^{2} - 3x + y + \lambda(x+y - 1) - \alpha x - \beta y .
   \]
   Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are:
   \begin{align*}
     \nabla f(x^{*}) + \sum_{i}^m\lambda_{i} \nabla g_{i}(x^*) + \sum_{i}^p\mu_{j} \nabla h_{j}(x^*) = 0, \\
     \lambda_{i}g_{i}(x^*) = 0
   \end{align*}
-  With \(\lambda_{i} \geq 0\). If we apply them to our problem, \textbf{our KKT conditions} are:
+  If we apply this to our problem, \textbf{our KKT conditions} are:
   \begin{align*}
-    2x + 2y - 3 + \lambda + \alpha & = 0 \\
-    2x + 4y + 1 +  \lambda + \beta & = 0 \\
+    2x + 2y - 3 + \lambda - \alpha & = 0 \\
+    2x + 4y + 1 +  \lambda - \beta & = 0 \\
     \alpha x                       & = 0 \\
     \beta y                        & = 0
   \end{align*}
@@ -224,13 +224,13 @@ Argue first that \(f\) is convex and then:
           \[
             -2y +3 - \lambda +4y + 1 + \lambda = 0 \implies 2y = 4  \implies y = -2,
           \]
-          and, since \(x+y = 1\), we obtain that our \emph{KKT point} is \((3,-2)\). However, using this point in the first KKT condition, we obtain: \(6 -  4 - 3 + \lambda = 0\), \(\lambda = -1\), which is \textbf{not a valid value} for \(\lambda\), so we \textbf{discard} this KKT point.
+          which is simply not possible due to the initial restriction \(y \geq 0\), so no KKT point is obtained.
     \item Case \(\alpha, \beta > 0\).\\
           In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
     \item Case \(\alpha > 0, \beta = 0\).\\
-          Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) and a possible \emph{KKT point} \((0,1)\). If we use this point in the second KKT condition, we obtain \(0+4+1 + \lambda = 0\), \(\lambda = -5\), which is not a valid value for \(\lambda\), so we discard again this KKT point.
+          Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) so we have the point \((0,1)\). We have to check if this point matches the rest of the KKT conditions. If we use this point in the second KKT condition, we obtain \(0+4+1 + \lambda = 0\), \(\lambda = -5\), and using this \(\lambda\) in the first KKT condition we obtain \(\alpha = -6\). This \textbf{does not hold} the conditions imposed in this case (\(\alpha > 0\)), so this point is \textbf{not} a KKT point.
     \item Case \(\alpha = 0, \beta > 0\).\\
-          Using the same reasoning, we obtain \((1,0)\) as a possible \emph{KKT point}. We check the \(\lambda\) condition using the first KKT condition: \(1 + 0 -3 + \lambda = 0\), \(\lambda = 2\), so we obtain a \textbf{KKT point}.
+          Using the same reasoning as in the previous case, we obtain \((1,0)\) as a possible \emph{KKT point}. If we use this point in the first equation, we obtain \(\lambda = 1\) and using this \(\lambda\) in the second KKT condition, we obtain that \(\beta = 4\), which matches the conditions, so we obtain a \textbf{KKT point}.
   \end{itemize}
 
   Since we have an \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
