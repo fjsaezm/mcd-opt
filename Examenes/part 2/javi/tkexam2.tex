@@ -1,0 +1,403 @@
+\documentclass[a4paper]{article}
+
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-3.25cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0in}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage{blindtext} % Package to generate dummy text
+\usepackage{charter} % Use the Charter font
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+\usepackage{amsthm, amsmath, amssymb} % Mathematical typesetting
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true,
+            linkcolor = black,
+            citecolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor} % Facilities for controlling restricted text
+\usepackage{listings} % Environment for non-formatted code, !uses style file!
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+ % Environment for f-structures, !uses style file!
+\usepackage{booktabs} % Enhances quality of tables
+\usepackage{tikz-qtree} % Easy tree drawing tool
+ % Configuration for b-trees and b+-trees, !uses style file!
+\usepackage[backend=biber,style=numeric,
+            sorting=nyt]{biblatex} % Complete reimplementation of bibliographic facilities
+\addbibresource{ecl.bib}
+\usepackage{csquotes} % Context sensitive quotation facilities
+\usepackage[ddmmyyyy]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\renewcommand{\dateseparator}{-} % Sets dateseparator to '-'
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} % Blank out the default header
+\fancyfoot[L]{} % Custom footer text
+\fancyfoot[C]{} % Custom footer text
+\fancyfoot[R]{\thepage} % Custom footer text
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+\usepackage{mathtools}
+\usepackage{amsmath}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+\usepackage{cancel}
+\usepackage{minted}
+\usepackage{float}
+%-------------------------------
+
+%----------------------------------------------------------------------------------------
+
+%-------------------------------
+%	ENVIRONMENT SECTION
+%-------------------------------
+\pagestyle{fancy}
+\usepackage{mdframed}
+
+\newtheorem{nprop}{Proposition}
+
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \vspace*{0.1cm} \textbf{#1 #2}.}
+    {  \end{mdframed}\vspace{0.3cm}}
+
+% Define solution environment
+\newenvironment{solution}
+    {\textit{Solution.}\\}
+    {}
+
+
+%-------------------------------------------------------------------------------------------
+%	CUSTOM COMMANDS
+%-------------------------------
+\newcommand{\gaussian}{\frac{1}{\sigma\sqrt{2\pi}}\exp\left(- \frac{(x-\mu)^2}{2\sigma^2}\right)}
+\newcommand{\R}{\mathbb R}
+
+
+\def\inline{\lstinline[basicstyle=\ttfamily,keywordstyle={}]}
+
+
+\begin{document}
+
+%-------------------------------
+%	TITLE SECTION
+%-------------------------------
+
+\fancyhead[C]{}
+\hrule \medskip % Upper rule
+\begin{minipage}{0.295\textwidth}
+  \raggedright
+  \footnotesize
+  Francisco Javier Sáez Maldonado \hfill\\
+  77448344F \hfill\\
+  franciscojavier.saez@estudiante.uam.es
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+  \centering
+  \large
+  Take Home Exam 2\\
+  \normalsize
+  Convex Optimization\\
+\end{minipage}
+\begin{minipage}{0.295\textwidth}
+  \raggedleft
+  \today\hfill\\
+\end{minipage}
+\medskip\hrule
+\bigskip
+
+%-------------------------------
+%	CONTENTS
+%-------------------------------
+
+\begin{problem}{1}
+We have worked out the elementary vision of Lagrange multipliers, assuming that , from \(g(x,y) = 0\), we can find a function \(y = h(x)\) such that \(g(x,h(x)) = 0\).\\
+
+But sometimes, what we get is that there is an \(h\) such that \(g(x,h(x)) = 0\). Rewrite the Lagrange multiplier analysis in the lecture slides under this assumption.
+\end{problem}
+\begin{solution}
+  Consider \(f,g:\R^2 \to \R\), and the following minimization problem:
+  \begin{equation}\label{p1:problem}
+    \min f(x,y) \ \ \text{s.t.  } g(x,y) = 0.
+  \end{equation}
+
+  Now, we can use the \textbf{implicit function theorem} to find a dependence between the variables of the restriction. This theorem (not written completely formally) \textbf{states} the following: let \(g:\R^{n+m} \to \R^m\) be a continuously differentiable function, \((x,y) \in \R^{n+m}\) such that \(g(x,y) = 0\). If the jacobian with respect to the variables in \(y\) is invertible, then there exists an open subset \(U\) such that \(h(x) = y\) and \(g(x,h(x)) = 0\) for all \(x \in U\). \\
+
+  \textbf{Assuming} that the \textbf{conditions for this theorem are matched}, we can apply it to the \textbf{jacobian with respect to the variables in x} to obtain an \(U'\) where \(h(y) = x\) and \(f(h(y),y) = 0\) for all \(y \in U'\). Thus, we can write:
+  \[
+    f(x,y) = f(h(y),y) =  \psi(y).
+  \]
+  Then, we can keep the procedure as it is done in the slides. Let us see this:\\
+
+  Consider that \(y^*\) is a minimum with \(x^* = h(y^*)\). Then, we have:
+  \begin{equation}\label{p1:fprime}
+    0 = \psi'(y^*) = \frac{\partial f}{\partial x} (x^*, y^*)h'(y^*) + \frac{\partial f}{\partial y}(x^*, y^*).
+  \end{equation}
+  Using that \((x^*,y^*)\) is a minimum and that \(g(h(y),y) = 0\), we have that:
+  \begin{equation}\label{p1:gprime}
+    0 = \frac{\partial g}{\partial x}(x^*, y^*)h'(y^*) + \frac{\partial g}{\partial y}(x^*, y^*) \implies h'(y^*) = - \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})}.
+  \end{equation}
+  Then, if we combine Equations \eqref{p1:fprime} and \eqref{p1:gprime}, we arrive at
+  \begin{align*}
+    0 & = - \frac{\partial f}{\partial x}(x^*,y^*) \frac{\frac{\partial g}{\partial y}(x^{*},y^{*})}{\frac{\partial g}{\partial x}(x^{*},y^{*})} + \frac{\partial f}{\partial y}(x^*, y^*) \\
+      & = - \frac{\partial f}{\partial x}(x^*,y^*)\frac{\partial g}{\partial y}(x^{*},y^{*}) +  \frac{\partial f}{\partial y}(x^*, y^*)\frac{\partial g}{\partial x}(x^{*},y^{*}).
+  \end{align*}
+  This means that, at \((x^*,y^*)\), \(\nabla F \perp \left(- \frac{\partial f}{\partial y}, \frac{\partial f}{\partial x}\right)\) and, since \(\left(- \frac{\partial f}{\partial y}, \frac{\partial f}{\partial x}\right) \perp \nabla g\), we have
+  \[
+    \nabla f \parallel \nabla g, \text{ that is } \nabla f(x^*,y^*) = -\mu^* \nabla g(x^*,y^*),
+  \]
+  for some \(\mu^* \neq 0\). Thus, \textbf{for the Lagrangian}
+  \[
+    L(x,y,\mu) = f(x,y) + \mu g(x,y),
+  \]
+  we have that at a \emph{minimum} \((x^*,y^*)\) there exists a \(\mu^* \neq 0\) such that
+  \begin{equation}\label{p1:nabla:lagr}
+    \nabla L(x^*,y^*,\mu^*) = \nabla f(x^*,y^*) + \mu^* \nabla g(x^*,y^*) = 0
+  \end{equation}
+
+  With all this, we have observed that a way to solve the problem in Equation \eqref{p1:problem} is to define its Lagrangian an solve simultaneously the Equation \eqref{p1:nabla:lagr} and the constraint \(g(x,y) = 0\).
+
+\end{solution}
+
+
+\begin{problem}{2}
+We want to solve the following constrained restriction problem:
+\begin{align*}
+  \min \quad       & x^{2} + 2xy + 2y^2 - 3x + y \\
+  \text{s.t} \quad & x + y = 1                   \\
+                   & x,y \geq 0.
+\end{align*}
+Argue first that \(f\) is convex and then:
+\begin{enumerate}
+  \item Write its Lagrangian with \(\alpha,\beta\) the multipliers of the inequality constraints.
+  \item Write the KKT conditions.
+  \item Use them to solve the problem. For this consider separately the \((\alpha = \beta = 0)\), \((\alpha > 0, \beta = 0)\), \((\alpha = 0, \beta > 0)\), \((\alpha > 0, \beta > 0)\) cases.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+  Let us first see that \(f\) is convex. We know that a characterization of convex functions is that they have a definite positive hessian matrix \(Hf\). Firstly, we observe that the gradient of \(f\) is
+  \[
+    \nabla f(x,y) = \left( 2x + 2y - 3, 2x + 4y + 1\right).
+  \]
+  Hence, the hessian of \(f\) is
+  \[
+    Hf = \begin{pmatrix} 2 & 2 \\ 2 & 4 \end{pmatrix}
+  \]
+
+  This matrix is positive definite, since it is Hermitian (it is real-valued and symmetric) and we can apply the \textbf{Sylvester's criterion} to see that all the minor determinants (which are \(2\) and \(4\)) are positive. Hence, \(f\) is convex. Now, given that \(f\) is convex, we can make use of the \textbf{theorem} that states that if \(f,g_{i} \in C^{1}\) and convex, and \(h_{j}\) are affine, then a KKT point \(x^{*}\) is an optimum of the original problem. Since our problem matches these conditions, we will find the candidates to KKT points.\\
+
+  The \textbf{Lagrangian} of \(f\) in terms of \(\alpha,\beta,\lambda\) is:
+  \[
+    L(x,y,\alpha,\beta,\lambda) = x^{2} + 2xy + 2y^{2} - 3x + y + \lambda(x+y - 1) - \alpha x - \beta y .
+  \]
+  Now, to write the KKT conditions. As a very brief summarization, the KKT conditions are:
+  \begin{align*}
+    \nabla f(x^{*}) + \sum_{i}^m\lambda_{i} \nabla g_{i}(x^*) + \sum_{i}^p\mu_{j} \nabla h_{j}(x^*) = 0, \\
+    \lambda_{i}g_{i}(x^*) = 0
+  \end{align*}
+  If we apply this to our problem, \textbf{our KKT conditions} are:
+  \begin{align*}
+    2x + 2y - 3 + \lambda - \alpha & = 0 \\
+    2x + 4y + 1 +  \lambda - \beta & = 0 \\
+    \alpha x                       & = 0 \\
+    \beta y                        & = 0
+  \end{align*}
+  Now, we want to solve this equations system to see if we can find a minimum of our problem. We have the following cases:
+
+  \begin{itemize}
+    \item Case \(\alpha = \beta = 0\).\\
+          In this case, the system is
+          \begin{align*}
+            2x + 2y - 3 + \lambda & = 0 \\
+            2x + 4y +1 + \lambda  & = 0
+          \end{align*}
+          If we substitute \(2x\) from the first equation into the second one, we obtain
+          \[
+            -2y +3 - \lambda +4y + 1 + \lambda = 0 \implies 2y = 4  \implies y = -2,
+          \]
+          which is simply not possible due to the initial restriction \(y \geq 0\), so no KKT point is obtained.
+    \item Case \(\alpha, \beta > 0\).\\
+          In this case, we obtain from the KKT conditions that \(x=  y = 0\), which does not match our initial conditions \(x+y = 1\), so no \emph{KKT points} are obtained.
+    \item Case \(\alpha > 0, \beta = 0\).\\
+          Looking at our KKT conditions, since \(\alpha > 0\), we have that \(x = 0\), resulting in \(y=1\) so we have the point \((0,1)\). We have to check if this point matches the rest of the KKT conditions. If we use this point in the second KKT condition, we obtain \(0+4+1 + \lambda = 0\), \(\lambda = -5\), and using this \(\lambda\) in the first KKT condition we obtain \(\alpha = -6\). This \textbf{does not hold} the conditions imposed in this case (\(\alpha > 0\)), so this point is \textbf{not} a KKT point.
+    \item Case \(\alpha = 0, \beta > 0\).\\
+          Using the same reasoning as in the previous case, we obtain \((1,0)\) as a possible \emph{KKT point}. If we use this point in the first equation, we obtain \(\lambda = 1\) and using this \(\lambda\) in the second KKT condition, we obtain that \(\beta = 4\), which matches the conditions, so we obtain a \textbf{KKT point}.
+  \end{itemize}
+
+  Since we have an \textbf{unique} candidate, \((1,0)\), making use of the previously stated theorem, this point is the \textbf{minimum}, with a value of \(f(1,0) = -2\).
+
+\end{solution}
+
+\begin{problem}{3}
+Let \(f: S \subset \R^d \to \R\) be a convex function on the convex set \(S\) and we extend it to an \(\tilde f : \R^d \to \R\) as:
+\[
+  \tilde f(x) = \begin{cases}
+    f(x)    & \text{ if } x \in S    \\
+    +\infty & \text{ if } i \notin S
+  \end{cases}
+\]
+Show that \(\tilde f\) is a convex function on \(\R^d\). Assume that \(a+\infty = \infty\) and \(a\cdot \infty = \infty\) for \(a > 0\).
+\end{problem}
+
+\begin{solution}
+
+  Let \(x,x' \in \R^d\) and consider the segment \(\lambda x + (1-\lambda)x'\) with \(\lambda \in [0,1]\). We can consider two cases:
+
+  \begin{enumerate}
+    \item If \(x,x' \in S\), since \(S\) is convex, \(\lambda x + (1-\lambda)x' \in S\) for any \(\lambda \in [0,1]\). Also, we know that in \(S\) we have \(f(x) = \tilde f(x)\) and the same happens for \(x'\). Then, for any \(\lambda \in [0,1]\):
+          \begin{align*}
+            \tilde f(\lambda x + (1-\lambda)x') & = f(\lambda x + (1-\lambda)x') \stackrel{(1)}{\leq}\lambda f(x) + (1-\lambda )f(x') = \lambda \tilde f(x) + (1-\lambda) \tilde f(x')
+          \end{align*}
+          where, in \((1)\) we have used the convexity of \(f\).
+
+    \item If \(x \in S\) and \(x' \notin S\), the convexity inequality is trivial since \(\tilde f(x') = +\infty\), so, using that we assume that \(a \cdot +\infty = +\infty\), we see that for any \(\lambda \in [0,1]\)
+          \[
+            \tilde f ( \lambda x + (1-\lambda)x' ) \leq \lambda \tilde f(x) + (1-\lambda) \tilde f(x') = + \infty
+          \]
+          The case where \(x' \in S\) and \(x \notin S\) is analogous.
+  \end{enumerate}
+
+  We have seen that the definition of convexity is fulfilled for any \(x,x' \in \R^{d}\), so \(\tilde f\) is convex.
+\end{solution}
+
+\begin{problem}{4}
+Prove \textbf{Jensen's inequality} : if \(f\) is convex on \(\R^{d}\) and \(\sum_{1}^{k} \lambda_{i}=1\), with \(0 \leq \lambda_{i} \leq 1\), we have for any \(x_{1}, \ldots, x_{k} \in \mathrm{R}^{n}\)
+\[
+  f\left(\sum_{1}^{k} \lambda_{i} x_{i}\right) \leq \sum_{1}^{k} \lambda_{i} f\left(x_{i}\right)
+\]
+Hint: just write \(\sum_{1}^{k} \lambda_{i} x_{i}=\lambda_{1} x_{1}+\left(1-\lambda_{1}\right)v\)  for an appropriate \(v\) and apply repeatedly the definition of a convex function. Start with \(k=3\) and carry on.
+\end{problem}
+\begin{solution}
+  Let us prove this inequality by induction. We begin with the \textbf{base case} \(k = 3\), since \(k = 2\) is the known definition of convexity. We want to see that, if \(x_1,x_2,x_3 \in \R^d\), then
+  \[
+    f\left(\lambda_1 x1 + \lambda_2 x_2 + \lambda_3 x_3\right) \leq \lambda_1 f(x_1) + \lambda_2 f(x_2) + \lambda_3 f(x_3).
+  \]
+  Let us reformulate the argument of \(f\) on the left-hand-side as:
+  \[
+    \lambda_1 x_1 + \lambda_2  x_2 + \lambda_3 x_3 = \lambda_1 x_1 + (1-\lambda_1)\underbrace{\left( \frac{\lambda_2}{1-\lambda_1}x_2 + \frac{\lambda_3}{1-\lambda_1}x_3\right)}_{\in \R^d}
+  \]
+  Also, note that, since \(\lambda_1 + \lambda_2 +\lambda_3 = 1\), then \(\lambda_3 = 1- \lambda_1 - \lambda_2\), and the above expression can be written as:
+  \begin{align*}
+    \lambda_1 x_1 + (1-\lambda_1)\left( \frac{\lambda_2}{1-\lambda_1}x_2 + \frac{\lambda_3}{1-\lambda_1}x_3\right) & = \lambda_1 x_1 + (1-\lambda_1) \left(\frac{\lambda_2}{1-\lambda_1}x_2 + \frac{1- \lambda_1 - \lambda_2}{1-\lambda_1}x_3\right) \\
+                                                                                                                   & = \lambda_1 x_1 + (1-\lambda_1)\left(\frac{\lambda_2}{1-\lambda_1}x_2 \left(1- \frac{\lambda_2}{1-\lambda_1}\right)x_3  \right)
+  \end{align*}
+  So, we can apply the definition of convexity twice to obtain our result as follows:
+  \begin{align*}
+    f\left(\lambda_1 x_1 + \lambda_2  x_2 + \lambda_3 x_3 \right) & = f \left( \lambda_1 x_1 + (1-\lambda_1)\left(\frac{\lambda_2}{1-\lambda_1}x_2 \left(1- \frac{\lambda_2}{1-\lambda_1}\right)x_3  \right)\right)          \\
+                                                                  & \leq \lambda_1 f(x_1) + (1-\lambda_1)f\left(\frac{\lambda_2}{1-\lambda_1}x_2 \left(1- \frac{\lambda_2}{1-\lambda_1}\right)x_3  \right)                   \\
+                                                                  & \leq \lambda_1 f(x_1) + \left(1-\lambda_1\right)\left(\frac{\lambda_2}{1-\lambda_1}f(x_2) + \left(1- \frac{\lambda_2}{1-\lambda_1}\right) f(x_3) \right) \\
+                                                                  & = \lambda_1 f(x_1) + \lambda_2 f(x_3) + (1-\lambda_1 - \lambda_2)f(x_3)                                                                                  \\
+                                                                  & = \lambda_1 f(x_1) + \lambda_2 f(x_2) + \lambda_3 f(x_3),
+  \end{align*}
+  ending with the base case.\\
+
+  Let us now prove the induction step. Consider that the hypothesis is true for \(k = n\), we will prove that is is also true for \(k = n+1\). We proceed as we did in the previous case:
+  \begin{align*}
+    f\left(\sum_{i=1}^{n+1} \lambda_i x_i\right) & = f\left(\lambda_1 x_1 + \sum_{i=2}^{n+1} \lambda_i x_i\right)
+  \end{align*}
+  And, considering \(v = \sum_{i=2}^{n+1} \frac{\lambda_i}{1-\lambda_1} x_i \in \R^d \), we can rewrite the previous expression as:
+  \[
+    f\left(\lambda_1 x_1 + (1-\lambda_1)v\right)
+  \]
+  Applying the convexity of \(f\),
+  \begin{align*}
+    f\left(\lambda_1 x_1 + (1-\lambda_1)v\right) & \leq \lambda_1 f(x_1) + (1-\lambda_1)f(v)                                                                \\
+                                                 & \stackrel{(1)}{\leq} \lambda_1 f(x_1) + (1-\lambda_1)\sum_{i=2}^{n+1}\frac{\lambda_i}{1-\lambda_1}f(x_i) \\
+                                                 & = \sum_{i=1}^{n+1} \lambda_i f(x_i),
+  \end{align*}
+  where in \((1)\) we applied the induction hypothesis, proving our \(k=n+1\) case, and ending our proof. \qed
+
+
+\end{solution}
+
+\begin{problem}{5}
+Prove that the following function is convex
+\[
+  f(x) =
+  \begin{cases}
+    x^{2}-1 \quad & |x|>1      \\
+    0  \quad      & |x| \leq 1
+  \end{cases}
+\]
+and compute its proximal. Which are the fixed points of this proximal?
+\end{problem}
+\begin{solution}
+  Let us see the convexity of \(f\). We will use the following proposition a couple times:
+  \begin{nprop}
+    Let \(S\) be an nEC open set and \(f:S\to \R\). \(f\) is convex if, and only if, \(\text{epi}(f)\) is convex.
+  \end{nprop}
+
+  Now, we will show that \(\text{epi}(f)\) is convex. Consider the function \(f_1(x) = x^2 - 1\). This function is clearly convex, since it is twice continuously differentiable with \(f''(x) = 2 > 0\). Using the previous proposition, \(\text{epi}(f_1)\) is convex. Now, consider the \emph{upper half plane} (which is a convex not empty set)
+  \[
+    \mathcal H = \{ (x,y) \in \R^2 \ : \ y > 0\}.
+  \]
+  Then, it is clear that
+  \[
+    \text{epi}(f) = \text{epi}(f_1) \cap \mathcal H.
+  \]
+  Lastly, using that the finite intersection of convex sets is convex (this is pretty straightforward to see, since each pair of points \(x,x'\) in the intersection is in both convex sets, in particular it is in one of them, and so does the segment that aligns the points, so the segment is contained in the intersection, proving that the intersection is convex), we obtain that \(\text{epi}(f)\) is convex and the proposition tells us that \(f\) is also convex.\\
+
+  We are asked to compute the \textbf{proximal}. We know that the proximal of a function \(f\) is defined as:
+  \[
+    \text{prox}_f(x) = \text{arg}\ \min_u \{f(u) + \frac{1}{2} \norm{u-x}^2\}.
+  \]
+  In our case, our \(u\) and \(x\) are in \(\R\) and also \(\abs{x}^2 = x^2\) for any \(x\in \R\), so our proximal can be seen as
+  \[
+    \text{prox}_f(x) = \text{arg}\ \min_u \{f(u) + \frac{1}{2}(u-x)^2\} = \text{arg}\ \min_u \phi_x(u),
+  \]
+  where
+  \begin{equation}\label{ej5:prox}
+    \phi_x(u) =  \begin{cases}
+      u^2 - 1 + \frac{1}{2}(u-x)^2 & \text{ if } \abs{u} > 1    \\
+      \frac{1}{2}(u-x)^2           & \text{ if } \abs{u} \leq 1
+    \end{cases}
+  \end{equation}
+  We can now analytically compute the proximal operator, making distinctions between the different possible cases depending on where our minimizer is attained.
+
+  \begin{itemize}
+    \item Case \(\abs{u} \leq 1\).\\
+          In this case, then the minimum is clearly \(z = x\), meaning that \(\text{prox}_f(x) = x\) for \(\abs{x}<1\).
+
+    \item Case \(\abs{u} > 1\).\\
+          In this case, we see that
+          \[
+            \left(u^2 - 1 + \frac{1}{2}(u-x)^2\right)' = 3u - x = 0 \Longleftrightarrow u = \frac{x}{3}.
+          \]
+          This implies that \(\text{prox}_f(x) = \frac{x}{3}\) if \(x > 3\).
+
+    \item Lastly, we have to take into account the rest of possible values of \(x\). Those will correspond to the points of non differentiability of \(\phi_x(u)\). We know that \(\phi_x(u)\) is non differentiable at \(\{-1,1\}\):
+          \[
+            \phi_x(-1) = \frac{1}{2}(-1-x)^2 \quad \text{and} \quad \phi_x(1) = \frac{1}{2}(1-x)^2
+          \]
+          Essentially, we are computing the distance between \(x\) and \(-1,1\) in each case. Hence:
+          \begin{itemize}
+            \item  If \(x \in [-3,-1)\),  then \(\phi_x(-1) < \phi_x(1)\) and \(\text{prox}_f(x) = -1 \).
+            \item Likewise, when \(x \in (1,3]\), \(\phi_x(1) < \phi_x(-1)\), so \(\text{prox}_f(x) = 1\).
+          \end{itemize}
+  \end{itemize}
+
+  The conclusion is that the \textbf{proximal} of \(f\) is:
+  \[
+    \operatorname{prox}_f(x) = \begin{cases}
+      -1          & \text{ if } x \in [-3,1) \\
+      x           & \text{ if } x \in [-1,1] \\
+      1           & \text{ if } x \in (1,3]  \\
+      \frac{x}{3} & \text{ elsewhere }
+    \end{cases}
+  \]
+
+  Clearly, the \textbf{fixed points} of \(\operatorname{prox}_f(x)\) are those that hold \(\operatorname{prox}_f(x) = x\). In our case,
+  \[
+    \text{fixed points} = [-1,1]
+  \]
+\end{solution}
+\end{document}

@@ -1,0 +1,23 @@
+Integrantes del grupo:
+
+- José Antonio Álvarez Ocete
+- Francisco Javier Sáez Maldonado
+
+Archivos entregados:
+- algorithms.ipynb : código de los algoritmos y pruebas
+- algorithms.html  : muestra el cuaderno de jupyter ya ejecutado 
+			   de manera algo más estética
+- leeme.txt 	 : este archivo
+
+Instrucciones para la ejecución de código:
+
+1. Requerimientos: 
+	- Jupyter notebook
+	- Librerías de python: numpy, matplotlib
+2. Instalados los requerimientos, se inicia el cuaderno de jupyter
+	(se abre una powershell/terminal de linux en la carpeta donde esté el archivo
+	 y se ejecuta el comando: jupyter notebook)
+3. Ejecutar celda a celda de arriba a abajo
+
+
+Los casos de prueba analizados están ya expresados en el cuaderno de jupyter (y, por ende, en el html)
